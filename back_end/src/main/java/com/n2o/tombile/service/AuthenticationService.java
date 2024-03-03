@@ -1,6 +1,9 @@
 package com.n2o.tombile.service;
 
 import com.n2o.tombile.dto.auth.AuthenticationDTO;
+import com.n2o.tombile.dto.auth.LoginUserDTO;
+import com.n2o.tombile.dto.auth.RegisterUserDTO;
+import com.n2o.tombile.enums.TokenType;
 import com.n2o.tombile.model.Token;
 import com.n2o.tombile.model.User;
 import com.n2o.tombile.model.UserData;
@@ -25,9 +28,9 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationDTO register(User request) {
+    public AuthenticationDTO register(RegisterUserDTO request) {
         Date date = new Date();
-        String jwtToken = jwtService.generateToken(request);
+        String jwtToken = jwtService.generateToken(request.getUsername());
 
         User user = User.builder()
                 .username(request.getUsername())
@@ -45,7 +48,7 @@ public class AuthenticationService {
                 .build();
         Token token = Token.builder()
                 .token(jwtToken)
-                .tokenType(Token.TokenType.BEARER)
+                .tokenType(TokenType.BEARER)
                 .expired(false)
                 .revoked(false)
                 .build();
@@ -53,12 +56,12 @@ public class AuthenticationService {
         token.setUser(user);
         user.getTokens().add(token);
         user.setUserData(userData);
-        user = userRepository.save(user);
+        userRepository.save(user);
 
         return new AuthenticationDTO(jwtToken);
     }
 
-    public AuthenticationDTO authenticate(User request) {
+    public AuthenticationDTO authenticate(LoginUserDTO request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getUsername(),
@@ -66,10 +69,10 @@ public class AuthenticationService {
                 )
         );
         User user = userRepository.findByUsername(request.getUsername()).orElseThrow();
-        String jwtToken = jwtService.generateToken(user);
+        String jwtToken = jwtService.generateToken(request.getUsername());
         Token token = Token.builder()
                 .token(jwtToken)
-                .tokenType(Token.TokenType.BEARER)
+                .tokenType(TokenType.BEARER)
                 .expired(false)
                 .revoked(false)
                 .build();

@@ -1,6 +1,5 @@
 package com.n2o.tombile.service;
 
-import com.n2o.tombile.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -45,10 +44,10 @@ public class JwtService {
         return extractClaim(token, Claims::getSubject);
     }
 
-    public String generateToken(User user) {
+    public String generateToken(String username) {
         return Jwts
                 .builder()
-                .subject(user.getUsername())
+                .subject(username)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_DURATION))
                 .signWith(getSignInKey())

@@ -1,5 +1,6 @@
 package com.n2o.tombile.model;
 
+import com.n2o.tombile.enums.TokenType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -51,8 +52,4 @@ public class Token {
     @ManyToOne
     @JoinColumn(name = USER_ID)
     private User user;
-    
-    public enum TokenType {
-        BEARER
-    }
 }

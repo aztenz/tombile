@@ -3,7 +3,7 @@ package com.n2o.tombile.model;
 
 import java.util.Date;
 
-import jakarta.persistence.CascadeType;
+import com.n2o.tombile.enums.Role;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -11,7 +11,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -35,11 +34,6 @@ public class UserData {
     private static final String VERIFICATION_STATUS = "verification_status";
     private static final String WALLET_BALANCE = "wallet_balance";
 
-    public enum Role {
-        USER,
-        SUPPLIER,
-        ADMIN
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,7 +45,7 @@ public class UserData {
 
     @Enumerated(EnumType.STRING)
     @Column(name = ROLE)
-    private UserData.Role role;
+    private Role role;
 
     @Column(name = WALLET_BALANCE)
     private Double walletBalance;
