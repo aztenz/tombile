@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class LogoutService implements LogoutHandler {
     private final TokenRepository tokenRepository;
+
     @Override
     public void logout(
             HttpServletRequest request,
@@ -21,12 +22,12 @@ public class LogoutService implements LogoutHandler {
     ) {
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
-        if(authHeader == null || !authHeader.startsWith("Bearer ")){
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             return;
         }
         jwt = authHeader.substring(7);
         Token retievedToken = tokenRepository.findByToken(jwt).orElse(null);
-        if(retievedToken != null) {
+        if (retievedToken != null) {
             retievedToken.setRevoked(true);
             retievedToken.setExpired(true);
             tokenRepository.save(retievedToken);

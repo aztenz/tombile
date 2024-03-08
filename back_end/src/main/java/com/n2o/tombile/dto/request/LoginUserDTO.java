@@ -1,4 +1,4 @@
-package com.n2o.tombile.dto.auth;
+package com.n2o.tombile.dto.request;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterUserDTO {
+public class LoginUserDTO {
     private static final String USERNAME_IS_MANDATORY = "username is mandatory";
     private static final String PASSWORD_IS_MANDATORY = "password is mandatory";
     @Valid
@@ -22,7 +22,4 @@ public class RegisterUserDTO {
     @NotNull(message = PASSWORD_IS_MANDATORY)
     @NotBlank(message = PASSWORD_IS_MANDATORY)
     private String password;
-
-    @Valid
-    private UserDataDTO userData;
 }

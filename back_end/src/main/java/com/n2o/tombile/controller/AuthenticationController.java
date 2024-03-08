@@ -1,19 +1,16 @@
 package com.n2o.tombile.controller;
 
-import com.n2o.tombile.dto.auth.LoginUserDTO;
-import com.n2o.tombile.dto.auth.AuthenticationDTO;
-import com.n2o.tombile.dto.auth.RegisterUserDTO;
+import com.n2o.tombile.dto.response.AuthenticationDTO;
+import com.n2o.tombile.dto.request.LoginUserDTO;
+import com.n2o.tombile.dto.request.RegisterUserDTO;
 import com.n2o.tombile.service.AuthenticationService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @AllArgsConstructor
 @RestController
@@ -32,20 +29,7 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationDTO> login(
             @Valid @RequestBody LoginUserDTO loginUserDTO
     ) {
-        return ResponseEntity.ok(authenticationService.authenticate(loginUserDTO));
-    }
-
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> handleValidationException(MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
-            String fieldName = ((FieldError)error).getField();
-            String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
-        });
-        return errors;
+        return ResponseEntity.ok(authenticationService.login(loginUserDTO));
     }
 
 }

@@ -1,29 +1,17 @@
 package com.n2o.tombile.model;
 
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @Data
 @Builder
@@ -34,7 +22,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class User implements UserDetails {
 
     private static final String ID = "id";
-    private static final String USER = "user";
     private static final String USERNAME = "username";
     private static final String PASSWORD = "password";
     private static final String USER_DATA_ID = "user_data_id";
@@ -53,9 +40,6 @@ public class User implements UserDetails {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = USER_DATA_ID)
     private UserData userData;
-    
-    @OneToMany(mappedBy = USER, cascade = CascadeType.ALL)
-    private List<Token> tokens;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

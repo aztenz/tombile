@@ -4,7 +4,7 @@ USE tombile;
 
 CREATE TABLE user_data (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    email VARCHAR(100) UNIQUE,
+    email VARCHAR(100),
     role VARCHAR(50),
     wallet_balance DECIMAL(10 , 2 ),
     verification_status BOOLEAN,

@@ -18,6 +18,6 @@ public class UserDetailsService implements org.springframework.security.core.use
             String username
     ) throws UsernameNotFoundException {
         return userRepository.findByUsername(username)
-                .orElseThrow(()-> new UsernameNotFoundException(USER_NOT_FOUND));
+                .orElseThrow(() -> new UsernameNotFoundException(USER_NOT_FOUND));
     }
 }

@@ -1,9 +1,11 @@
 package com.n2o.tombile.service;
 
-import com.n2o.tombile.dto.auth.AuthenticationDTO;
-import com.n2o.tombile.dto.auth.LoginUserDTO;
-import com.n2o.tombile.dto.auth.RegisterUserDTO;
+import com.n2o.tombile.dto.response.AuthenticationDTO;
+import com.n2o.tombile.dto.request.LoginUserDTO;
+import com.n2o.tombile.dto.request.RegisterUserDTO;
 import com.n2o.tombile.enums.TokenType;
+import com.n2o.tombile.exception.DuplicateUserException;
+import com.n2o.tombile.exception.UserNotFoundException;
 import com.n2o.tombile.model.Token;
 import com.n2o.tombile.model.User;
 import com.n2o.tombile.model.UserData;
@@ -15,82 +17,101 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 public class AuthenticationService {
+    private static final double WALLET_BALANCE = 0.0;
+    private static final String USERNAME_ALREADY_EXISTS = "Username already exists: ";
+    public static final String USER_NOT_FOUND = "Couldn't Find User: ";
+
     private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationDTO register(RegisterUserDTO request) {
-        Date date = new Date();
-        String jwtToken = jwtService.generateToken(request.getUsername());
 
-        User user = User.builder()
+    public AuthenticationDTO register(RegisterUserDTO request) {
+        validateDuplicateUser(request.getUsername());
+
+        User user = createUser(request);
+        UserData userData = createUserData(request);
+
+        user.setUserData(userData);
+
+        userRepository.save(user);
+
+        return generateAuthenticationToken(request.getUsername());
+    }
+
+    public AuthenticationDTO login(LoginUserDTO request) {
+        authenticateUser(request.getUsername(), request.getPassword());
+
+        User user = userRepository.findByUsername(request.getUsername()).orElseThrow();
+
+        revokeAllTokens(user);
+
+        return generateAuthenticationToken(request.getUsername());
+    }
+
+    private void validateDuplicateUser(String username) {
+        userRepository.findByUsername(username)
+                .ifPresent(u -> {
+                    throw new DuplicateUserException(USERNAME_ALREADY_EXISTS + username);
+                });
+    }
+
+    private User createUser(RegisterUserDTO request) {
+        return User.builder()
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .tokens(new ArrayList<>())
                 .build();
+    }
 
-        UserData userData = UserData.builder()
-                .email(request.getUserData().getEmail())
-                .role(request.getUserData().getRole())
-                .walletBalance(0.0)
+    private UserData createUserData(RegisterUserDTO request) {
+        Date date = new Date();
+        return UserData.builder()
+                .email(request.getEmail())
+                .role(request.getRole())
+                .walletBalance(WALLET_BALANCE)
                 .verificationStatus(false)
                 .registrationDate(date)
                 .lastLoginDate(date)
                 .build();
-        Token token = Token.builder()
-                .token(jwtToken)
-                .tokenType(TokenType.BEARER)
-                .expired(false)
-                .revoked(false)
-                .build();
-
-        token.setUser(user);
-        user.getTokens().add(token);
-        user.setUserData(userData);
-        userRepository.save(user);
-
-        return new AuthenticationDTO(jwtToken);
     }
 
-    public AuthenticationDTO authenticate(LoginUserDTO request) {
+    private void authenticateUser(String username, String password) {
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getUsername(),
-                        request.getPassword()
-                )
+                new UsernamePasswordAuthenticationToken(username, password)
         );
-        User user = userRepository.findByUsername(request.getUsername()).orElseThrow();
-        String jwtToken = jwtService.generateToken(request.getUsername());
-        Token token = Token.builder()
-                .token(jwtToken)
-                .tokenType(TokenType.BEARER)
-                .expired(false)
-                .revoked(false)
-                .build();
-
-        token.setUser(user);
-        user.getTokens().add(token);
-        revokeAllTokens(user);
-        tokenRepository.save(token);
-        return new AuthenticationDTO(jwtToken);
     }
 
-    private void revokeAllTokens(User user){
+    private void revokeAllTokens(User user) {
         List<Token> validTokens = tokenRepository.findAllValidTokensByUser(user.getId());
-        if(validTokens.isEmpty()) return;
-        validTokens.forEach(t-> {
-            t.setExpired(true);
-            t.setRevoked(true);
+        validTokens.forEach(token -> {
+            token.setExpired(true);
+            token.setRevoked(true);
         });
         tokenRepository.saveAll(validTokens);
+    }
+
+    private AuthenticationDTO generateAuthenticationToken(String username) {
+        String jwtToken = jwtService.generateToken(username);
+        Token token = Token.builder()
+                .token(jwtToken)
+                .tokenType(TokenType.BEARER)
+                .expired(false)
+                .revoked(false)
+                .build();
+
+        token.setUser(userRepository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND + username)));
+
+        tokenRepository.save(token);
+
+        return new AuthenticationDTO(jwtToken);
     }
 }
