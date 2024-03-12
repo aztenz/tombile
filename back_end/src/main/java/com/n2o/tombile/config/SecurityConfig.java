@@ -5,6 +5,7 @@ import com.n2o.tombile.service.UserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -33,10 +34,10 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
-                        req -> req.requestMatchers("/auth/login/**", "/auth/register/**")
-                                .permitAll()
-                                .anyRequest()
-                                .authenticated()
+                        req -> req
+                                .requestMatchers("/auth/login/**", "/auth/register/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/cars/**").hasAnyAuthority("USER")
+                                .anyRequest().authenticated()
                 ).userDetailsService(userDetailsService)
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(

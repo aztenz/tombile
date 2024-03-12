@@ -1,4 +1,4 @@
-package com.n2o.tombile.dto.request;
+package com.n2o.tombile.dto.request.auth;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;

@@ -1,4 +1,4 @@
-package com.n2o.tombile.dto.request;
+package com.n2o.tombile.dto.request.auth;
 
 import com.n2o.tombile.enums.Role;
 import jakarta.validation.Valid;
@@ -30,7 +30,6 @@ public class RegisterUserDTO {
     private String password;
 
     @NotNull(message = ROLE_IS_MANDATORY)
-    @NotBlank(message = ROLE_IS_MANDATORY)
     private Role role;
 
     @NotNull(message = EMAIL_IS_MANDATORY)

@@ -2,8 +2,10 @@ package com.n2o.tombile.aspect;
 
 import com.n2o.tombile.dto.error.GenericErrorResponse;
 import com.n2o.tombile.exception.DuplicateUserException;
+import com.n2o.tombile.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -29,12 +31,34 @@ public class ExceptionHandlingAspect {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler
-    public ResponseEntity<GenericErrorResponse> duplicateUser(DuplicateUserException e) {
+    public ResponseEntity<GenericErrorResponse> duplicateUser(
+            DuplicateUserException e
+    ) {
+        return handleGenericException(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler
+    public ResponseEntity<GenericErrorResponse> userNotFound(UserNotFoundException e) {
+        return handleGenericException(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler
+    public ResponseEntity<GenericErrorResponse> badCredentials(
+            BadCredentialsException e
+    ) {
+        return handleGenericException(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    private ResponseEntity<GenericErrorResponse> handleGenericException(
+            String message,
+            HttpStatus httpStatus
+    ) {
         GenericErrorResponse err = new GenericErrorResponse(
-                HttpStatus.BAD_REQUEST.value(),
-                e.getMessage(),
+                httpStatus.value(),
+                message,
                 System.currentTimeMillis()
         );
-        return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(err, httpStatus);
     }
 }

@@ -32,37 +32,62 @@ public class JwtFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
-        final String authHeader = request.getHeader("Authorization");
-        final String token;
-        final String username;
-        if (
-                authHeader == null
-                        || !authHeader.startsWith("Bearer ")) {
+        String token = extractTokenFromHeader(request);
+        if (token == null) {
             filterChain.doFilter(request, response);
             return;
         }
-        token = authHeader.substring(7);
-        username = jwtService.extractUsername(token);
-        if (
-                username != null
-                        && SecurityContextHolder.getContext().getAuthentication() == null
-        ) {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-            boolean isTokenValidDB = tokenRepository.findByToken(token)
-                    .map(t -> !t.getExpired() && !t.getRevoked())
-                    .orElse(false);
 
-            if (jwtService.isValid(token, userDetails) && isTokenValidDB) {
-                UsernamePasswordAuthenticationToken authToken =
-                        new UsernamePasswordAuthenticationToken(
-                                userDetails,
-                                null,
-                                userDetails.getAuthorities());
-                authToken.setDetails(new WebAuthenticationDetailsSource()
-                        .buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authToken);
-            }
+        //TODO: check tokenization logic -> if the token expired, what is going to happen, cause it throws an exception
+        String username = getUsernameFromToken(token);
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            authenticateUser(token, username, request);
         }
         filterChain.doFilter(request, response);
+    }
+
+    private String extractTokenFromHeader(HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            return authHeader.substring(7);
+        }
+        return null;
+    }
+
+    private String getUsernameFromToken(String token) {
+        return jwtService.extractUsername(token);
+    }
+
+    private void authenticateUser(String token, String username, HttpServletRequest request) {
+        UserDetails userDetails = loadUserByUsername(username);
+        if (isValidToken(token) && isTokenValidInDB(token)) {
+            setAuthentication(userDetails, request);
+        }
+    }
+
+    private UserDetails loadUserByUsername(String username) {
+        return userDetailsService.loadUserByUsername(username);
+    }
+
+    private boolean isValidToken(String token) {
+        UserDetails userDetails = loadUserByUsername(getUsernameFromToken(token));
+        userDetails.getPassword();
+        return jwtService.isValid(token, userDetails);
+    }
+
+    private boolean isTokenValidInDB(String token) {
+        return tokenRepository.findByToken(token)
+                .map(t -> !t.getExpired() && !t.getRevoked())
+                .orElse(false);
+    }
+
+    private void setAuthentication(UserDetails userDetails, HttpServletRequest request) {
+        UsernamePasswordAuthenticationToken authToken =
+                new UsernamePasswordAuthenticationToken(
+                        userDetails,
+                        null,
+                        userDetails.getAuthorities());
+        authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+        SecurityContextHolder.getContext().setAuthentication(authToken);
     }
 }

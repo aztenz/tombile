@@ -1,8 +1,8 @@
 package com.n2o.tombile.service;
 
-import com.n2o.tombile.dto.response.AuthenticationDTO;
-import com.n2o.tombile.dto.request.LoginUserDTO;
-import com.n2o.tombile.dto.request.RegisterUserDTO;
+import com.n2o.tombile.dto.response.auth.AuthenticationDTO;
+import com.n2o.tombile.dto.request.auth.LoginUserDTO;
+import com.n2o.tombile.dto.request.auth.RegisterUserDTO;
 import com.n2o.tombile.enums.TokenType;
 import com.n2o.tombile.exception.DuplicateUserException;
 import com.n2o.tombile.exception.UserNotFoundException;
@@ -50,7 +50,9 @@ public class AuthenticationService {
     public AuthenticationDTO login(LoginUserDTO request) {
         authenticateUser(request.getUsername(), request.getPassword());
 
-        User user = userRepository.findByUsername(request.getUsername()).orElseThrow();
+        User user = userRepository.findByUsername(request.getUsername()).orElseThrow(
+                () -> new UserNotFoundException(USER_NOT_FOUND + request.getUsername())
+        );
 
         revokeAllTokens(user);
 
