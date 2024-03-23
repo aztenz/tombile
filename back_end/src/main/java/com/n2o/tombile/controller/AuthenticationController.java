@@ -1,8 +1,8 @@
 package com.n2o.tombile.controller;
 
-import com.n2o.tombile.dto.response.auth.AuthenticationDTO;
 import com.n2o.tombile.dto.request.auth.LoginUserDTO;
 import com.n2o.tombile.dto.request.auth.RegisterUserDTO;
+import com.n2o.tombile.dto.response.auth.AuthenticationDTO;
 import com.n2o.tombile.service.AuthenticationService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

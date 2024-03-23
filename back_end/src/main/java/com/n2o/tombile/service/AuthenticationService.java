@@ -1,11 +1,11 @@
 package com.n2o.tombile.service;
 
-import com.n2o.tombile.dto.response.auth.AuthenticationDTO;
 import com.n2o.tombile.dto.request.auth.LoginUserDTO;
 import com.n2o.tombile.dto.request.auth.RegisterUserDTO;
+import com.n2o.tombile.dto.response.auth.AuthenticationDTO;
 import com.n2o.tombile.enums.TokenType;
-import com.n2o.tombile.exception.DuplicateUserException;
-import com.n2o.tombile.exception.UserNotFoundException;
+import com.n2o.tombile.exception.DuplicateItemException;
+import com.n2o.tombile.exception.ItemNotFoundException;
 import com.n2o.tombile.model.Token;
 import com.n2o.tombile.model.User;
 import com.n2o.tombile.model.UserData;
@@ -23,10 +23,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class AuthenticationService {
+    public static final String USER_NOT_FOUND = "Couldn't Find User: ";
     private static final double WALLET_BALANCE = 0.0;
     private static final String USERNAME_ALREADY_EXISTS = "Username already exists: ";
-    public static final String USER_NOT_FOUND = "Couldn't Find User: ";
-
     private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
@@ -51,7 +50,7 @@ public class AuthenticationService {
         authenticateUser(request.getUsername(), request.getPassword());
 
         User user = userRepository.findByUsername(request.getUsername()).orElseThrow(
-                () -> new UserNotFoundException(USER_NOT_FOUND + request.getUsername())
+                () -> new ItemNotFoundException(USER_NOT_FOUND + request.getUsername())
         );
 
         revokeAllTokens(user);
@@ -62,7 +61,7 @@ public class AuthenticationService {
     private void validateDuplicateUser(String username) {
         userRepository.findByUsername(username)
                 .ifPresent(u -> {
-                    throw new DuplicateUserException(USERNAME_ALREADY_EXISTS + username);
+                    throw new DuplicateItemException(USERNAME_ALREADY_EXISTS + username);
                 });
     }
 
@@ -110,7 +109,7 @@ public class AuthenticationService {
                 .build();
 
         token.setUser(userRepository.findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND + username)));
+                .orElseThrow(() -> new ItemNotFoundException(USER_NOT_FOUND + username)));
 
         tokenRepository.save(token);
 

@@ -1,35 +1,38 @@
 package com.n2o.tombile.model;
 
+import com.n2o.tombile.enums.CarState;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-@Data
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
+@SuperBuilder
+@Getter @Setter
 @Entity
 @Table(name = "cars")
-public class Car {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+public class Car extends Product {
+    private static final String MAKE = "make";
+    private static final String MODEL = "model";
+    private static final String YEAR = "year";
+    private static final String MILEAGE = "mileage";
+    private static final String CAR_STATE = "car_state";
 
-    @Column(name = "make")
+    @Column(name = MAKE)
     private String make;
 
-    @Column(name = "model")
+    @Column(name = MODEL)
     private String model;
 
-    @Column(name = "year")
+    @Column(name = YEAR)
     private int year;
 
-    @Column(name = "mileage")
+    @Column(name = MILEAGE)
     private int mileage;
 
-    @Column(name = "car_state")
-    private String carState;
+    @Enumerated(EnumType.STRING)
+    @Column(name = CAR_STATE)
+    private CarState carState;
 }

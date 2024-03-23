@@ -93,8 +93,6 @@ CREATE TABLE order_items (
 
 CREATE TABLE services (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100),
-    description TEXT,
     contact_info VARCHAR(100),
     location VARCHAR(100),
     service_type VARCHAR(50),
@@ -117,8 +115,6 @@ CREATE TABLE cars (
 
 CREATE TABLE parts (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100),
-    description TEXT,
     manufacturer VARCHAR(100),
     compatibility VARCHAR(100),
     CONSTRAINT FK_Parts_Product FOREIGN KEY (id)

@@ -1,12 +1,15 @@
 package com.n2o.tombile.controller;
 
+import com.n2o.tombile.dto.request.car.PostCarRQ;
+import com.n2o.tombile.dto.response.car.CarDetails;
+import com.n2o.tombile.dto.response.car.CarListItem;
+import com.n2o.tombile.dto.response.car.PostCarRSP;
 import com.n2o.tombile.model.Car;
 import com.n2o.tombile.service.CarService;
-import lombok.AllArgsConstructor;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,8 +19,21 @@ import java.util.List;
 public class CarController {
     private final CarService carService;
 
-    @GetMapping("")
-    public List<Car> getAllCars(){
-        return carService.getAllCars();
+    @GetMapping
+    public ResponseEntity<List<CarListItem>> getAllCars() {
+        return ResponseEntity.ok(carService.getAllCars());
+    }
+    @GetMapping("/{carId}")
+    public ResponseEntity<CarDetails> getCarById(
+            @PathVariable int carId
+    ) {
+        return ResponseEntity.ok(carService.getCarById(carId));
+    }
+
+    @PostMapping
+    public ResponseEntity<PostCarRSP> addCar(
+            @Valid @RequestBody PostCarRQ request
+    ){
+        return ResponseEntity.ok(carService.addCar(request));
     }
 }

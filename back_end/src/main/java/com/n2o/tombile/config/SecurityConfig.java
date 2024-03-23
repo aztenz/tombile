@@ -36,7 +36,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         req -> req
                                 .requestMatchers("/auth/login/**", "/auth/register/**").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/cars/**").hasAnyAuthority("USER")
                                 .anyRequest().authenticated()
                 ).userDetailsService(userDetailsService)
                 .sessionManagement(session ->
