@@ -1,16 +1,14 @@
 package com.n2o.tombile.dto.response.car;
 
 import com.n2o.tombile.enums.CarState;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostCarRSP {
+public class PutCarRSP {
     private int id;
     private int supplierId;
     private String name;

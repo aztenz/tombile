@@ -6,16 +6,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 
-@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter @Getter
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "products")
-public abstract class Product {
+public class Product {
     private static final String ID = "id";
     private static final String NAME = "name";
     private static final String PRICE = "price";

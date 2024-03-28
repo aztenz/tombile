@@ -9,7 +9,6 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @NoArgsConstructor
-@SuperBuilder
 @Getter @Setter
 @Entity
 @Table(name = "cars")

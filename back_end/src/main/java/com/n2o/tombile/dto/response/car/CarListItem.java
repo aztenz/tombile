@@ -1,9 +1,11 @@
 package com.n2o.tombile.dto.response.car;
 
 import com.n2o.tombile.enums.CarState;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
 @Builder @Getter
 public class CarListItem {
     private int id;
