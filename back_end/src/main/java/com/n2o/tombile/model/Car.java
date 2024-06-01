@@ -1,15 +1,14 @@
 package com.n2o.tombile.model;
 
 import com.n2o.tombile.enums.CarState;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Table;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 
-@NoArgsConstructor
-@Getter @Setter
+@Getter
 @Entity
 @Table(name = "cars")
 public class Car extends Product {

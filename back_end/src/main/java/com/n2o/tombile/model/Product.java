@@ -2,14 +2,9 @@ package com.n2o.tombile.model;
 
 import com.n2o.tombile.enums.ProductType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Setter @Getter
+@Setter
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "products")
@@ -26,9 +21,6 @@ public class Product {
     @Column(name = ID)
     private int id;
 
-    @Column(name = SUPPLIER_ID)
-    private int supplierId;
-
     @Column(name = NAME)
     private String name;
 
@@ -37,6 +29,10 @@ public class Product {
 
     @Column(name = PRICE)
     private double price;
+
+    @ManyToOne
+    @JoinColumn(name = SUPPLIER_ID)
+    private User supplier;
 
     @Enumerated(EnumType.STRING)
     @Column(name = PRODUCT_TYPE)

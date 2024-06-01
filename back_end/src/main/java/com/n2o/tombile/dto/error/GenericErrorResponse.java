@@ -1,11 +1,9 @@
 package com.n2o.tombile.dto.error;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 
-@Data
-@NoArgsConstructor
+@Getter
 @AllArgsConstructor
 public class GenericErrorResponse {
     private int status;

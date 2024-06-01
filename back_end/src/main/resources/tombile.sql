@@ -4,6 +4,8 @@ USE tombile;
 
 CREATE TABLE user_data (
     id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
     email VARCHAR(100),
     role VARCHAR(50),
     wallet_balance DECIMAL(10 , 2 ),

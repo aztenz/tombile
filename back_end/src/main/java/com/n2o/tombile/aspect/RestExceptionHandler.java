@@ -19,7 +19,7 @@ import java.util.Map;
 public class RestExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> handleValidationException(
+    public ResponseEntity<Map<String, String>> handleValidationException(
             MethodArgumentNotValidException ex
     ) {
         Map<String, String> errors = new HashMap<>();
@@ -28,7 +28,7 @@ public class RestExceptionHandler {
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
         });
-        return errors;
+        return ResponseEntity.badRequest().body(errors);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -51,6 +51,14 @@ public class RestExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<GenericErrorResponse> badCredentials(
             BadCredentialsException e
+    ) {
+        return handleGenericException(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler
+    public ResponseEntity<GenericErrorResponse> badCredentials(
+            Exception e
     ) {
         return handleGenericException(e.getMessage(), HttpStatus.BAD_REQUEST);
     }

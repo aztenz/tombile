@@ -1,18 +1,16 @@
 package com.n2o.tombile.controller;
 
-import com.n2o.tombile.dto.request.car.PostCarRQ;
-import com.n2o.tombile.dto.request.car.PutCarRQ;
-import com.n2o.tombile.dto.response.car.CarDetails;
-import com.n2o.tombile.dto.response.car.CarListItem;
-import com.n2o.tombile.dto.response.car.PostCarRSP;
-import com.n2o.tombile.dto.response.car.PutCarRSP;
-import com.n2o.tombile.model.Car;
-import com.n2o.tombile.service.CarService;
+import com.n2o.tombile.dto.request.product.PersistCarRQ;
+import com.n2o.tombile.dto.response.product.car.CarDetails;
+import com.n2o.tombile.dto.response.product.car.PersistCarRSP;
+import com.n2o.tombile.service.product.CarService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -22,36 +20,40 @@ public class CarController {
     private final CarService carService;
 
     @GetMapping
-    public ResponseEntity<List<CarListItem>> getAllCars() {
-        return ResponseEntity.ok(carService.getAllCars());
+    public ResponseEntity<List<Object>> getAllCars() {
+        List<Object> cars = carService.getAll();
+        return cars.isEmpty()? ResponseEntity.noContent().build() : ResponseEntity.ok(cars);
     }
 
     @GetMapping("/{carId}")
-    public ResponseEntity<CarDetails> getCarById(
-            @PathVariable int carId
-    ) {
-        return ResponseEntity.ok(carService.getCarById(carId));
+    public ResponseEntity<CarDetails> getCarById(@PathVariable int carId) {
+        return ResponseEntity.ok((CarDetails) carService.getItemById(carId));
     }
 
     @PostMapping
-    public ResponseEntity<PostCarRSP> addCar(
-            @Valid @RequestBody PostCarRQ request
-    ){
-        return ResponseEntity.ok(carService.addCar(request));
+    public ResponseEntity<PersistCarRSP> addCar(@Valid @RequestBody PersistCarRQ request){
+        PersistCarRSP PersistCarRSP = (PersistCarRSP) carService.addItem(request);
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(PersistCarRSP.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).body(PersistCarRSP);
     }
 
     @PutMapping("/{carId}")
-    public ResponseEntity<PutCarRSP> editCar(
+    public ResponseEntity<PersistCarRSP> editCar(
             @PathVariable int carId,
-            @Valid @RequestBody PutCarRQ request
+            @Valid @RequestBody PersistCarRQ request
     ){
-        return ResponseEntity.ok(carService.editCar(carId, request));
+        return ResponseEntity.ok((PersistCarRSP) carService.editItem(request, carId));
     }
 
     @DeleteMapping("/{carId}")
     public void deleteCar(
             @PathVariable int carId
     ) {
-        carService.deleteCar(carId);
+        carService.deleteItem(carId);
     }
 }

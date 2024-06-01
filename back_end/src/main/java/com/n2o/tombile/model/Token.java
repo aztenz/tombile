@@ -2,15 +2,11 @@ package com.n2o.tombile.model;
 
 import com.n2o.tombile.enums.TokenType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "tokens")
 public class Token {
@@ -34,10 +30,10 @@ public class Token {
     private TokenType tokenType;
 
     @Column(name = EXPIRED)
-    private Boolean expired;
+    private boolean expired;
 
     @Column(name = REVOKED)
-    private Boolean revoked;
+    private boolean revoked;
 
     @ManyToOne
     @JoinColumn(name = USER_ID)
