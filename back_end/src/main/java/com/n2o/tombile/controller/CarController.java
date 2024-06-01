@@ -32,14 +32,14 @@ public class CarController {
 
     @PostMapping
     public ResponseEntity<PersistCarRSP> addCar(@Valid @RequestBody PersistCarRQ request){
-        PersistCarRSP PersistCarRSP = (PersistCarRSP) carService.addItem(request);
+        PersistCarRSP persistCarRSP = (PersistCarRSP) carService.addItem(request);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(PersistCarRSP.getId())
+                .buildAndExpand(persistCarRSP.getId())
                 .toUri();
 
-        return ResponseEntity.created(location).body(PersistCarRSP);
+        return ResponseEntity.created(location).body(persistCarRSP);
     }
 
     @PutMapping("/{carId}")
