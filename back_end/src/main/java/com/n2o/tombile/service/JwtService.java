@@ -1,25 +1,25 @@
 package com.n2o.tombile.service;
 
-import com.n2o.tombile.model.Token;
-import com.n2o.tombile.repository.TokenRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.crypto.SecretKey;
+import java.io.IOException;
 import java.util.Date;
-import java.util.Optional;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class JwtService {
-    private final TokenRepository tokenRepository;
+    private final TokenService tokenService;
 
     @Value("${security.JwtService.SECRET_KEY}")
     private String secretKey;
@@ -58,12 +58,14 @@ public class JwtService {
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
-    public void handleExpiredToken(String token) {
-        Optional<Token> tokenEntityOptional = tokenRepository.findByToken(token);
-        tokenEntityOptional.ifPresent(tokenEntity -> {
-            tokenEntity.setExpired(true);
-            tokenRepository.save(tokenEntity);
-        });
+    public void handleExpiredToken(HttpServletResponse response, String token) throws IOException {
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        Map<String, String> responseBody = new HashMap<>();
+        responseBody.put("error", "Token has expired");
+        responseBody.put("message", "Your session has expired. Please log in again.");
+        response.setContentType("application/json");
+        tokenService.revokeTokenByToken(token);
+        new ObjectMapper().writeValue(response.getOutputStream(), responseBody);
     }
 
     private SecretKey getSigningKey() {

@@ -1,7 +1,5 @@
 package com.n2o.tombile.service;
 
-import com.n2o.tombile.model.Token;
-import com.n2o.tombile.repository.TokenRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class LogoutService implements LogoutHandler {
-    private final TokenRepository tokenRepository;
+    private final TokenService tokenService;
 
     @Override
     public void logout(
@@ -26,11 +24,6 @@ public class LogoutService implements LogoutHandler {
             return;
         }
         jwt = authHeader.substring(7);
-        Token retievedToken = tokenRepository.findByToken(jwt).orElse(null);
-        if (retievedToken != null) {
-            retievedToken.setRevoked(true);
-            retievedToken.setExpired(true);
-            tokenRepository.save(retievedToken);
-        }
+        tokenService.revokeTokenByToken(jwt);
     }
 }

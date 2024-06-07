@@ -13,9 +13,8 @@ import java.util.Date;
 @Entity
 @Table(name = "user_data")
 public class UserData {
-
     private static final String EMAIL = "email";
-    private static final String ID = "id";
+    private static final String USER_ID = "user_id";
     private static final String ROLE = "role";
     private static final String LAST_LOGIN_DATE = "last_login_date";
     private static final String REGISTRATION_DATE = "registration_date";
@@ -24,10 +23,8 @@ public class UserData {
     private static final String LAST_NAME = "last_name";
     private static final String FIRST_NAME = "first_name";
 
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = ID)
+    @Column(name = USER_ID)
     private int id;
 
     @Column(name = EMAIL, unique = true)
@@ -54,4 +51,9 @@ public class UserData {
 
     @Column(name = LAST_LOGIN_DATE)
     private Date lastLoginDate;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = USER_ID)
+    private User user;
 }

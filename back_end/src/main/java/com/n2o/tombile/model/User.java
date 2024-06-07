@@ -20,7 +20,6 @@ public class User implements UserDetails {
     private static final String ID = "id";
     private static final String USERNAME = "username";
     private static final String PASSWORD = "password";
-    private static final String USER_DATA_ID = "user_data_id";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,8 +32,7 @@ public class User implements UserDetails {
     @Column(name = PASSWORD)
     private String password;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = USER_DATA_ID)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY, optional = false)
     private UserData userData;
 
     @Override
