@@ -37,7 +37,7 @@ public class RegisterUserDTO {
     @NotBlank(message = PASSWORD_IS_MANDATORY)
     private String password;
 
-    @EnumValidator(enumClass = Role.class)
+    @EnumValidator(enumClass = Role.class, allowedValues = {"USER", "SUPPLIER"}, ignoreCase = true)
     private String role;
 
     @NotNull(message = EMAIL_IS_MANDATORY)

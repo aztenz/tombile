@@ -1,9 +1,7 @@
 package com.n2o.tombile.validate;
 
-
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -25,4 +23,6 @@ public @interface EnumValidator {
     Class<? extends Enum<?>> enumClass();
 
     boolean ignoreCase() default false;
+
+    String[] allowedValues() default {};
 }
