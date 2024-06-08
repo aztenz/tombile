@@ -37,6 +37,7 @@ public class AuthenticationService {
     private final TokenService tokenService;
     private final OtpService otpService;
     private final AuthenticationManager authenticationManager;
+    private final RoleStrategyFactory roleStrategyFactory;
 
 
     public String register(RQRegister request) {
@@ -73,9 +74,12 @@ public class AuthenticationService {
         User user = userRepository
                 .findByEmailAndVerificationStatus(request.getEmail(), VerificationStatus.NOT_VERIFIED)
                 .orElseThrow(() -> new ItemNotFoundException(NON_VERIFIED_USER_NOT_FOUND + request.getEmail()));
+
         otpService.verifyOtp(request.getOtp(), user);
-        user.getUserData().setVerificationStatus(VerificationStatus.VERIFIED);
-        return EMAIL_VERIFIED;
+
+        RoleStrategy roleStrategy = roleStrategyFactory.getStrategy(user.getUserData().getRole());
+
+        return roleStrategy.handleAfterVerifyEmail(user);
     }
 
     private User getUser(String username) {
