@@ -14,7 +14,7 @@ public class EmailService {
     private final JavaMailSender javaMailSender;
 
     @Value("${spring.mail.username}")
-    private static String senderMail;
+    private String senderMail;
 
     public void sendSimpleMessage(MailBody mailBody) {
         SimpleMailMessage message = new SimpleMailMessage();

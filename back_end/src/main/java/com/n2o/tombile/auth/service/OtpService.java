@@ -24,13 +24,13 @@ public class OtpService {
     private final EmailService emailService;
 
     @Value("${otp.range.min}")
-    private static int minOtpRange;
+    private int minOtpRange;
 
     @Value("${otp.range.max}")
-    private static int maxOtpRange;
+    private int maxOtpRange;
 
     @Value("${otp.expiration.duration}")
-    private static int otpExpirationDuration;
+    private int otpExpirationDuration;
 
     public void sendOtpForVerification(User user, OtpType otpType) {
         revokeExistingOtp(user.getId());
