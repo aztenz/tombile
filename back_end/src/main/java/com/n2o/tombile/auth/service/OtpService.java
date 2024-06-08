@@ -20,6 +20,7 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class OtpService {
     private static final String INVALID_OTP = "invalid otp";
+    private static final String EXPIRED_OTP = "otp is expired";
     private final OtpRepository otpRepository;
     private final EmailService emailService;
 
@@ -49,10 +50,12 @@ public class OtpService {
                 .orElseThrow(() -> new InvalidOtpException(INVALID_OTP));
 
         boolean isOtpNotMatch = otp.getOtpCode() != requestedOtp;
-        boolean isOtpExpired = otp.getExpiration().after(Date.from(Instant.now()));
+        boolean isOtpExpired = otp.getExpiration().before(Date.from(Instant.now()));
 
-        if(isOtpNotMatch || isOtpExpired)
+        if(isOtpNotMatch)
             throw new InvalidOtpException(INVALID_OTP);
+        if(isOtpExpired)
+            throw new InvalidOtpException(EXPIRED_OTP);
     }
 
     private MailBody createMailBody(User user, Otp otp) {

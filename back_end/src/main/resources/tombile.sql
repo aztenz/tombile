@@ -15,7 +15,7 @@ CREATE TABLE user_data (
     email VARCHAR(100),
     role VARCHAR(50),
     wallet_balance DECIMAL(10 , 2 ),
-    verification_status BOOLEAN,
+    verification_status VARCHAR(50),
     registration_date DATETIME,
     last_login_date DATETIME,
     CONSTRAINT FK_UserData_User FOREIGN KEY (user_id)

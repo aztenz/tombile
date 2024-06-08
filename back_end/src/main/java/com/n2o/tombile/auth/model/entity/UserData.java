@@ -2,6 +2,7 @@ package com.n2o.tombile.auth.model.entity;
 
 
 import com.n2o.tombile.auth.model.enums.Role;
+import com.n2o.tombile.auth.model.enums.VerificationStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -43,8 +44,9 @@ public class UserData {
     @Column(name = WALLET_BALANCE)
     private double walletBalance;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = VERIFICATION_STATUS)
-    private boolean verificationStatus;
+    private VerificationStatus verificationStatus;
 
     @Column(name = REGISTRATION_DATE)
     private Date registrationDate;
