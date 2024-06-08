@@ -1,4 +1,4 @@
-package com.n2o.tombile.service;
+package com.n2o.tombile.auth.service;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

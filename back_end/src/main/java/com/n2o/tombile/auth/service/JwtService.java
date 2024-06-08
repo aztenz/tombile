@@ -1,4 +1,4 @@
-package com.n2o.tombile.service;
+package com.n2o.tombile.auth.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;

@@ -1,14 +1,14 @@
-package com.n2o.tombile.service;
+package com.n2o.tombile.auth.service;
 
-import com.n2o.tombile.dto.request.auth.LoginUserDTO;
-import com.n2o.tombile.dto.request.auth.RegisterUserDTO;
-import com.n2o.tombile.dto.response.auth.AuthenticationDTO;
-import com.n2o.tombile.enums.TokenType;
+import com.n2o.tombile.auth.dto.RQLogin;
+import com.n2o.tombile.auth.dto.RQRegister;
+import com.n2o.tombile.auth.dto.RSPToken;
+import com.n2o.tombile.auth.model.enums.TokenType;
 import com.n2o.tombile.exception.DuplicateItemException;
 import com.n2o.tombile.exception.ItemNotFoundException;
-import com.n2o.tombile.model.User;
-import com.n2o.tombile.model.UserData;
-import com.n2o.tombile.repository.UserRepository;
+import com.n2o.tombile.auth.model.entity.User;
+import com.n2o.tombile.auth.model.entity.UserData;
+import com.n2o.tombile.auth.repository.UserRepository;
 import com.n2o.tombile.util.Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,7 +32,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
 
-    public AuthenticationDTO register(RegisterUserDTO request) {
+    public RSPToken register(RQRegister request) {
         validateDuplicateUser(request.getUsername());
 
         User user = createUser(request);
@@ -46,7 +46,7 @@ public class AuthenticationService {
         return generateAuthenticationToken(user);
     }
 
-    public AuthenticationDTO login(LoginUserDTO request) {
+    public RSPToken login(RQLogin request) {
         authenticateUser(request.getUsername(), request.getPassword());
 
         User user = getUser(request.getUsername());
@@ -71,14 +71,14 @@ public class AuthenticationService {
         });
     }
 
-    private User createUser(RegisterUserDTO request) {
+    private User createUser(RQRegister request) {
         User user = new User();
         user.setUsername(request.getUsername());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         return user;
     }
 
-    private UserData createUserData(RegisterUserDTO request) {
+    private UserData createUserData(RQRegister request) {
         Date date = new Date();
         UserData userData = Util.cloneObject(request, UserData.class);
         userData.setLastLoginDate(date);
@@ -90,13 +90,13 @@ public class AuthenticationService {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
     }
 
-    private AuthenticationDTO generateAuthenticationToken(User user) {
+    private RSPToken generateAuthenticationToken(User user) {
         String jwtToken = jwtService.generateToken(user.getUsername());
 
         tokenService.saveToken(jwtToken, user, TokenType.BEARER);
 
         String userRole = user.getUserData().getRole().name();
 
-        return new AuthenticationDTO(jwtToken, userRole);
+        return new RSPToken(jwtToken, userRole);
     }
 }

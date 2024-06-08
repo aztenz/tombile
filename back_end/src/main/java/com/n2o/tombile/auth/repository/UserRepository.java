@@ -1,6 +1,6 @@
-package com.n2o.tombile.repository;
+package com.n2o.tombile.auth.repository;
 
-import com.n2o.tombile.model.User;
+import com.n2o.tombile.auth.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

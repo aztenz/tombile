@@ -1,7 +1,7 @@
 package com.n2o.tombile.component;
 
-import com.n2o.tombile.service.JwtService;
-import com.n2o.tombile.service.UserDetailsService;
+import com.n2o.tombile.auth.service.JwtService;
+import com.n2o.tombile.auth.service.UserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

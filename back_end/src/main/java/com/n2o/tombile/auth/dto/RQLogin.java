@@ -1,4 +1,4 @@
-package com.n2o.tombile.dto.request.auth;
+package com.n2o.tombile.auth.dto;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
 @Getter
-public class LoginUserDTO {
+public class RQLogin {
     private static final String USERNAME_IS_MANDATORY = "username is mandatory";
     private static final String PASSWORD_IS_MANDATORY = "password is mandatory";
     @Valid

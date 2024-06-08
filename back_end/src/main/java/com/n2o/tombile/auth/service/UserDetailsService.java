@@ -1,6 +1,6 @@
-package com.n2o.tombile.service;
+package com.n2o.tombile.auth.service;
 
-import com.n2o.tombile.repository.UserRepository;
+import com.n2o.tombile.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

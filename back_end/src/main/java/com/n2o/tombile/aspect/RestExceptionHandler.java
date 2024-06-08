@@ -2,6 +2,7 @@ package com.n2o.tombile.aspect;
 
 import com.n2o.tombile.dto.error.GenericErrorResponse;
 import com.n2o.tombile.exception.DuplicateItemException;
+import com.n2o.tombile.exception.InvalidOtpException;
 import com.n2o.tombile.exception.ItemNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,9 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class RestExceptionHandler {
+
+    public static final String ERROR_HANDLING_REQUEST = "Error handling request";
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationException(
@@ -41,7 +45,7 @@ public class RestExceptionHandler {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler
-    public ResponseEntity<GenericErrorResponse> userNotFound(
+    public ResponseEntity<GenericErrorResponse> itemNotFound(
             ItemNotFoundException e
     ) {
         return handleGenericException(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -57,10 +61,18 @@ public class RestExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler
-    public ResponseEntity<GenericErrorResponse> badCredentials(
-            Exception e
+    public ResponseEntity<GenericErrorResponse> invalidOtp(
+            InvalidOtpException e
     ) {
         return handleGenericException(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler
+    public ResponseEntity<GenericErrorResponse> genericException(
+            Exception e
+    ) {
+        return handleGenericException(ERROR_HANDLING_REQUEST, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     private ResponseEntity<GenericErrorResponse> handleGenericException(

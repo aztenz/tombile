@@ -1,7 +1,7 @@
 package com.n2o.tombile.service;
 
 
-import com.n2o.tombile.dto.request.auth.MailBody;
+import com.n2o.tombile.dto.MailBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;

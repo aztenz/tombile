@@ -1,4 +1,4 @@
-package com.n2o.tombile.model;
+package com.n2o.tombile.auth.model.entity;
 
 
 import jakarta.persistence.*;

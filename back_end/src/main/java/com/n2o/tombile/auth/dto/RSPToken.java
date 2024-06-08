@@ -1,11 +1,11 @@
-package com.n2o.tombile.dto.response.auth;
+package com.n2o.tombile.auth.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class AuthenticationDTO {
+public class RSPToken {
     private String token;
     private String role;
 }

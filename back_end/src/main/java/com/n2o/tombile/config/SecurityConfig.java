@@ -1,7 +1,7 @@
 package com.n2o.tombile.config;
 
 import com.n2o.tombile.component.JwtFilter;
-import com.n2o.tombile.service.UserDetailsService;
+import com.n2o.tombile.auth.service.UserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

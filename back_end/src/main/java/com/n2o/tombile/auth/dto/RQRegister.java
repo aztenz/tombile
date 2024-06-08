@@ -1,6 +1,6 @@
-package com.n2o.tombile.dto.request.auth;
+package com.n2o.tombile.auth.dto;
 
-import com.n2o.tombile.enums.Role;
+import com.n2o.tombile.auth.model.enums.Role;
 import com.n2o.tombile.validate.EnumValidator;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
 @Getter
-public class RegisterUserDTO {
+public class RQRegister {
     private static final String USERNAME_IS_MANDATORY = "username is mandatory";
     private static final String PASSWORD_IS_MANDATORY = "password is mandatory";
     private static final String FIRST_NAME_IS_MANDATORY = "first name is mandatory";

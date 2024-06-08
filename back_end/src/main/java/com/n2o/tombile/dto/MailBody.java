@@ -1,4 +1,4 @@
-package com.n2o.tombile.dto.request.auth;
+package com.n2o.tombile.dto;
 
 import lombok.Builder;
 

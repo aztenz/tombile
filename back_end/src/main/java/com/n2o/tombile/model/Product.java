@@ -1,5 +1,6 @@
 package com.n2o.tombile.model;
 
+import com.n2o.tombile.auth.model.entity.User;
 import com.n2o.tombile.enums.ProductType;
 import jakarta.persistence.*;
 import lombok.Setter;

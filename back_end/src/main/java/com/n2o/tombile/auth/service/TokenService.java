@@ -1,9 +1,9 @@
-package com.n2o.tombile.service;
+package com.n2o.tombile.auth.service;
 
-import com.n2o.tombile.enums.TokenType;
-import com.n2o.tombile.model.Token;
-import com.n2o.tombile.model.User;
-import com.n2o.tombile.repository.TokenRepository;
+import com.n2o.tombile.auth.model.enums.TokenType;
+import com.n2o.tombile.auth.model.entity.Token;
+import com.n2o.tombile.auth.model.entity.User;
+import com.n2o.tombile.auth.repository.TokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

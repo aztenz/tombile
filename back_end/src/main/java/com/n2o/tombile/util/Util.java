@@ -1,7 +1,7 @@
 package com.n2o.tombile.util;
 
 import com.n2o.tombile.exception.ItemNotFoundException;
-import com.n2o.tombile.model.User;
+import com.n2o.tombile.auth.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 
