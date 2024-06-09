@@ -2,6 +2,7 @@ package com.n2o.tombile.auth.controller;
 
 import com.n2o.tombile.auth.dto.*;
 import com.n2o.tombile.auth.service.AuthenticationService;
+import com.n2o.tombile.enums.OtpType;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/auth")
+@RequiredArgsConstructor
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
@@ -38,10 +39,25 @@ public class AuthenticationController {
     }
 
     @PostMapping("/verify-email/resend")
-    public ResponseEntity<String> resendOtp(
+    public ResponseEntity<String> resendVerifyEmailOtp(
             @Valid @RequestBody RQSendOtp request
     ) {
-        return ResponseEntity.ok(authenticationService.resendOtp(request));
+        return ResponseEntity.ok(authenticationService.sendOtp(request, OtpType.VERIFY_EMAIL));
+    }
+
+    @PostMapping("/forget-password")
+    public ResponseEntity<String> forgetPassword(
+            @Valid @RequestBody RQVerifyRegistration request
+    ) {
+        return ResponseEntity.ok(authenticationService.verifyEmail(request));
+    }
+
+    @PostMapping("/forget-password/resend")
+    public ResponseEntity<String> resendForgetPasswordOtp(
+            @Valid @RequestBody RQSendOtp request
+    ) {
+        return ResponseEntity.ok(authenticationService.sendOtp(request, OtpType.RECOVER_PASSWORD));
     }
 
 }
+

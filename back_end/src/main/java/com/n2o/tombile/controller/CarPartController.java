@@ -13,9 +13,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
-@RequiredArgsConstructor
 @RestController
 @RequestMapping("/parts")
+@RequiredArgsConstructor
 public class CarPartController {
     private final CarPartService carPartService;
 

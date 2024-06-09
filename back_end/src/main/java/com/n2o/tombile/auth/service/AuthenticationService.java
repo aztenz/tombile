@@ -76,10 +76,10 @@ public class AuthenticationService {
         return roleStrategy.handleAfterVerifyEmail(user);
     }
 
-    public String resendOtp(RQSendOtp request) {
+    public String sendOtp(RQSendOtp request, OtpType otpType) {
         User user = getNonVerifiedUserByEmail(request);
 
-        otpService.sendOtpForVerification(user, OtpType.VERIFY_EMAIL);
+        otpService.sendOtpForVerification(user, otpType);
 
         return OTP_SENT_FOR_VERIFICATION;
     }

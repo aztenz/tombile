@@ -13,9 +13,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
-@RequiredArgsConstructor
 @RestController
 @RequestMapping("/products/{pId}/reviews")
+@RequiredArgsConstructor
 public class ReviewController {
     private final ReviewService reviewService;
 
