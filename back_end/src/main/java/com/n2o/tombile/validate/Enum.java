@@ -13,14 +13,14 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Constraint(validatedBy = EnumValidatorImpl.class)
 @Documented
-public @interface EnumValidator {
+public @interface Enum {
     String message() default "Invalid value";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
 
-    Class<? extends Enum<?>> enumClass();
+    Class<? extends java.lang.Enum<?>> enumClass();
 
     boolean ignoreCase() default false;
 

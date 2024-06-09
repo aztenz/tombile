@@ -1,9 +1,6 @@
 package com.n2o.tombile.auth.service;
 
-import com.n2o.tombile.auth.dto.RQLogin;
-import com.n2o.tombile.auth.dto.RQRegister;
-import com.n2o.tombile.auth.dto.RQVerifyEmail;
-import com.n2o.tombile.auth.dto.RSPToken;
+import com.n2o.tombile.auth.dto.*;
 import com.n2o.tombile.auth.model.enums.TokenType;
 import com.n2o.tombile.auth.model.enums.VerificationStatus;
 import com.n2o.tombile.enums.OtpType;
@@ -30,7 +27,6 @@ public class AuthenticationService {
     private static final String NON_VERIFIED_USER_NOT_FOUND = "couldn't Find non verified User: ";
     private static final String USERNAME_ALREADY_EXISTS = "username already exists: ";
     private static final String OTP_SENT_FOR_VERIFICATION = "otp sent for verification";
-    private static final String EMAIL_VERIFIED = "email verified";
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
@@ -59,7 +55,7 @@ public class AuthenticationService {
     public RSPToken login(RQLogin request) {
         authenticateUser(request.getUsername(), request.getPassword());
 
-        User user = getUser(request.getUsername());
+        User user = getUserByUsername(request.getUsername());
 
         user.getUserData().setLastLoginDate(new Date());
 
@@ -70,10 +66,8 @@ public class AuthenticationService {
         return generateAuthenticationToken(user);
     }
 
-    public String verifyEmail(RQVerifyEmail request) {
-        User user = userRepository
-                .findByEmailAndVerificationStatus(request.getEmail(), VerificationStatus.NOT_VERIFIED)
-                .orElseThrow(() -> new ItemNotFoundException(NON_VERIFIED_USER_NOT_FOUND + request.getEmail()));
+    public String verifyEmail(RQVerifyRegistration request) {
+        User user = getNonVerifiedUserByEmail(request);
 
         otpService.verifyOtp(request.getOtp(), user);
 
@@ -82,9 +76,23 @@ public class AuthenticationService {
         return roleStrategy.handleAfterVerifyEmail(user);
     }
 
-    private User getUser(String username) {
+    public String resendOtp(RQSendOtp request) {
+        User user = getNonVerifiedUserByEmail(request);
+
+        otpService.sendOtpForVerification(user, OtpType.VERIFY_EMAIL);
+
+        return OTP_SENT_FOR_VERIFICATION;
+    }
+
+    private User getUserByUsername(String username) {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new ItemNotFoundException(USER_NOT_FOUND + username));
+    }
+
+    private User getNonVerifiedUserByEmail(RQSendOtp request) {
+        return userRepository
+                .findByEmailAndVerificationStatus(request.getEmail(), VerificationStatus.NOT_VERIFIED)
+                .orElseThrow(() -> new ItemNotFoundException(NON_VERIFIED_USER_NOT_FOUND + request.getEmail()));
     }
 
     private void validateDuplicateUser(String username) {

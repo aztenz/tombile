@@ -1,9 +1,6 @@
 package com.n2o.tombile.auth.controller;
 
-import com.n2o.tombile.auth.dto.RQLogin;
-import com.n2o.tombile.auth.dto.RQRegister;
-import com.n2o.tombile.auth.dto.RQVerifyEmail;
-import com.n2o.tombile.auth.dto.RSPToken;
+import com.n2o.tombile.auth.dto.*;
 import com.n2o.tombile.auth.service.AuthenticationService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -35,9 +32,16 @@ public class AuthenticationController {
 
     @PostMapping("/verify-email")
     public ResponseEntity<String> verifyEmail(
-            @Valid @RequestBody RQVerifyEmail request
+            @Valid @RequestBody RQVerifyRegistration request
     ) {
         return ResponseEntity.ok(authenticationService.verifyEmail(request));
+    }
+
+    @PostMapping("/verify-email/resend")
+    public ResponseEntity<String> resendOtp(
+            @Valid @RequestBody RQSendOtp request
+    ) {
+        return ResponseEntity.ok(authenticationService.resendOtp(request));
     }
 
 }

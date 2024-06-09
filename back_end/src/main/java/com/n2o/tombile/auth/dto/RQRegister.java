@@ -1,7 +1,7 @@
 package com.n2o.tombile.auth.dto;
 
 import com.n2o.tombile.auth.model.enums.Role;
-import com.n2o.tombile.validate.EnumValidator;
+import com.n2o.tombile.validate.Enum;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -37,7 +37,7 @@ public class RQRegister {
     @NotBlank(message = PASSWORD_IS_MANDATORY)
     private String password;
 
-    @EnumValidator(enumClass = Role.class, allowedValues = {"USER", "SUPPLIER"}, ignoreCase = true)
+    @Enum(enumClass = Role.class, allowedValues = {"USER", "SUPPLIER"}, ignoreCase = true)
     private String role;
 
     @NotNull(message = EMAIL_IS_MANDATORY)

@@ -8,14 +8,14 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class EnumValidatorImpl implements ConstraintValidator<EnumValidator, String> {
+public class EnumValidatorImpl implements ConstraintValidator<Enum, String> {
     private Set<String> allowedValuesSet;
     private String validValues;
     private boolean ignoreCase;
 
     @Override
-    public void initialize(EnumValidator constraintAnnotation) {
-        Class<? extends Enum<?>> enumClass = constraintAnnotation.enumClass();
+    public void initialize(Enum constraintAnnotation) {
+        Class<? extends java.lang.Enum<?>> enumClass = constraintAnnotation.enumClass();
         this.ignoreCase = constraintAnnotation.ignoreCase();
         String[] allowedValues = constraintAnnotation.allowedValues();
 
@@ -34,7 +34,7 @@ public class EnumValidatorImpl implements ConstraintValidator<EnumValidator, Str
                         .collect(Collectors.toSet());
             } else {
                 this.allowedValuesSet = Arrays.stream(enumClass.getEnumConstants())
-                        .map(Enum::name)
+                        .map(java.lang.Enum::name)
                         .collect(Collectors.toSet());
             }
         }
