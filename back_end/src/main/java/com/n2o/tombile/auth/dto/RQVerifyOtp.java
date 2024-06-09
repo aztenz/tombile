@@ -3,6 +3,6 @@ package com.n2o.tombile.auth.dto;
 import lombok.Getter;
 
 @Getter
-public class RQVerifyRegistration extends RQSendOtp {
+public class RQVerifyOtp extends RQSendOtp {
     private int otp;
 }

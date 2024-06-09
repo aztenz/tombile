@@ -31,15 +31,15 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.login(request));
     }
 
-    @PostMapping("/verify-email")
-    public ResponseEntity<String> verifyEmail(
-            @Valid @RequestBody RQVerifyRegistration request
+    @PostMapping("/confirm-email")
+    public ResponseEntity<String> confirmEmail(
+            @Valid @RequestBody RQVerifyOtp request
     ) {
-        return ResponseEntity.ok(authenticationService.verifyEmail(request));
+        return ResponseEntity.ok(authenticationService.verifyOtp(request, OtpType.VERIFY_EMAIL));
     }
 
-    @PostMapping("/verify-email/resend")
-    public ResponseEntity<String> resendVerifyEmailOtp(
+    @PostMapping("/resend-confirm-email")
+    public ResponseEntity<String> resendConfirmEmail(
             @Valid @RequestBody RQSendOtp request
     ) {
         return ResponseEntity.ok(authenticationService.sendOtp(request, OtpType.VERIFY_EMAIL));
@@ -47,17 +47,22 @@ public class AuthenticationController {
 
     @PostMapping("/forget-password")
     public ResponseEntity<String> forgetPassword(
-            @Valid @RequestBody RQVerifyRegistration request
-    ) {
-        return ResponseEntity.ok(authenticationService.verifyEmail(request));
-    }
-
-    @PostMapping("/forget-password/resend")
-    public ResponseEntity<String> resendForgetPasswordOtp(
             @Valid @RequestBody RQSendOtp request
     ) {
         return ResponseEntity.ok(authenticationService.sendOtp(request, OtpType.RECOVER_PASSWORD));
     }
 
-}
+    @PostMapping("/verify-forget-password")
+    public ResponseEntity<String> verifyForgetPassword(
+            @Valid @RequestBody RQVerifyOtp request
+    ) {
+        return ResponseEntity.ok(authenticationService.verifyOtp(request, OtpType.RECOVER_PASSWORD));
+    }
 
+    @PostMapping("/resend-forget-password")
+    public ResponseEntity<String> resendForgetPassword(
+            @Valid @RequestBody RQSendOtp request
+    ) {
+        return ResponseEntity.ok(authenticationService.sendOtp(request, OtpType.RECOVER_PASSWORD));
+    }
+}
