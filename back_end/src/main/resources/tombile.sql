@@ -12,7 +12,7 @@ CREATE TABLE user_data (
     user_id INT PRIMARY KEY,
     first_name VARCHAR(50),
     last_name VARCHAR(50),
-    email VARCHAR(100),
+    email VARCHAR(100) UNIQUE,
     role VARCHAR(50),
     wallet_balance DECIMAL(10 , 2 ),
     verification_status VARCHAR(50),

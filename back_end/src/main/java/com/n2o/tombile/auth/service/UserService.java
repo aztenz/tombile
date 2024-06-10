@@ -18,15 +18,16 @@ import java.util.Date;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-    private static final String APPROVED_USER_NOT_FOUND = "couldn't find approved user: ";
-    private static final String NON_VERIFIED_USER_NOT_FOUND = "couldn't find non verified user: ";
-    private static final String USERNAME_ALREADY_EXISTS = "username already exists: ";
+    private static final String APPROVED_USER_NOT_FOUND = "couldn't find approved user";
+    private static final String NON_VERIFIED_USER_NOT_FOUND = "couldn't find non verified user";
+    private static final String USER_ALREADY_EXISTS_EMAIL = "a user with the given email already exists";
+    private static final String USER_ALREADY_EXISTS_USERNAME = "a user with the given username already exists";
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
     public User createUser(RQRegister request) {
-        validateDuplicateUser(request.getUsername());
+        validateDuplicateUser(request.getUsername(), request.getEmail());
 
         return saveUser(request);
     }
@@ -41,24 +42,27 @@ public class UserService {
 
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new ItemNotFoundException(NON_VERIFIED_USER_NOT_FOUND + email));
+                .orElseThrow(() -> new ItemNotFoundException(NON_VERIFIED_USER_NOT_FOUND));
     }
 
     public User getNonVerifiedUserByEmail(String email) {
         return userRepository
                 .findByEmailAndVerificationStatus(email, VerificationStatus.NOT_VERIFIED)
-                .orElseThrow(() -> new ItemNotFoundException(NON_VERIFIED_USER_NOT_FOUND + email));
+                .orElseThrow(() -> new ItemNotFoundException(NON_VERIFIED_USER_NOT_FOUND));
     }
 
     private User getApprovedUserByUsername(String username) {
         return userRepository
                 .findByUsernameAndVerificationStatus(username, VerificationStatus.APPROVED)
-                .orElseThrow(() -> new ItemNotFoundException(APPROVED_USER_NOT_FOUND + username));
+                .orElseThrow(() -> new ItemNotFoundException(APPROVED_USER_NOT_FOUND));
     }
 
-    private void validateDuplicateUser(String username) {
-        userRepository.findByUsername(username).ifPresent(u -> {
-            throw new DuplicateItemException(USERNAME_ALREADY_EXISTS + username);
+    private void validateDuplicateUser(String username, String email) {
+        userRepository.findByUsernameOrEmail(username, email).ifPresent(user -> {
+            if(user.getUsername().equals(username))
+                throw new DuplicateItemException(USER_ALREADY_EXISTS_USERNAME);
+            if(user.getUserData().getEmail().equals(email))
+                throw new DuplicateItemException(USER_ALREADY_EXISTS_EMAIL);
         });
     }
 
