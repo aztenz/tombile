@@ -1,6 +1,7 @@
 package com.n2o.tombile.auth.service;
 
 import com.n2o.tombile.auth.model.entity.User;
+import com.n2o.tombile.enums.OtpType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,11 @@ public class OtpStrategyVerifyEmail implements OtpStrategy {
     @Override
     public User getTargetUser(String email) {
         return userService.getNonVerifiedUserByEmail(email);
+    }
+
+    @Override
+    public OtpType getOtpType() {
+        return OtpType.VERIFY_EMAIL;
     }
 
     @Override

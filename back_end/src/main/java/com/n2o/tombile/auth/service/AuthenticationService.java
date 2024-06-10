@@ -52,7 +52,7 @@ public class AuthenticationService {
     public String verifyOtp(RQVerifyOtp request, OtpType otpType) {
         return otpStrategyFactory
                 .getStrategy(otpType)
-                .verifyOtp(request.getEmail(), request.getOtp());
+                .verifyOtp(request);
     }
 
     private void authenticateUser(String username, String password) {

@@ -21,6 +21,7 @@ import java.util.Random;
 public class OtpService {
     private static final String INVALID_OTP = "invalid otp";
     private static final String EXPIRED_OTP = "otp is expired";
+    private static final String OTP_TYPE_NOT_MATCH = "otp type not match";
     private final OtpRepository otpRepository;
     private final EmailService emailService;
 
@@ -45,17 +46,20 @@ public class OtpService {
         emailService.sendSimpleMessage(mailBody);
     }
 
-    public void verifyOtp(int requestedOtp, User user) {
+    public void verifyOtp(int requestedOtp, User user, OtpType otpType) {
         Otp otp = otpRepository.findById(user.getId())
                 .orElseThrow(() -> new InvalidOtpException(INVALID_OTP));
 
         boolean isOtpNotMatch = otp.getOtpCode() != requestedOtp;
+        boolean isOtpTypeNotMatch = otp.getOtpType() != otpType;
         boolean isOtpExpired = otp.getExpiration().before(Date.from(Instant.now()));
 
         if(isOtpNotMatch)
             throw new InvalidOtpException(INVALID_OTP);
         if(isOtpExpired)
             throw new InvalidOtpException(EXPIRED_OTP);
+        if(isOtpTypeNotMatch)
+            throw new InvalidOtpException(OTP_TYPE_NOT_MATCH);
     }
 
     private MailBody createMailBody(User user, Otp otp) {

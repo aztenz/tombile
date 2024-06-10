@@ -52,9 +52,9 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.sendOtp(request, OtpType.RECOVER_PASSWORD));
     }
 
-    @PostMapping("/verify-forget-password")
+    @PostMapping("/reset-password")
     public ResponseEntity<String> verifyForgetPassword(
-            @Valid @RequestBody RQVerifyOtp request
+            @Valid @RequestBody RQResetPassword request
     ) {
         return ResponseEntity.ok(authenticationService.verifyOtp(request, OtpType.RECOVER_PASSWORD));
     }

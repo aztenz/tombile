@@ -1,5 +1,6 @@
 package com.n2o.tombile.auth.service;
 
+import com.n2o.tombile.auth.dto.RQVerifyOtp;
 import com.n2o.tombile.auth.model.entity.User;
 import com.n2o.tombile.enums.OtpType;
 
@@ -14,10 +15,10 @@ public interface OtpStrategy {
         return OTP_SENT_FOR_VERIFICATION;
     }
 
-    default String verifyOtp(String email, int otp) {
-        User user = getTargetUser(email);
+    default <R extends RQVerifyOtp> String verifyOtp(R request) {
+        User user = getTargetUser(request.getEmail());
 
-        getOtpService().verifyOtp(otp, user);
+        getOtpService().verifyOtp(request.getOtp(), user, getOtpType());
 
         return getRoleStrategyFactory()
                 .getStrategy(user.getUserData().getRole())
@@ -25,6 +26,8 @@ public interface OtpStrategy {
     }
 
     User getTargetUser(String email);
+
+    OtpType getOtpType();
 
     OtpService getOtpService();
 
