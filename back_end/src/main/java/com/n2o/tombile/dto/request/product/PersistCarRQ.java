@@ -1,6 +1,6 @@
 package com.n2o.tombile.dto.request.product;
 
-import com.n2o.tombile.enums.CarState;
+import com.n2o.tombile.model.CarState;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

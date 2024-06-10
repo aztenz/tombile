@@ -1,6 +1,6 @@
 package com.n2o.tombile.repository.product;
 
-import com.n2o.tombile.enums.ProductType;
+import com.n2o.tombile.model.ProductType;
 import com.n2o.tombile.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

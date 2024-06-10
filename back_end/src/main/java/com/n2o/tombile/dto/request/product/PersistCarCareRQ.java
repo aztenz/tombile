@@ -1,6 +1,6 @@
 package com.n2o.tombile.dto.request.product;
 
-import com.n2o.tombile.enums.CarCareType;
+import com.n2o.tombile.model.CarCareType;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

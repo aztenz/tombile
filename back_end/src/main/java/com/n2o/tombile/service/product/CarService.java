@@ -1,7 +1,7 @@
 package com.n2o.tombile.service.product;
 
 import com.n2o.tombile.dto.response.product.car.*;
-import com.n2o.tombile.enums.ProductType;
+import com.n2o.tombile.model.ProductType;
 import com.n2o.tombile.model.Car;
 import com.n2o.tombile.repository.product.CarRepository;
 import org.springframework.stereotype.Service;

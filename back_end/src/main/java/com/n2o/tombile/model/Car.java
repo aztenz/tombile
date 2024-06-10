@@ -1,6 +1,5 @@
 package com.n2o.tombile.model;
 
-import com.n2o.tombile.enums.CarState;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

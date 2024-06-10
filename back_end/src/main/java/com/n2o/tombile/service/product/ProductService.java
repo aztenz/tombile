@@ -1,11 +1,11 @@
 package com.n2o.tombile.service.product;
 
 import com.n2o.tombile.dto.response.product.abs_product.*;
-import com.n2o.tombile.exception.ItemNotFoundException;
+import com.n2o.tombile.core.common.exception.ItemNotFoundException;
 import com.n2o.tombile.model.Product;
 import com.n2o.tombile.repository.product.ProductRepository;
 import com.n2o.tombile.service.CRUDService;
-import com.n2o.tombile.util.Util;
+import com.n2o.tombile.core.common.util.Util;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;

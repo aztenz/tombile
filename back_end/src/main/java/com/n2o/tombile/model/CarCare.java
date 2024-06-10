@@ -1,6 +1,5 @@
 package com.n2o.tombile.model;
 
-import com.n2o.tombile.enums.CarCareType;
 import jakarta.persistence.*;
 import lombok.Getter;
 

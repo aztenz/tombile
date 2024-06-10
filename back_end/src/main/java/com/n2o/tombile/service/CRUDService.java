@@ -1,7 +1,7 @@
 package com.n2o.tombile.service;
 
-import com.n2o.tombile.exception.ItemNotFoundException;
-import com.n2o.tombile.util.Util;
+import com.n2o.tombile.core.common.exception.ItemNotFoundException;
+import com.n2o.tombile.core.common.util.Util;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.ArrayList;
