@@ -32,7 +32,7 @@ public class User implements UserDetails {
     @Column(name = PASSWORD)
     private String password;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY, optional = false)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER, optional = false)
     private UserData userData;
 
     @Override
