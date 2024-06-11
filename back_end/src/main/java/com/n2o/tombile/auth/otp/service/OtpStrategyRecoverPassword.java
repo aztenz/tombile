@@ -22,8 +22,7 @@ public class OtpStrategyRecoverPassword implements OtpStrategy {
 
     @Override
     public User getTargetUser(String email) {
-        if(user == null)
-            user = userService.getUserByEmail(email);
+        user = userService.getUserByEmail(email);
         return user;
     }
 
