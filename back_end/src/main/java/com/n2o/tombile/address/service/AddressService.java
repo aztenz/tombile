@@ -23,6 +23,8 @@ public class AddressService {
     public RSPPersistAddress addAddress(RQAddAddress request) {
         Address address = Util.cloneObject(request, Address.class);
 
+        address.setUser(Util.getCurrentUser());
+
         addressRepository.save(address);
 
         return Util.cloneObject(address, RSPPersistAddress.class);

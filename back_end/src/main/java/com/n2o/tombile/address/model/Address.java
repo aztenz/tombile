@@ -2,7 +2,9 @@ package com.n2o.tombile.address.model;
 
 import com.n2o.tombile.core.user.model.User;
 import jakarta.persistence.*;
+import lombok.Setter;
 
+@Setter
 @Entity
 @Table(name = "addresses")
 public class Address {
