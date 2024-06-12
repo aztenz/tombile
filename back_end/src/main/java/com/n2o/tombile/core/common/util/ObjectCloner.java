@@ -39,6 +39,7 @@ public class ObjectCloner {
     @SuppressWarnings("unchecked")
     private static void copyField(Object source, Object target, Field sourceField, Field targetField) throws IllegalAccessException {
         Object value = sourceField.get(source);
+        if (value == null) return;
         Class<?> sourceFieldType = sourceField.getType();
         Class<?> targetFieldType = targetField.getType();
 
