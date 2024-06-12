@@ -41,7 +41,5 @@ public class ReviewController {
     }
 
     @DeleteMapping("/{rId}")
-    public void deleteReview(@PathVariable int rId) {
-        reviewService.deleteReview(rId);
-    }
+    public void deleteReview(@PathVariable int rId, @PathVariable String pId) { reviewService.deleteReview(rId); }
 }

@@ -1,4 +1,4 @@
-package com.n2o.tombile.address;
+package com.n2o.tombile.address.model;
 
 import com.n2o.tombile.core.user.model.User;
 import jakarta.persistence.*;
@@ -35,8 +35,9 @@ public class Address {
     @Column(name = COUNTRY)
     private String country;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = ADDRESS_TYPE)
-    private String addressType;
+    private AddressType addressType;
 }
 
 
