@@ -15,6 +15,7 @@ public class Product {
     private static final String DESCRIPTION = "description";
     private static final String SUPPLIER_ID = "supplier_id";
     private static final String PRODUCT_TYPE = "product_type";
+    private static final String QUANTITY = "quantity";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +30,9 @@ public class Product {
 
     @Column(name = PRICE)
     private double price;
+
+    @Column(name = QUANTITY)
+    private int quantity;
 
     @ManyToOne
     @JoinColumn(name = SUPPLIER_ID)

@@ -59,6 +59,7 @@ CREATE TABLE products (
     id INT PRIMARY KEY AUTO_INCREMENT,
     product_type VARCHAR(20),
     supplier_id INT,
+    quantity INT,
     name VARCHAR(100),
     description TEXT,
     price DECIMAL(10 , 2 ),
