@@ -91,7 +91,7 @@ CREATE TABLE order_items (
     product_id INT,
     quantity INT,
     price DECIMAL(10 , 2 ),
-    subtotal DECIMAL(10 , 2 ),
+    subtotal DECIMAL(10, 2) AS (quantity * price) STORED,
     CONSTRAINT FK_OrderItems_Order FOREIGN KEY (order_id)
         REFERENCES orders (id)
         ON DELETE CASCADE ON UPDATE CASCADE,
