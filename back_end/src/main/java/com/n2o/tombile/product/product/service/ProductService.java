@@ -96,9 +96,15 @@ public abstract class ProductService<P extends Product, R extends ProductReposit
 
     private @NotNull PersistProductRSP getPersistProductRSP(P product) {
         PersistProductRSP postProductRSP = Util.cloneObject(product, getPersistProductRSPClass());
-        postProductRSP.setSupplierName("");
+        postProductRSP.setSupplierName(getSupplierName());
         postProductRSP.setSupplierEmail(Util.getCurrentUser().getUserData().getEmail());
         return postProductRSP;
+    }
+
+    private @NotNull String getSupplierName() {
+        String firstName = Util.getCurrentUser().getUserData().getFirstName();
+        String lastName = Util.getCurrentUser().getUserData().getLastName();
+        return  firstName + " " + lastName;
     }
 
     @Override

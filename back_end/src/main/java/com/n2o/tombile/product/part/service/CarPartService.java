@@ -7,6 +7,7 @@ import com.n2o.tombile.product.part.dto.PartDetails;
 import com.n2o.tombile.product.part.dto.PartListItem;
 import com.n2o.tombile.product.part.dto.PersistPartRSP;
 import com.n2o.tombile.product.part.model.CarPart;
+import com.n2o.tombile.product.product.model.ProductType;
 import com.n2o.tombile.product.product.service.ProductService;
 import com.n2o.tombile.product.part.repository.CarPartRepository;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,7 @@ public class CarPartService extends ProductService<CarPart, CarPartRepository> {
 
     @Override
     public void setProductSpecificDetails(CarPart product) {
-
+        product.setName("");
+        product.setProductType(ProductType.CAR_PART);
     }
 }

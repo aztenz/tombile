@@ -7,4 +7,5 @@ import lombok.Getter;
 @Getter
 public class CarListItem extends ProductListItem {
     private CarState carState;
+    private final String path = "/api/cars/"+this.getId();
 }
