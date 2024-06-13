@@ -12,45 +12,36 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 public class Order {
-    private static final String ADDRESS_ID = "shipping_address_id";
-    private static final String USER_ID = "user_id";
-    private static final String PAYMENT_METHOD = "payment_method";
-    private static final String ORDER_STATUS = "order_status";
-    private static final String PAYMENT_STATUS = "payment_status";
-    private static final String AMOUNT = "total_amount";
-    private static final String ORDER_DATE = "order_date";
-    private static final String ORDER = "order";
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = ORDER_DATE)
+    @Column(name = "order_date")
     private Date orderDate;
 
-    @Column(name = AMOUNT)
+    @Column(name = "total_amount")
     private double totalAmount;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = PAYMENT_STATUS)
+    @Column(name = "payment_status")
     private PaymentStatus paymentStatus;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = ORDER_STATUS)
+    @Column(name = "order_status")
     private OrderStatus orderStatus;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = PAYMENT_METHOD)
+    @Column(name = "payment_method")
     private PaymentMethod paymentMethod;
 
     @ManyToOne
-    @JoinColumn(name = USER_ID)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = ADDRESS_ID)
+    @JoinColumn(name = "shipping_address_id")
     private Address address;
 
-    @OneToMany(mappedBy = ORDER, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderItem> orderItems;
 }

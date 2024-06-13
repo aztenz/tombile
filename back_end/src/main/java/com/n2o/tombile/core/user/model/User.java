@@ -16,20 +16,15 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
-
-    private static final String ID = "id";
-    private static final String USERNAME = "username";
-    private static final String PASSWORD = "password";
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = ID)
+    @Column(name = "id")
     private int id;
 
-    @Column(name = USERNAME, unique = true)
+    @Column(name = "username", unique = true)
     private String username;
 
-    @Column(name = PASSWORD)
+    @Column(name = "password")
     private String password;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER, optional = false)

@@ -8,23 +8,19 @@ import lombok.Setter;
 @Entity
 @Table(name = "tokens")
 public class Token {
-    private static final String TOKEN = "token";
-    private static final String TOKEN_TYPE = "token_type";
-    private static final String USER_ID = "user_id";
-
     @Id
-    @Column(name = USER_ID)
+    @Column(name = "user_id")
     private int id;
 
-    @Column(name = TOKEN, unique = true)
+    @Column(name = "token", unique = true)
     private String token;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = TOKEN_TYPE)
+    @Column(name = "token_type")
     private TokenType tokenType;
 
     @OneToOne
     @MapsId
-    @JoinColumn(name = USER_ID)
+    @JoinColumn(name = "user_id")
     private User user;
 }

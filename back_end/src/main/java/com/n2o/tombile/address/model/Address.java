@@ -8,37 +8,29 @@ import lombok.Setter;
 @Entity
 @Table(name = "addresses")
 public class Address {
-    private static final String ID = "id";
-    private static final String USER_ID = "user_id";
-    private static final String STREET = "street";
-    private static final String CITY = "city";
-    private static final String ZIP_CODE = "zip_code";
-    private static final String COUNTRY = "country";
-    private static final String ADDRESS_TYPE = "address_type";
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = ID)
+    @Column(name = "id")
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = USER_ID)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = STREET)
+    @Column(name = "street")
     private String street;
 
-    @Column(name = CITY)
+    @Column(name = "city")
     private String city;
 
-    @Column(name = ZIP_CODE)
+    @Column(name = "zip_code")
     private String zipCode;
 
-    @Column(name = COUNTRY)
+    @Column(name = "country")
     private String country;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = ADDRESS_TYPE)
+    @Column(name = "address_type")
     private AddressType addressType;
 }
 

@@ -12,48 +12,38 @@ import java.util.Date;
 @Entity
 @Table(name = "user_data")
 public class UserData {
-    private static final String EMAIL = "email";
-    private static final String USER_ID = "user_id";
-    private static final String ROLE = "role";
-    private static final String LAST_LOGIN_DATE = "last_login_date";
-    private static final String REGISTRATION_DATE = "registration_date";
-    private static final String VERIFICATION_STATUS = "verification_status";
-    private static final String WALLET_BALANCE = "wallet_balance";
-    private static final String LAST_NAME = "last_name";
-    private static final String FIRST_NAME = "first_name";
-
     @Id
-    @Column(name = USER_ID)
+    @Column(name = "user_id")
     private int id;
 
-    @Column(name = EMAIL, unique = true)
+    @Column(name = "email", unique = true)
     private String email;
 
-    @Column(name = FIRST_NAME)
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = LAST_NAME)
+    @Column(name = "last_name")
     private String lastName;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = ROLE)
+    @Column(name = "role")
     private Role role;
 
-    @Column(name = WALLET_BALANCE)
+    @Column(name = "wallet_balance")
     private double walletBalance;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = VERIFICATION_STATUS)
+    @Column(name = "verification_status")
     private VerificationStatus verificationStatus;
 
-    @Column(name = REGISTRATION_DATE)
+    @Column(name = "registration_date")
     private Date registrationDate;
 
-    @Column(name = LAST_LOGIN_DATE)
+    @Column(name = "last_login_date")
     private Date lastLoginDate;
 
     @OneToOne
     @MapsId
-    @JoinColumn(name = USER_ID)
+    @JoinColumn(name = "user_id")
     private User user;
 }

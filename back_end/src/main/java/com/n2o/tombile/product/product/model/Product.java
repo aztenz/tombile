@@ -9,36 +9,28 @@ import lombok.Setter;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "products")
 public class Product {
-    private static final String ID = "id";
-    private static final String NAME = "name";
-    private static final String PRICE = "price";
-    private static final String DESCRIPTION = "description";
-    private static final String SUPPLIER_ID = "supplier_id";
-    private static final String PRODUCT_TYPE = "product_type";
-    private static final String QUANTITY = "quantity";
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = ID)
+    @Column(name = "id")
     private int id;
 
-    @Column(name = NAME)
+    @Column(name = "name")
     private String name;
 
-    @Column(name = DESCRIPTION)
+    @Column(name = "description")
     private String description;
 
-    @Column(name = PRICE)
+    @Column(name = "price")
     private double price;
 
-    @Column(name = QUANTITY)
+    @Column(name = "quantity")
     private int quantity;
 
     @ManyToOne
-    @JoinColumn(name = SUPPLIER_ID)
+    @JoinColumn(name = "supplier_id")
     private User supplier;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = PRODUCT_TYPE)
+    @Column(name = "product_type")
     private ProductType productType;
 }

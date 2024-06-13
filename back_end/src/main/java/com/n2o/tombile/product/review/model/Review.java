@@ -13,30 +13,24 @@ import java.util.Date;
 @Entity
 @Table(name = "reviews")
 public class Review {
-    private static final String RATING = "rating";
-    private static final String COMMENT = "comment";
-    private static final String REVIEW_DATE = "review_date";
-    private static final String PRODUCT_ID = "product_id";
-    private static final String USER_ID = "user_id";
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = RATING)
+    @Column(name = "rating")
     private int rating;
 
-    @Column(name = COMMENT)
+    @Column(name = "comment")
     private String comment;
 
-    @Column(name = REVIEW_DATE)
+    @Column(name = "review_date")
     private Date reviewDate;
 
     @ManyToOne
-    @JoinColumn(name = PRODUCT_ID)
+    @JoinColumn(name = "product_id")
     private Product product;
 
     @ManyToOne
-    @JoinColumn(name = USER_ID)
+    @JoinColumn(name = "user_id")
     private User user;
 }

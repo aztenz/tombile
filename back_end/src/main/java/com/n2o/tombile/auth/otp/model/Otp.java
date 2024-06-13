@@ -12,27 +12,22 @@ import java.util.Date;
 @Entity
 @Table(name = "otp")
 public class Otp {
-    private static final String USER_ID = "user_id";
-    private static final String EXPIRATION = "expiration";
-    private static final String OTP_TYPE = "otp_type";
-    private static final String OTP_CODE = "otp_code";
-
     @Id
-    @Column(name = USER_ID)
+    @Column(name = "user_id")
     private int id;
 
-    @Column(name = OTP_CODE)
+    @Column(name = "otp_code")
     private int otpCode;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = OTP_TYPE)
+    @Column(name = "otp_type")
     private OtpType otpType;
 
-    @Column(name = EXPIRATION)
+    @Column(name = "expiration")
     private Date expiration;
 
     @OneToOne
     @MapsId
-    @JoinColumn(name = USER_ID)
+    @JoinColumn(name = "user_id")
     private User user;
 }

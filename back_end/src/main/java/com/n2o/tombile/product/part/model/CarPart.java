@@ -10,12 +10,9 @@ import lombok.Getter;
 @Entity
 @Table(name = "parts")
 public class CarPart extends Product {
-    private static final String COMPATIBILITY = "compatibility";
-    private static final String MANUFACTURER = "manufacturer";
-
-    @Column(name = MANUFACTURER)
+    @Column(name = "manufacturer")
     private String manufacturer;
 
-    @Column(name = COMPATIBILITY)
+    @Column(name = "compatibility")
     private String compatibility;
 }

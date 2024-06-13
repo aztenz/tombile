@@ -12,25 +12,19 @@ import lombok.Getter;
 @Entity
 @Table(name = "cars")
 public class Car extends Product {
-    private static final String MAKE = "make";
-    private static final String MODEL = "model";
-    private static final String YEAR = "year";
-    private static final String MILEAGE = "mileage";
-    private static final String CAR_STATE = "car_state";
-
-    @Column(name = MAKE)
+    @Column(name = "make")
     private String make;
 
-    @Column(name = MODEL)
+    @Column(name = "model")
     private String model;
 
-    @Column(name = YEAR)
+    @Column(name = "year")
     private int year;
 
-    @Column(name = MILEAGE)
+    @Column(name = "mileage")
     private int mileage;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = CAR_STATE)
+    @Column(name = "car_state")
     private CarState carState;
 }
