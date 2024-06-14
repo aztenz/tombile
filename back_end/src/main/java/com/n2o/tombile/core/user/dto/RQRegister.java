@@ -12,6 +12,7 @@ import static com.n2o.tombile.core.common.util.Constants.ERROR_EMAIL_REQUIRED;
 import static com.n2o.tombile.core.common.util.Constants.ERROR_FIRST_NAME_REQUIRED;
 import static com.n2o.tombile.core.common.util.Constants.ERROR_LAST_NAME_REQUIRED;
 import static com.n2o.tombile.core.common.util.Constants.ERROR_PASSWORD_REQUIRED;
+import static com.n2o.tombile.core.common.util.Constants.ERROR_ROLE_REQUIRED;
 import static com.n2o.tombile.core.common.util.Constants.ERROR_USERNAME_REQUIRED;
 
 @Getter
@@ -28,6 +29,7 @@ public class RQRegister {
     @NotEmpty(message = ERROR_PASSWORD_REQUIRED)
     private String password;
 
+    @NotEmpty(message = ERROR_ROLE_REQUIRED)
     @Enum(enumClass = Role.class, allowedValues = {"USER", "SUPPLIER"}, ignoreCase = true)
     private String role;
 

@@ -10,6 +10,7 @@ import lombok.Getter;
 
 import static com.n2o.tombile.core.common.util.Constants.CAR_YEAR_MAX;
 import static com.n2o.tombile.core.common.util.Constants.CAR_YEAR_MIN;
+import static com.n2o.tombile.core.common.util.Constants.ERROR_CAR_STATE_REQUIRED;
 import static com.n2o.tombile.core.common.util.Constants.ERROR_MAKE_REQUIRED;
 import static com.n2o.tombile.core.common.util.Constants.ERROR_MILEAGE_NEGATIVE;
 import static com.n2o.tombile.core.common.util.Constants.ERROR_MODEL_REQUIRED;
@@ -32,6 +33,7 @@ public class RQPersistCar extends PersistProductRQ {
     @Min(value = POSITIVE_NUM_MIN, message = ERROR_MILEAGE_NEGATIVE)
     private int mileage;
 
+    @NotEmpty(message = ERROR_CAR_STATE_REQUIRED)
     @Enum(enumClass = CarState.class)
     private String carState;
 }

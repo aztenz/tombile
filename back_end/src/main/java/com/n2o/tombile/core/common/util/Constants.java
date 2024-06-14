@@ -26,6 +26,7 @@ public abstract class Constants {
     public static final String ERROR_FIRST_NAME_REQUIRED = "first name can't be empty";
     public static final String ERROR_LAST_NAME_REQUIRED = "last name can't be empty";
     public static final String ERROR_EMAIL_REQUIRED = "email can't be empty";
+    public static final String ERROR_ROLE_REQUIRED = "role can't be empty";
     public static final String ERROR_EMAIL_INVALID = "this is not a valid email";
     public static final String ERROR_USER_EXISTS_EMAIL = "a user with the given email already exists";
     public static final String ERROR_USER_EXISTS_USERNAME = "a user with the given username already exists";
@@ -38,6 +39,7 @@ public abstract class Constants {
     public static final String ERROR_CITY_REQUIRED = "city can't be empty";
     public static final String ERROR_ZIP_CODE_REQUIRED = "zip code can't be empty";
     public static final String ERROR_COUNTRY_REQUIRED = "country can't be empty";
+    public static final String ERROR_ADDRESS_TYPE_REQUIRED = "address type can't be empty";
     public static final String ERROR_ADDRESS_NOT_FOUND = "couldn't find requested address for the given user";
 
     // Car-related Error Messages
@@ -67,6 +69,8 @@ public abstract class Constants {
     public static final String ERROR_PRICE_NEGATIVE = "price can't be negative";
     public static final String ERROR_MANUFACTURER_REQUIRED = "manufacturer can't be empty";
     public static final String ERROR_COMPATIBILITY_REQUIRED = "compatibility can't be empty";
+    public static final String ERROR_CAR_CARE_TYPE_REQUIRED = "car care type can't be empty";
+    public static final String ERROR_CAR_STATE_REQUIRED = "car state can't be empty";
 
     // Success Messages
     public static final String EMAIL_VERIFIED = "email verified";

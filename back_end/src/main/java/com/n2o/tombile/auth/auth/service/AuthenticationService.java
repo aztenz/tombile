@@ -1,17 +1,17 @@
 package com.n2o.tombile.auth.auth.service;
 
-import com.n2o.tombile.core.user.dto.RQLogin;
-import com.n2o.tombile.core.user.dto.RQRegister;
 import com.n2o.tombile.auth.otp.dto.RQSendOtp;
 import com.n2o.tombile.auth.otp.dto.RQVerifyOtp;
-import com.n2o.tombile.auth.token.dto.RSPToken;
-import com.n2o.tombile.auth.token.model.TokenType;
+import com.n2o.tombile.auth.otp.model.OtpType;
 import com.n2o.tombile.auth.otp.service.OtpService;
 import com.n2o.tombile.auth.otp.service.OtpStrategyFactory;
-import com.n2o.tombile.auth.otp.model.OtpType;
-import com.n2o.tombile.core.user.model.User;
+import com.n2o.tombile.auth.token.dto.RSPToken;
+import com.n2o.tombile.auth.token.model.TokenType;
 import com.n2o.tombile.auth.token.service.JwtService;
 import com.n2o.tombile.auth.token.service.TokenService;
+import com.n2o.tombile.core.user.dto.RQLogin;
+import com.n2o.tombile.core.user.dto.RQRegister;
+import com.n2o.tombile.core.user.model.User;
 import com.n2o.tombile.core.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,7 +19,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.n2o.tombile.auth.otp.service.OtpStrategy.OTP_SENT_FOR_VERIFICATION;
+import static com.n2o.tombile.core.common.util.Constants.OTP_SENT;
 
 @Service
 @Transactional
@@ -38,7 +38,7 @@ public class AuthenticationService {
 
         otpService.sendOtpForVerification(user, OtpType.VERIFY_EMAIL);
 
-        return OTP_SENT_FOR_VERIFICATION;
+        return OTP_SENT;
     }
 
     public RSPToken login(RQLogin request) {

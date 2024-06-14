@@ -11,7 +11,6 @@ import static com.n2o.tombile.core.common.util.Constants.PASSWORD_MIN_LENGTH;
 
 @Getter
 public class RQResetPassword extends RQVerifyOtp {
-    @NotNull(message = ERROR_PASSWORD_REQUIRED)
     @NotEmpty(message = ERROR_PASSWORD_REQUIRED)
     @Size(min = PASSWORD_MIN_LENGTH, message = ERROR_PASSWORD_TOO_SHORT)
     private String newPassword;
