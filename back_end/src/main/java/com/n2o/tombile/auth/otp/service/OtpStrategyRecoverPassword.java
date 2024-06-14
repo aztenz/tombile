@@ -10,10 +10,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import static com.n2o.tombile.core.common.util.Constants.PASSWORD_RESET_SUCCESS;
+
 @Service
 @RequiredArgsConstructor
 public class OtpStrategyRecoverPassword implements OtpStrategy {
-    private static final String PASSWORD_RESET_SUCCESSFULLY = "password reset successfully";
     private final UserService userService;
     private final OtpService otpService;
     private final RoleStrategyFactory roleStrategyFactory;
@@ -46,6 +47,6 @@ public class OtpStrategyRecoverPassword implements OtpStrategy {
         OtpStrategy.super.verifyOtp(request);
         String newPassword = ((RQResetPassword) request).getNewPassword();
         user.setPassword(passwordEncoder.encode(newPassword));
-        return PASSWORD_RESET_SUCCESSFULLY;
+        return PASSWORD_RESET_SUCCESS;
     }
 }

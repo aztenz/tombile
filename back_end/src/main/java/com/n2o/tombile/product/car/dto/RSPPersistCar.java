@@ -5,7 +5,7 @@ import com.n2o.tombile.product.car.model.CarState;
 import lombok.Getter;
 
 @Getter
-public class PersistCarRSP extends PersistProductRSP {
+public class RSPPersistCar extends PersistProductRSP {
     private CarState carState;
     private String make;
     private String model;

@@ -1,14 +1,14 @@
 package com.n2o.tombile.core.user.service;
 
+import com.n2o.tombile.core.common.exception.DuplicateItemException;
+import com.n2o.tombile.core.common.exception.ItemNotFoundException;
+import com.n2o.tombile.core.common.util.Util;
 import com.n2o.tombile.core.user.dto.RQLogin;
 import com.n2o.tombile.core.user.dto.RQRegister;
 import com.n2o.tombile.core.user.model.User;
 import com.n2o.tombile.core.user.model.UserData;
 import com.n2o.tombile.core.user.model.VerificationStatus;
 import com.n2o.tombile.core.user.repository.UserRepository;
-import com.n2o.tombile.core.common.exception.DuplicateItemException;
-import com.n2o.tombile.core.common.exception.ItemNotFoundException;
-import com.n2o.tombile.core.common.util.Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,14 +16,16 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
+import static com.n2o.tombile.core.common.util.Constants.ERROR_APPROVED_USER_NOT_FOUND;
+import static com.n2o.tombile.core.common.util.Constants.ERROR_NON_VERIFIED_USER_NOT_FOUND;
+import static com.n2o.tombile.core.common.util.Constants.ERROR_USER_EXISTS_EMAIL;
+import static com.n2o.tombile.core.common.util.Constants.ERROR_USER_EXISTS_USERNAME;
+import static com.n2o.tombile.core.common.util.Constants.ERROR_USER_NOT_FOUND;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
-    private static final String APPROVED_USER_NOT_FOUND = "couldn't find approved user";
-    private static final String NON_VERIFIED_USER_NOT_FOUND = "couldn't find non verified user";
-    private static final String USER_ALREADY_EXISTS_EMAIL = "a user with the given email already exists";
-    private static final String USER_ALREADY_EXISTS_USERNAME = "a user with the given username already exists";
-    private static final String USER_NOT_FOUND = "user not found";
+
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -44,32 +46,32 @@ public class UserService {
 
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new ItemNotFoundException(NON_VERIFIED_USER_NOT_FOUND));
+                .orElseThrow(() -> new ItemNotFoundException(ERROR_USER_NOT_FOUND));
     }
 
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException(USER_NOT_FOUND));
+                .orElseThrow(() -> new UsernameNotFoundException(ERROR_USER_NOT_FOUND));
     }
 
     public User getNonVerifiedUserByEmail(String email) {
         return userRepository
                 .findByEmailAndVerificationStatus(email, VerificationStatus.NOT_VERIFIED)
-                .orElseThrow(() -> new ItemNotFoundException(NON_VERIFIED_USER_NOT_FOUND));
+                .orElseThrow(() -> new ItemNotFoundException(ERROR_NON_VERIFIED_USER_NOT_FOUND));
     }
 
     private User getApprovedUserByUsername(String username) {
         return userRepository
                 .findByUsernameAndVerificationStatus(username, VerificationStatus.APPROVED)
-                .orElseThrow(() -> new ItemNotFoundException(APPROVED_USER_NOT_FOUND));
+                .orElseThrow(() -> new ItemNotFoundException(ERROR_APPROVED_USER_NOT_FOUND));
     }
 
     private void validateDuplicateUser(String username, String email) {
         userRepository.findByUsernameOrEmail(username, email).ifPresent(user -> {
             if(user.getUsername().equals(username))
-                throw new DuplicateItemException(USER_ALREADY_EXISTS_USERNAME);
+                throw new DuplicateItemException(ERROR_USER_EXISTS_USERNAME);
             if(user.getUserData().getEmail().equals(email))
-                throw new DuplicateItemException(USER_ALREADY_EXISTS_EMAIL);
+                throw new DuplicateItemException(ERROR_USER_EXISTS_EMAIL);
         });
     }
 

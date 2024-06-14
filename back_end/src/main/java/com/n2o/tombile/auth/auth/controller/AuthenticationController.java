@@ -1,13 +1,13 @@
 package com.n2o.tombile.auth.auth.controller;
 
-import com.n2o.tombile.core.user.dto.RQLogin;
-import com.n2o.tombile.core.user.dto.RQRegister;
 import com.n2o.tombile.auth.auth.service.AuthenticationService;
 import com.n2o.tombile.auth.otp.dto.RQResetPassword;
 import com.n2o.tombile.auth.otp.dto.RQSendOtp;
 import com.n2o.tombile.auth.otp.dto.RQVerifyOtp;
 import com.n2o.tombile.auth.otp.model.OtpType;
 import com.n2o.tombile.auth.token.dto.RSPToken;
+import com.n2o.tombile.core.user.dto.RQLogin;
+import com.n2o.tombile.core.user.dto.RQRegister;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

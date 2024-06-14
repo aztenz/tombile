@@ -1,7 +1,11 @@
 package com.n2o.tombile.product.care.model;
 
 import com.n2o.tombile.product.product.model.Product;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Table;
 import lombok.Getter;
 
 @Getter

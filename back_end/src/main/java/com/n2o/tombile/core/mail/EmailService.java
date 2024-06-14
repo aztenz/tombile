@@ -1,6 +1,5 @@
 package com.n2o.tombile.core.mail;
 
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;

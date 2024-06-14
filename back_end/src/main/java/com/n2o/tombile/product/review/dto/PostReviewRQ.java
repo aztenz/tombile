@@ -1,27 +1,22 @@
 package com.n2o.tombile.product.review.dto;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+
+import static com.n2o.tombile.core.common.util.Constants.ERROR_COMMENT_REQUIRED;
+import static com.n2o.tombile.core.common.util.Constants.ERROR_REVIEW_TOO_HIGH;
+import static com.n2o.tombile.core.common.util.Constants.ERROR_REVIEW_TOO_LOW;
+import static com.n2o.tombile.core.common.util.Constants.RATING_MAX_VALUE;
+import static com.n2o.tombile.core.common.util.Constants.RATING_MIN_VALUE;
 
 @Getter
 public class PostReviewRQ {
-    private static final String MIN_REVIEW_CONSTRAINT = "review can't be less than 1";
-    private static final String MAX_REVIEW_CONSTRAINT = "review can't exceed 5";
-    public static final int MIN_RATING = 1;
-    public static final int MAX_RATING = 5;
-    public static final String COMMENT_IS_MANDATORY = "comment is mandatory";
-
-    @Valid
-
-    @Min(value = MIN_RATING, message = MIN_REVIEW_CONSTRAINT)
-    @Max(value = MAX_RATING, message = MAX_REVIEW_CONSTRAINT)
+    @Min(value = RATING_MIN_VALUE, message = ERROR_REVIEW_TOO_LOW)
+    @Max(value = RATING_MAX_VALUE, message = ERROR_REVIEW_TOO_HIGH)
     private int rating;
 
-    @NotNull(message = COMMENT_IS_MANDATORY)
-    @NotEmpty(message = COMMENT_IS_MANDATORY)
+    @NotEmpty(message = ERROR_COMMENT_REQUIRED)
     private String comment;
 }

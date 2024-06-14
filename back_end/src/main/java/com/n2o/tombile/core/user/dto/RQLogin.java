@@ -1,21 +1,16 @@
 package com.n2o.tombile.core.user.dto;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
+
+import static com.n2o.tombile.core.common.util.Constants.ERROR_PASSWORD_REQUIRED;
+import static com.n2o.tombile.core.common.util.Constants.ERROR_USERNAME_REQUIRED;
 
 @Getter
 public class RQLogin {
-    private static final String USERNAME_IS_MANDATORY = "username is mandatory";
-    private static final String PASSWORD_IS_MANDATORY = "password is mandatory";
-    @Valid
-
-    @NotNull(message = USERNAME_IS_MANDATORY)
-    @NotBlank(message = USERNAME_IS_MANDATORY)
+    @NotEmpty(message = ERROR_USERNAME_REQUIRED)
     private String username;
 
-    @NotNull(message = PASSWORD_IS_MANDATORY)
-    @NotBlank(message = PASSWORD_IS_MANDATORY)
+    @NotEmpty(message = ERROR_PASSWORD_REQUIRED)
     private String password;
 }

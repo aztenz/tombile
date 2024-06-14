@@ -5,15 +5,15 @@ import com.n2o.tombile.core.user.model.User;
 import com.n2o.tombile.core.user.service.RoleStrategyFactory;
 import com.n2o.tombile.auth.otp.model.OtpType;
 
-public interface OtpStrategy {
-    String OTP_SENT_FOR_VERIFICATION = "otp sent for verification";
+import static com.n2o.tombile.core.common.util.Constants.OTP_SENT;
 
+public interface OtpStrategy {
     default String sendOtp(String email, OtpType otpType) {
         User user = getTargetUser(email);
 
         getOtpService().sendOtpForVerification(user, otpType);
 
-        return OTP_SENT_FOR_VERIFICATION;
+        return OTP_SENT;
     }
 
     default <R extends RQVerifyOtp> String verifyOtp(R request) {

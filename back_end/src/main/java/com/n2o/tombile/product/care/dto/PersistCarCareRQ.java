@@ -1,27 +1,22 @@
 package com.n2o.tombile.product.care.dto;
 
-import com.n2o.tombile.product.product.dto.PersistProductRQ;
+import com.n2o.tombile.core.common.validate.Enum;
 import com.n2o.tombile.product.care.model.CarCareType;
-import jakarta.validation.Valid;
+import com.n2o.tombile.product.product.dto.PersistProductRQ;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+
+import static com.n2o.tombile.core.common.util.Constants.ERROR_CONTACT_INFO_REQUIRED;
+import static com.n2o.tombile.core.common.util.Constants.ERROR_LOCATION_REQUIRED;
 
 @Getter
 public class PersistCarCareRQ extends PersistProductRQ {
-    private static final String LOCATION_IS_MANDATORY = "location is mandatory";
-    private static final String CONTACT_INFO_IS_MANDATORY = "contact info is mandatory";
-    private static final String SERVICE_TYPE_IS_MANDATORY = "service type is mandatory";
-    @Valid
-
-    @NotNull(message = CONTACT_INFO_IS_MANDATORY)
-    @NotEmpty(message = CONTACT_INFO_IS_MANDATORY)
+    @NotEmpty(message = ERROR_CONTACT_INFO_REQUIRED)
     private String contactInfo;
 
-    @NotNull(message = LOCATION_IS_MANDATORY)
-    @NotEmpty(message = LOCATION_IS_MANDATORY)
+    @NotEmpty(message = ERROR_LOCATION_REQUIRED)
     private String location;
 
-    @NotNull(message = SERVICE_TYPE_IS_MANDATORY)
-    private CarCareType carCareType;
+    @Enum(enumClass = CarCareType.class)
+    private String carCareType;
 }

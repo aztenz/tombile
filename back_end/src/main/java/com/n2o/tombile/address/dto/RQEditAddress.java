@@ -5,23 +5,23 @@ import com.n2o.tombile.core.common.validate.Enum;
 import com.n2o.tombile.core.common.validate.NotEmptyIfPresent;
 import lombok.Getter;
 
+import static com.n2o.tombile.core.common.util.Constants.ERROR_CITY_REQUIRED;
+import static com.n2o.tombile.core.common.util.Constants.ERROR_COUNTRY_REQUIRED;
+import static com.n2o.tombile.core.common.util.Constants.ERROR_STREET_REQUIRED;
+import static com.n2o.tombile.core.common.util.Constants.ERROR_ZIP_CODE_REQUIRED;
+
 @Getter
 public class RQEditAddress {
-    private static final String STREET_IS_MANDATORY = "street can't be empty";
-    private static final String CITY_IS_MANDATORY = "city can't be empty";
-    private static final String ZIP_CODE_IS_MANDATORY = "zip code can't be empty";
-    private static final String COUNTRY_IS_MANDATORY = "country can't be empty";
-
-    @NotEmptyIfPresent(message = STREET_IS_MANDATORY)
+    @NotEmptyIfPresent(message = ERROR_CITY_REQUIRED)
     String street;
 
-    @NotEmptyIfPresent(message = CITY_IS_MANDATORY)
+    @NotEmptyIfPresent(message = ERROR_COUNTRY_REQUIRED)
     String city;
 
-    @NotEmptyIfPresent(message = ZIP_CODE_IS_MANDATORY)
+    @NotEmptyIfPresent(message = ERROR_STREET_REQUIRED)
     String zipCode;
 
-    @NotEmptyIfPresent(message = COUNTRY_IS_MANDATORY)
+    @NotEmptyIfPresent(message = ERROR_ZIP_CODE_REQUIRED)
     String country;
 
     @Enum(enumClass = AddressType.class, ignoreCase = true)

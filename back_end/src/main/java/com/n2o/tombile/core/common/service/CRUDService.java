@@ -7,10 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.n2o.tombile.core.common.util.Constants.ERROR_ITEM_NOT_FOUND;
+
 public interface CRUDService<E, ID, I extends JpaRepository<E, ID>> {
-
-    String ITEM_NOT_FOUND = "Item not found";
-
     I getRepository();
 
     Class<E> getEntity();
@@ -32,7 +31,7 @@ public interface CRUDService<E, ID, I extends JpaRepository<E, ID>> {
     default Object getItemById(ID id) {
         try {
             E item = getRepository().findById(id)
-                    .orElseThrow(() -> new ItemNotFoundException(ITEM_NOT_FOUND));
+                    .orElseThrow(() -> new ItemNotFoundException(ERROR_ITEM_NOT_FOUND));
             return Util.cloneObject(item, getDetails());
         } catch (Exception e) {
             throw e;
@@ -52,7 +51,7 @@ public interface CRUDService<E, ID, I extends JpaRepository<E, ID>> {
     default Object editItem(Object request, ID id) {
         try {
             E item = getRepository().findById(id)
-                    .orElseThrow(() -> new ItemNotFoundException(ITEM_NOT_FOUND));
+                    .orElseThrow(() -> new ItemNotFoundException(ERROR_ITEM_NOT_FOUND));
             Util.copyProperties(request, item);
             item = getRepository().save(item);
             return Util.cloneObject(item, getPersistRSP());
@@ -62,11 +61,6 @@ public interface CRUDService<E, ID, I extends JpaRepository<E, ID>> {
     }
 
     default void deleteItem(ID id) {
-        try {
-            Util.validateItemExistence(id, getRepository());
-            getRepository().deleteById(id);
-        } catch (Exception e) {
-            throw e;
-        }
+        getRepository().findById(id).ifPresent(getRepository()::delete);
     }
 }

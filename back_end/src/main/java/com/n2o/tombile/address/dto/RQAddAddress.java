@@ -6,27 +6,27 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
+import static com.n2o.tombile.core.common.util.Constants.ERROR_CITY_REQUIRED;
+import static com.n2o.tombile.core.common.util.Constants.ERROR_COUNTRY_REQUIRED;
+import static com.n2o.tombile.core.common.util.Constants.ERROR_STREET_REQUIRED;
+import static com.n2o.tombile.core.common.util.Constants.ERROR_ZIP_CODE_REQUIRED;
+
 @Getter
 public class RQAddAddress {
-    private static final String STREET_IS_MANDATORY = "street is mandatory";
-    private static final String CITY_IS_MANDATORY = "city is mandatory";
-    private static final String ZIP_CODE_IS_MANDATORY = "zip code is mandatory";
-    private static final String COUNTRY_IS_MANDATORY = "country is mandatory";
-
-    @NotNull(message = STREET_IS_MANDATORY)
-    @NotEmpty(message = STREET_IS_MANDATORY)
+    @NotNull(message = ERROR_STREET_REQUIRED)
+    @NotEmpty(message = ERROR_STREET_REQUIRED)
     String street;
 
-    @NotNull(message = CITY_IS_MANDATORY)
-    @NotEmpty(message = CITY_IS_MANDATORY)
+    @NotNull(message = ERROR_CITY_REQUIRED)
+    @NotEmpty(message = ERROR_CITY_REQUIRED)
     String city;
 
-    @NotNull(message = ZIP_CODE_IS_MANDATORY)
-    @NotEmpty(message = ZIP_CODE_IS_MANDATORY)
+    @NotNull(message = ERROR_ZIP_CODE_REQUIRED)
+    @NotEmpty(message = ERROR_ZIP_CODE_REQUIRED)
     String zipCode;
 
-    @NotNull(message = COUNTRY_IS_MANDATORY)
-    @NotEmpty(message = COUNTRY_IS_MANDATORY)
+    @NotNull(message = ERROR_COUNTRY_REQUIRED)
+    @NotEmpty(message = ERROR_COUNTRY_REQUIRED)
     String country;
 
     @Enum(enumClass = AddressType.class, ignoreCase = true)

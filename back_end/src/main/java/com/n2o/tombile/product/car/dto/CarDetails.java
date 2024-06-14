@@ -1,7 +1,7 @@
 package com.n2o.tombile.product.car.dto;
 
-import com.n2o.tombile.product.product.dto.ProductDetails;
 import com.n2o.tombile.product.car.model.CarState;
+import com.n2o.tombile.product.product.dto.ProductDetails;
 import lombok.Getter;
 
 @Getter

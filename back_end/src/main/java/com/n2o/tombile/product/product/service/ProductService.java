@@ -1,20 +1,21 @@
 package com.n2o.tombile.product.product.service;
 
 import com.n2o.tombile.core.common.exception.ItemNotFoundException;
-import com.n2o.tombile.product.product.model.Product;
+import com.n2o.tombile.core.common.service.CRUDService;
+import com.n2o.tombile.core.common.util.Util;
 import com.n2o.tombile.product.product.dto.PersistProductRSP;
 import com.n2o.tombile.product.product.dto.ProductDetails;
 import com.n2o.tombile.product.product.dto.ProductListItem;
+import com.n2o.tombile.product.product.model.Product;
 import com.n2o.tombile.product.product.repository.ProductRepository;
-import com.n2o.tombile.core.common.service.CRUDService;
-import com.n2o.tombile.core.common.util.Util;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.n2o.tombile.core.common.util.Constants.ERROR_PRODUCT_NOT_FOUND;
 
 @Service
 @Transactional
@@ -22,7 +23,6 @@ import java.util.List;
 public abstract class ProductService<P extends Product, R extends ProductRepository<P>>
         implements CRUDService<P, Integer, R> {
 
-    private static final String PRODUCT_NOT_FOUND = "Cannot find the product for the given user";
     private final R productRepository;
 
     public abstract Class<P> getProductClass();
@@ -51,7 +51,7 @@ public abstract class ProductService<P extends Product, R extends ProductReposit
     ) {
         try {
             P product = productRepository.findUserProductById(id, Util.getCurrentUserId())
-                    .orElseThrow(() -> new ItemNotFoundException(PRODUCT_NOT_FOUND));
+                    .orElseThrow(() -> new ItemNotFoundException(ERROR_PRODUCT_NOT_FOUND));
             Util.copyProperties(request, product);
             product = productRepository.save(product);
             return getPersistProductRSP(product);
@@ -76,7 +76,7 @@ public abstract class ProductService<P extends Product, R extends ProductReposit
         try {
             P product = productRepository
                     .findUserProductById(id, Util.getCurrentUserId())
-                    .orElseThrow(() -> new ItemNotFoundException(PRODUCT_NOT_FOUND));
+                    .orElseThrow(() -> new ItemNotFoundException(ERROR_PRODUCT_NOT_FOUND));
             return Util.cloneObject(product, getProductDetailsClass());
         } catch (Exception e) {
             throw e;
@@ -87,21 +87,21 @@ public abstract class ProductService<P extends Product, R extends ProductReposit
         try {
             P product = productRepository
                     .findUserProductById(id, Util.getCurrentUserId())
-                    .orElseThrow(() -> new ItemNotFoundException(PRODUCT_NOT_FOUND));
+                    .orElseThrow(() -> new ItemNotFoundException(ERROR_PRODUCT_NOT_FOUND));
             productRepository.delete(product);
         } catch (Exception e) {
             throw e;
         }
     }
 
-    private @NotNull PersistProductRSP getPersistProductRSP(P product) {
+    private PersistProductRSP getPersistProductRSP(P product) {
         PersistProductRSP postProductRSP = Util.cloneObject(product, getPersistProductRSPClass());
         postProductRSP.setSupplierName(getSupplierName());
         postProductRSP.setSupplierEmail(Util.getCurrentUser().getUserData().getEmail());
         return postProductRSP;
     }
 
-    private @NotNull String getSupplierName() {
+    private String getSupplierName() {
         String firstName = Util.getCurrentUser().getUserData().getFirstName();
         String lastName = Util.getCurrentUser().getUserData().getLastName();
         return  firstName + " " + lastName;

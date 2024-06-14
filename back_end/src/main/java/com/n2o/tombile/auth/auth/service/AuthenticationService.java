@@ -19,11 +19,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.n2o.tombile.auth.otp.service.OtpStrategy.OTP_SENT_FOR_VERIFICATION;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class AuthenticationService {
-    private static final String OTP_SENT_FOR_VERIFICATION = "otp sent for verification";
     private final JwtService jwtService;
     private final TokenService tokenService;
     private final UserService userService;

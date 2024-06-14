@@ -1,6 +1,10 @@
 package com.n2o.tombile.address.service;
 
-import com.n2o.tombile.address.dto.*;
+import com.n2o.tombile.address.dto.RQAddAddress;
+import com.n2o.tombile.address.dto.RQEditAddress;
+import com.n2o.tombile.address.dto.RSPAddressDetails;
+import com.n2o.tombile.address.dto.RSPAddressListItem;
+import com.n2o.tombile.address.dto.RSPPersistAddress;
 import com.n2o.tombile.address.model.Address;
 import com.n2o.tombile.address.repository.AddressRepository;
 import com.n2o.tombile.core.common.exception.ItemNotFoundException;
@@ -12,12 +16,12 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.n2o.tombile.core.common.util.Constants.ERROR_ADDRESS_NOT_FOUND;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class AddressService {
-    private static final String ADDRESS_NOT_FOUND = "couldn't find requested address for the given user";
-
     private final AddressRepository addressRepository;
 
     public RSPPersistAddress addAddress(RQAddAddress request) {
@@ -68,6 +72,6 @@ public class AddressService {
 
     private Address getUserAddress(int id) {
         return addressRepository.findAddressByIdAndUserId(id, Util.getCurrentUserId())
-                .orElseThrow(() -> new ItemNotFoundException(ADDRESS_NOT_FOUND));
+                .orElseThrow(() -> new ItemNotFoundException(ERROR_ADDRESS_NOT_FOUND));
     }
 }

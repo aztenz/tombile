@@ -1,14 +1,11 @@
 package com.n2o.tombile.core.common.util;
 
-import com.n2o.tombile.core.common.exception.ItemNotFoundException;
 import com.n2o.tombile.core.user.model.User;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import static com.n2o.tombile.core.common.util.Constants.ERROR_COPYING_PROPERTIES;
+
 public abstract class Util {
-    private static final String ERROR_COPYING_PROPERTIES = "Error copying properties: ";
-    private static final String ITEM_NOT_FOUND = "Item not found";
-    private static final String ERROR_VALIDATING_ITEM_EXISTENCE = "Error Validating Item existence ";
 
     public static int getCurrentUserId() {
         return ((User) SecurityContextHolder
@@ -34,7 +31,7 @@ public abstract class Util {
             targetObject = targetType.getDeclaredConstructor().newInstance();
             ObjectCloner.cloneProperties(source, targetObject);
         } catch (Exception e) {
-            throw new RuntimeException(ERROR_COPYING_PROPERTIES + e.getMessage(), e);
+            throw new RuntimeException(ERROR_COPYING_PROPERTIES, e);
         }
         return targetObject;
     }
@@ -46,21 +43,7 @@ public abstract class Util {
         try {
             ObjectCloner.cloneProperties(source, target);
         } catch (Exception e) {
-            throw new RuntimeException(ERROR_COPYING_PROPERTIES + e.getMessage(), e);
-        }
-    }
-
-    public static <Id, EntityClass> void validateItemExistence(
-            Id id,
-            JpaRepository<EntityClass, Id> repository
-    ) {
-        try {
-            if(!repository.existsById(id))
-                throw new ItemNotFoundException(ITEM_NOT_FOUND);
-        } catch (ItemNotFoundException e) {
-            throw new ItemNotFoundException(ITEM_NOT_FOUND);
-        } catch (Exception e) {
-            throw new RuntimeException(ERROR_VALIDATING_ITEM_EXISTENCE + e.getMessage(), e);
+            throw new RuntimeException(ERROR_COPYING_PROPERTIES, e);
         }
     }
 }

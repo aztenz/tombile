@@ -1,14 +1,13 @@
 package com.n2o.tombile.auth.otp.service;
 
-import com.n2o.tombile.core.mail.MailBody;
-import com.n2o.tombile.auth.otp.model.OtpType;
-import com.n2o.tombile.core.common.exception.InvalidOtpException;
 import com.n2o.tombile.auth.otp.model.Otp;
-import com.n2o.tombile.core.user.model.User;
+import com.n2o.tombile.auth.otp.model.OtpType;
 import com.n2o.tombile.auth.otp.repository.OtpRepository;
+import com.n2o.tombile.core.common.exception.InvalidOtpException;
 import com.n2o.tombile.core.mail.EmailService;
+import com.n2o.tombile.core.mail.MailBody;
+import com.n2o.tombile.core.user.model.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
@@ -16,23 +15,18 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.Random;
 
+import static com.n2o.tombile.core.common.util.Constants.ERROR_OTP_EXPIRED;
+import static com.n2o.tombile.core.common.util.Constants.ERROR_OTP_INVALID;
+import static com.n2o.tombile.core.common.util.Constants.ERROR_OTP_TYPE_MISMATCH;
+import static com.n2o.tombile.core.common.util.Constants.OTP_EXPIRATION_MILLISECONDS;
+import static com.n2o.tombile.core.common.util.Constants.OTP_MAX_VALUE;
+import static com.n2o.tombile.core.common.util.Constants.OTP_MIN_VALUE;
+
 @Service
 @RequiredArgsConstructor
 public class OtpService {
-    private static final String INVALID_OTP = "invalid otp";
-    private static final String EXPIRED_OTP = "otp is expired";
-    private static final String OTP_TYPE_NOT_MATCH = "otp type not match";
     private final OtpRepository otpRepository;
     private final EmailService emailService;
-
-    @Value("${otp.range.min}")
-    private int minOtpRange;
-
-    @Value("${otp.range.max}")
-    private int maxOtpRange;
-
-    @Value("${otp.expiration.duration}")
-    private int otpExpirationDuration;
 
     public void sendOtpForVerification(User user, OtpType otpType) {
         revokeExistingOtp(user.getId());
@@ -48,18 +42,18 @@ public class OtpService {
 
     public void verifyOtp(int requestedOtp, User user, OtpType otpType) {
         Otp otp = otpRepository.findById(user.getId())
-                .orElseThrow(() -> new InvalidOtpException(INVALID_OTP));
+                .orElseThrow(() -> new InvalidOtpException(ERROR_OTP_INVALID));
 
         boolean isOtpNotMatch = otp.getOtpCode() != requestedOtp;
         boolean isOtpTypeNotMatch = otp.getOtpType() != otpType;
         boolean isOtpExpired = otp.getExpiration().before(Date.from(Instant.now()));
 
         if(isOtpNotMatch)
-            throw new InvalidOtpException(INVALID_OTP);
+            throw new InvalidOtpException(ERROR_OTP_INVALID);
         if(isOtpExpired)
-            throw new InvalidOtpException(EXPIRED_OTP);
+            throw new InvalidOtpException(ERROR_OTP_EXPIRED);
         if(isOtpTypeNotMatch)
-            throw new InvalidOtpException(OTP_TYPE_NOT_MATCH);
+            throw new InvalidOtpException(ERROR_OTP_TYPE_MISMATCH);
     }
 
     private MailBody createMailBody(User user, Otp otp) {
@@ -80,7 +74,7 @@ public class OtpService {
     private Otp createOtp(User user, OtpType otpType) {
         Otp otp = new Otp();
         otp.setOtpCode(generateOtp());
-        otp.setExpiration(new Date(System.currentTimeMillis() + otpExpirationDuration));
+        otp.setExpiration(new Date(System.currentTimeMillis() + OTP_EXPIRATION_MILLISECONDS));
         otp.setOtpType(otpType);
         otp.setUser(user);
         return otp;
@@ -92,6 +86,6 @@ public class OtpService {
 
     private int generateOtp() {
         Random random = new Random();
-        return random.nextInt(minOtpRange, maxOtpRange);
+        return random.nextInt(OTP_MIN_VALUE, OTP_MAX_VALUE);
     }
 }

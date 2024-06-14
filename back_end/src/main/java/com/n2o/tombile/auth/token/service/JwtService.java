@@ -6,26 +6,25 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.n2o.tombile.core.common.util.Constants.JWT_SECRET_KEY_BYTE_SIZE;
+import static com.n2o.tombile.core.common.util.Constants.JWT_SECRET_KEY_SIZE;
+import static com.n2o.tombile.core.common.util.Constants.JWT_TOKEN_EXPIRATION_MILLISECONDS;
 
 @Service
 @RequiredArgsConstructor
 public class JwtService {
     private final TokenService tokenService;
-
-    @Value("${security.JwtService.SECRET_KEY}")
-    private String secretKey;
-
-    @Value("${security.JwtService.TOKEN_EXPIRATION_DURATION}")
-    private int tokenExpirationDuration;
+    private static String secretKey;
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -48,7 +47,7 @@ public class JwtService {
         return Jwts.builder()
                 .subject(username)
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + tokenExpirationDuration))
+                .expiration(new Date(System.currentTimeMillis() + JWT_TOKEN_EXPIRATION_MILLISECONDS))
                 .signWith(getSigningKey())
                 .compact();
     }
@@ -69,7 +68,7 @@ public class JwtService {
     }
 
     private SecretKey getSigningKey() {
-        return Keys.hmacShaKeyFor(secretKey.getBytes());
+        return Keys.hmacShaKeyFor(generateSecretKey().getBytes());
     }
 
     private Claims extractAllClaims(String token) {
@@ -83,5 +82,23 @@ public class JwtService {
     @FunctionalInterface
     public interface ClaimsResolver<T> {
         T resolve(Claims claims);
+    }
+
+    private static String generateSecretKey() {
+        if(secretKey != null) return secretKey;
+        SecureRandom secureRandom = new SecureRandom();
+        byte[] keyBytes = new byte[JWT_SECRET_KEY_BYTE_SIZE];
+        secureRandom.nextBytes(keyBytes);
+
+        StringBuilder hexString = new StringBuilder(JWT_SECRET_KEY_SIZE);
+        for (byte b : keyBytes) {
+            String hex = Integer.toHexString(0xff & b);
+            if (hex.length() == 1) {
+                hexString.append('0');
+            }
+            hexString.append(hex);
+        }
+        secretKey = hexString.toString();
+        return secretKey;
     }
 }

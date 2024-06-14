@@ -2,7 +2,14 @@ package com.n2o.tombile.product.review.model;
 
 import com.n2o.tombile.core.user.model.User;
 import com.n2o.tombile.product.product.model.Product;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 

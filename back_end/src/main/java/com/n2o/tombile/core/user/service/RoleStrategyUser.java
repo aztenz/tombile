@@ -3,8 +3,9 @@ package com.n2o.tombile.core.user.service;
 import com.n2o.tombile.core.user.model.User;
 import com.n2o.tombile.core.user.model.VerificationStatus;
 
+import static com.n2o.tombile.core.common.util.Constants.EMAIL_VERIFIED;
+
 public class RoleStrategyUser implements RoleStrategy {
-    private static final String EMAIL_VERIFIED = "email verified";
 
     @Override
     public String handleAfterVerifyEmail(User user) {

@@ -1,13 +1,20 @@
 package com.n2o.tombile.product.car.controller;
 
-import com.n2o.tombile.product.car.dto.PersistCarRQ;
 import com.n2o.tombile.product.car.dto.CarDetails;
-import com.n2o.tombile.product.car.dto.PersistCarRSP;
+import com.n2o.tombile.product.car.dto.RQPersistCar;
+import com.n2o.tombile.product.car.dto.RSPPersistCar;
 import com.n2o.tombile.product.car.service.CarService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -31,8 +38,8 @@ public class CarController {
     }
 
     @PostMapping
-    public ResponseEntity<PersistCarRSP> addCar(@Valid @RequestBody PersistCarRQ request){
-        PersistCarRSP persistCarRSP = (PersistCarRSP) carService.addItem(request);
+    public ResponseEntity<RSPPersistCar> addCar(@Valid @RequestBody RQPersistCar request){
+        RSPPersistCar persistCarRSP = (RSPPersistCar) carService.addItem(request);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -43,11 +50,11 @@ public class CarController {
     }
 
     @PutMapping("/{carId}")
-    public ResponseEntity<PersistCarRSP> editCar(
+    public ResponseEntity<RSPPersistCar> editCar(
             @PathVariable int carId,
-            @Valid @RequestBody PersistCarRQ request
+            @Valid @RequestBody RQPersistCar request
     ){
-        return ResponseEntity.ok((PersistCarRSP) carService.editItem(request, carId));
+        return ResponseEntity.ok((RSPPersistCar) carService.editItem(request, carId));
     }
 
     @DeleteMapping("/{carId}")
