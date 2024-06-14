@@ -32,14 +32,14 @@ public class AddressController {
     public ResponseEntity<RSPPersistAddress> addAddress(
             @Valid @RequestBody RQAddAddress request
     ) {
-        RSPPersistAddress rspPersistAddress = addressService.addAddress(request);
+        RSPPersistAddress response = addressService.addAddress(request);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(rspPersistAddress.getId())
+                .buildAndExpand(response.getId())
                 .toUri();
 
-        return ResponseEntity.created(location).body(rspPersistAddress);
+        return ResponseEntity.created(location).body(response);
     }
 
     @PutMapping("/{id}")

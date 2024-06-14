@@ -3,9 +3,9 @@ package com.n2o.tombile.product.product.service;
 import com.n2o.tombile.core.common.exception.ItemNotFoundException;
 import com.n2o.tombile.core.common.service.CRUDService;
 import com.n2o.tombile.core.common.util.Util;
-import com.n2o.tombile.product.product.dto.PersistProductRSP;
-import com.n2o.tombile.product.product.dto.ProductDetails;
-import com.n2o.tombile.product.product.dto.ProductListItem;
+import com.n2o.tombile.product.product.dto.RSPPersistProduct;
+import com.n2o.tombile.product.product.dto.RSPProductDetails;
+import com.n2o.tombile.product.product.dto.RSPProductListItem;
 import com.n2o.tombile.product.product.model.Product;
 import com.n2o.tombile.product.product.repository.ProductRepository;
 import jakarta.transaction.Transactional;
@@ -26,9 +26,9 @@ public abstract class ProductService<P extends Product, R extends ProductReposit
     private final R productRepository;
 
     public abstract Class<P> getProductClass();
-    public abstract Class<? extends PersistProductRSP> getPersistProductRSPClass();
-    public abstract Class<? extends ProductListItem> getProductListItemClass();
-    public abstract Class<? extends ProductDetails> getProductDetailsClass();
+    public abstract Class<? extends RSPPersistProduct> getPersistProductRSPClass();
+    public abstract Class<? extends RSPProductListItem> getProductListItemClass();
+    public abstract Class<? extends RSPProductDetails> getProductDetailsClass();
     public abstract void setProductSpecificDetails(P product);
 
     @Override
@@ -94,8 +94,8 @@ public abstract class ProductService<P extends Product, R extends ProductReposit
         }
     }
 
-    private PersistProductRSP getPersistProductRSP(P product) {
-        PersistProductRSP postProductRSP = Util.cloneObject(product, getPersistProductRSPClass());
+    private RSPPersistProduct getPersistProductRSP(P product) {
+        RSPPersistProduct postProductRSP = Util.cloneObject(product, getPersistProductRSPClass());
         postProductRSP.setSupplierName(getSupplierName());
         postProductRSP.setSupplierEmail(Util.getCurrentUser().getUserData().getEmail());
         return postProductRSP;

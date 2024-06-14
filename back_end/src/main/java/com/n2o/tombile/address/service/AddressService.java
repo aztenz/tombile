@@ -47,11 +47,11 @@ public class AddressService {
     public List<RSPAddressListItem> getAllAddresses() {
         List<Address> addresses = getAllUserAddresses();
 
-        List<RSPAddressListItem> addressListItems = new ArrayList<>();
+        List<RSPAddressListItem> responses = new ArrayList<>();
 
-        addresses.forEach(address -> addressListItems.add(Util.cloneObject(address, RSPAddressListItem.class)));
+        addresses.forEach(address -> responses.add(Util.cloneObject(address, RSPAddressListItem.class)));
 
-        return addressListItems;
+        return responses;
     }
 
     public RSPAddressDetails getAddressById(int id) {

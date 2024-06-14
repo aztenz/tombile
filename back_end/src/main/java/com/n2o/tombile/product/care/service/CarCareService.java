@@ -1,10 +1,10 @@
 package com.n2o.tombile.product.care.service;
 
-import com.n2o.tombile.product.care.dto.PersistCarCareRSP;
+import com.n2o.tombile.product.care.dto.RSPPersistCarCare;
 import com.n2o.tombile.product.care.model.CarCare;
 import com.n2o.tombile.product.care.repository.CarCareRepository;
-import com.n2o.tombile.product.product.dto.ProductDetails;
-import com.n2o.tombile.product.product.dto.ProductListItem;
+import com.n2o.tombile.product.product.dto.RSPProductDetails;
+import com.n2o.tombile.product.product.dto.RSPProductListItem;
 import com.n2o.tombile.product.product.model.ProductType;
 import com.n2o.tombile.product.product.service.ProductService;
 import org.springframework.stereotype.Service;
@@ -22,17 +22,17 @@ public class CarCareService extends ProductService<CarCare, CarCareRepository> {
     }
 
     @Override
-    public Class<PersistCarCareRSP> getPersistProductRSPClass() {
-        return PersistCarCareRSP.class;
+    public Class<RSPPersistCarCare> getPersistProductRSPClass() {
+        return RSPPersistCarCare.class;
     }
 
     @Override
-    public Class<? extends ProductListItem> getProductListItemClass() {
+    public Class<? extends RSPProductListItem> getProductListItemClass() {
         return null;
     }
 
     @Override
-    public Class<? extends ProductDetails> getProductDetailsClass() {
+    public Class<? extends RSPProductDetails> getProductDetailsClass() {
         return null;
     }
 

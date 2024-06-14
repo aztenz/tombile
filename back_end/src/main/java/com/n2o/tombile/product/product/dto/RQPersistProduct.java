@@ -9,7 +9,7 @@ import static com.n2o.tombile.core.common.util.Constants.POSITIVE_NUM_MIN;
 
 @Getter
 @Setter
-public abstract class PersistProductRQ {
+public abstract class RQPersistProduct {
     private String description;
 
     @Min(value = POSITIVE_NUM_MIN, message = ERROR_PRICE_NEGATIVE)

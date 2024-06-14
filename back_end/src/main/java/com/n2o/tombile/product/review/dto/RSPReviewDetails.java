@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Setter
 @Getter
-public class ReviewDetails {
+public class RSPReviewDetails {
     private int rating;
     private String comment;
     private Date reviewDate;

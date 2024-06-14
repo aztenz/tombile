@@ -2,8 +2,8 @@ package com.n2o.tombile.product.car.service;
 
 import com.n2o.tombile.product.product.model.ProductType;
 import com.n2o.tombile.product.car.model.Car;
-import com.n2o.tombile.product.car.dto.CarDetails;
-import com.n2o.tombile.product.car.dto.CarListItem;
+import com.n2o.tombile.product.car.dto.RSPCarDetails;
+import com.n2o.tombile.product.car.dto.RSPCarListItem;
 import com.n2o.tombile.product.car.dto.RSPPersistCar;
 import com.n2o.tombile.product.product.service.ProductService;
 import com.n2o.tombile.product.car.repository.CarRepository;
@@ -28,13 +28,13 @@ public class CarService extends ProductService<Car, CarRepository> {
     }
 
     @Override
-    public Class<CarListItem> getProductListItemClass() {
-        return CarListItem.class;
+    public Class<RSPCarListItem> getProductListItemClass() {
+        return RSPCarListItem.class;
     }
 
     @Override
-    public Class<CarDetails> getProductDetailsClass() {
-        return CarDetails.class;
+    public Class<RSPCarDetails> getProductDetailsClass() {
+        return RSPCarDetails.class;
     }
 
 

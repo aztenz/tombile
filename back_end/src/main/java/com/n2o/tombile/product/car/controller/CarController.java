@@ -1,6 +1,6 @@
 package com.n2o.tombile.product.car.controller;
 
-import com.n2o.tombile.product.car.dto.CarDetails;
+import com.n2o.tombile.product.car.dto.RSPCarDetails;
 import com.n2o.tombile.product.car.dto.RQPersistCar;
 import com.n2o.tombile.product.car.dto.RSPPersistCar;
 import com.n2o.tombile.product.car.service.CarService;
@@ -33,20 +33,20 @@ public class CarController {
     }
 
     @GetMapping("/{carId}")
-    public ResponseEntity<CarDetails> getCarById(@PathVariable int carId) {
-        return ResponseEntity.ok((CarDetails) carService.getItemById(carId));
+    public ResponseEntity<RSPCarDetails> getCarById(@PathVariable int carId) {
+        return ResponseEntity.ok((RSPCarDetails) carService.getItemById(carId));
     }
 
     @PostMapping
     public ResponseEntity<RSPPersistCar> addCar(@Valid @RequestBody RQPersistCar request){
-        RSPPersistCar persistCarRSP = (RSPPersistCar) carService.addItem(request);
+        RSPPersistCar response = (RSPPersistCar) carService.addItem(request);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(persistCarRSP.getId())
+                .buildAndExpand(response.getId())
                 .toUri();
 
-        return ResponseEntity.created(location).body(persistCarRSP);
+        return ResponseEntity.created(location).body(response);
     }
 
     @PutMapping("/{carId}")

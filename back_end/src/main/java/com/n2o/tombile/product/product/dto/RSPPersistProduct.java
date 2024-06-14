@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public abstract class PersistProductRSP {
+public abstract class RSPPersistProduct {
     private int id;
     private String supplierName;
     private String supplierEmail;

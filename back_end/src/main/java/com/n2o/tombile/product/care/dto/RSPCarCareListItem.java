@@ -4,6 +4,6 @@ import com.n2o.tombile.product.care.model.CarCareType;
 import lombok.Getter;
 
 @Getter
-public class CarCareListItem {
+public class RSPCarCareListItem {
     private CarCareType carCareType;
 }

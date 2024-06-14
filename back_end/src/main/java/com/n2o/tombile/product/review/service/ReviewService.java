@@ -4,9 +4,9 @@ import com.n2o.tombile.core.common.exception.ItemNotFoundException;
 import com.n2o.tombile.core.common.util.Util;
 import com.n2o.tombile.product.product.model.Product;
 import com.n2o.tombile.product.product.repository.ProductRepository;
-import com.n2o.tombile.product.review.dto.PostReviewRQ;
-import com.n2o.tombile.product.review.dto.PostReviewRSP;
-import com.n2o.tombile.product.review.dto.ReviewDetails;
+import com.n2o.tombile.product.review.dto.RQPostReview;
+import com.n2o.tombile.product.review.dto.RSPPostReview;
+import com.n2o.tombile.product.review.dto.RSPReviewDetails;
 import com.n2o.tombile.product.review.model.Review;
 import com.n2o.tombile.product.review.repository.ReviewRepository;
 import jakarta.transaction.Transactional;
@@ -27,7 +27,7 @@ public class ReviewService {
     private final ProductRepository<Product> productRepository;
     private final ReviewRepository reviewRepository;
 
-    public PostReviewRSP addReview(int pId, PostReviewRQ request) {
+    public RSPPostReview addReview(int pId, RQPostReview request) {
         Product product = productRepository.findById(pId)
                 .orElseThrow(() -> new ItemNotFoundException(ERROR_PRODUCT_NOT_FOUND));
         Review review = Util.cloneObject(request, Review.class);
@@ -35,19 +35,19 @@ public class ReviewService {
         review.setUser(Util.getCurrentUser());
         review.setProduct(product);
         reviewRepository.save(review);
-        return Util.cloneObject(review, PostReviewRSP.class);
+        return Util.cloneObject(review, RSPPostReview.class);
     }
 
-    public List<ReviewDetails> getProductReviews(int productId) {
+    public List<RSPReviewDetails> getProductReviews(int productId) {
         List<Review> reviews = reviewRepository.findProductReviews(productId);
-        List<ReviewDetails> reviewDetails = new ArrayList<>();
+        List<RSPReviewDetails> responses = new ArrayList<>();
         reviews.forEach(review -> {
-            ReviewDetails reviewDetail = Util.cloneObject(review, ReviewDetails.class);
-            reviewDetail.setUserFirstName(review.getUser().getUserData().getFirstName());
-            reviewDetail.setUserLastName(review.getUser().getUserData().getLastName());
-            reviewDetails.add(reviewDetail);
+            RSPReviewDetails response = Util.cloneObject(review, RSPReviewDetails.class);
+            response.setUserFirstName(review.getUser().getUserData().getFirstName());
+            response.setUserLastName(review.getUser().getUserData().getLastName());
+            responses.add(response);
         });
-        return reviewDetails;
+        return responses;
     }
 
     public void deleteReview(int reviewId) {

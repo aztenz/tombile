@@ -1,8 +1,8 @@
 package com.n2o.tombile.product.review.controller;
 
-import com.n2o.tombile.product.review.dto.PostReviewRQ;
-import com.n2o.tombile.product.review.dto.PostReviewRSP;
-import com.n2o.tombile.product.review.dto.ReviewDetails;
+import com.n2o.tombile.product.review.dto.RQPostReview;
+import com.n2o.tombile.product.review.dto.RSPPostReview;
+import com.n2o.tombile.product.review.dto.RSPReviewDetails;
 import com.n2o.tombile.product.review.service.ReviewService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,24 +26,24 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @PostMapping
-    public ResponseEntity<PostReviewRSP> addReview(
+    public ResponseEntity<RSPPostReview> addReview(
             @PathVariable int pId,
-            @Valid @RequestBody PostReviewRQ request
+            @Valid @RequestBody RQPostReview request
     ) {
-        PostReviewRSP postReviewRSP = reviewService.addReview(pId, request);
+        RSPPostReview response = reviewService.addReview(pId, request);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(postReviewRSP.getId())
+                .buildAndExpand(response.getId())
                 .toUri();
 
-        return ResponseEntity.created(location).body(postReviewRSP);
+        return ResponseEntity.created(location).body(response);
     }
 
     @GetMapping
-    public ResponseEntity<List<ReviewDetails>> getProductReviews(@PathVariable int pId) {
-        List<ReviewDetails> reviewDetails = reviewService.getProductReviews(pId);
-        return reviewDetails.isEmpty()? ResponseEntity.noContent().build() : ResponseEntity.ok(reviewDetails);
+    public ResponseEntity<List<RSPReviewDetails>> getProductReviews(@PathVariable int pId) {
+        List<RSPReviewDetails> response = reviewService.getProductReviews(pId);
+        return response.isEmpty()? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{rId}")

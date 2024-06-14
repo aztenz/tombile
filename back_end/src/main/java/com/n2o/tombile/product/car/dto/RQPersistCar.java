@@ -2,7 +2,7 @@ package com.n2o.tombile.product.car.dto;
 
 import com.n2o.tombile.core.common.validate.Enum;
 import com.n2o.tombile.product.car.model.CarState;
-import com.n2o.tombile.product.product.dto.PersistProductRQ;
+import com.n2o.tombile.product.product.dto.RQPersistProduct;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
@@ -19,7 +19,7 @@ import static com.n2o.tombile.core.common.util.Constants.ERROR_YEAR_TOO_OLD;
 import static com.n2o.tombile.core.common.util.Constants.POSITIVE_NUM_MIN;
 
 @Getter
-public class RQPersistCar extends PersistProductRQ {
+public class RQPersistCar extends RQPersistProduct {
     @NotEmpty(message = ERROR_MAKE_REQUIRED)
     private String make;
 

@@ -1,13 +1,13 @@
 package com.n2o.tombile.product.part.service;
 
-import com.n2o.tombile.product.part.dto.PartDetails;
-import com.n2o.tombile.product.part.dto.PartListItem;
-import com.n2o.tombile.product.part.dto.PersistPartRSP;
+import com.n2o.tombile.product.part.dto.RSPPartDetails;
+import com.n2o.tombile.product.part.dto.RSPPartListItem;
+import com.n2o.tombile.product.part.dto.RSPPersistPart;
 import com.n2o.tombile.product.part.model.CarPart;
 import com.n2o.tombile.product.part.repository.CarPartRepository;
-import com.n2o.tombile.product.product.dto.PersistProductRSP;
-import com.n2o.tombile.product.product.dto.ProductDetails;
-import com.n2o.tombile.product.product.dto.ProductListItem;
+import com.n2o.tombile.product.product.dto.RSPPersistProduct;
+import com.n2o.tombile.product.product.dto.RSPProductDetails;
+import com.n2o.tombile.product.product.dto.RSPProductListItem;
 import com.n2o.tombile.product.product.model.ProductType;
 import com.n2o.tombile.product.product.service.ProductService;
 import org.springframework.stereotype.Service;
@@ -25,18 +25,18 @@ public class CarPartService extends ProductService<CarPart, CarPartRepository> {
     }
 
     @Override
-    public Class<? extends PersistProductRSP> getPersistProductRSPClass() {
-        return PersistPartRSP.class;
+    public Class<? extends RSPPersistProduct> getPersistProductRSPClass() {
+        return RSPPersistPart.class;
     }
 
     @Override
-    public Class<? extends ProductListItem> getProductListItemClass() {
-        return PartListItem.class;
+    public Class<? extends RSPProductListItem> getProductListItemClass() {
+        return RSPPartListItem.class;
     }
 
     @Override
-    public Class<? extends ProductDetails> getProductDetailsClass() {
-        return PartDetails.class;
+    public Class<? extends RSPProductDetails> getProductDetailsClass() {
+        return RSPPartDetails.class;
     }
 
     @Override

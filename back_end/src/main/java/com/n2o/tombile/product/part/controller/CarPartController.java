@@ -1,8 +1,8 @@
 package com.n2o.tombile.product.part.controller;
 
-import com.n2o.tombile.product.part.dto.PartDetails;
-import com.n2o.tombile.product.part.dto.PersistPartRQ;
-import com.n2o.tombile.product.part.dto.PersistPartRSP;
+import com.n2o.tombile.product.part.dto.RSPPartDetails;
+import com.n2o.tombile.product.part.dto.RQPersistPart;
+import com.n2o.tombile.product.part.dto.RSPPersistPart;
 import com.n2o.tombile.product.part.service.CarPartService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -33,28 +33,28 @@ public class CarPartController {
     }
 
     @GetMapping("/{partId}")
-    public ResponseEntity<PartDetails> getCarPartById(@PathVariable int partId) {
-        return ResponseEntity.ok((PartDetails) carPartService.getItemById(partId));
+    public ResponseEntity<RSPPartDetails> getCarPartById(@PathVariable int partId) {
+        return ResponseEntity.ok((RSPPartDetails) carPartService.getItemById(partId));
     }
 
     @PostMapping
-    public ResponseEntity<PersistPartRSP> addCarPart(@Valid @RequestBody PersistPartRQ request){
-        PersistPartRSP persistPartRSP = (PersistPartRSP) carPartService.addItem(request);
+    public ResponseEntity<RSPPersistPart> addCarPart(@Valid @RequestBody RQPersistPart request){
+        RSPPersistPart response = (RSPPersistPart) carPartService.addItem(request);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(persistPartRSP.getId())
+                .buildAndExpand(response.getId())
                 .toUri();
 
-        return ResponseEntity.created(location).body(persistPartRSP);
+        return ResponseEntity.created(location).body(response);
     }
 
     @PutMapping("/{partId}")
-    public ResponseEntity<PersistPartRSP> editCarPart(
+    public ResponseEntity<RSPPersistPart> editCarPart(
             @PathVariable int partId,
-            @Valid @RequestBody PersistPartRQ request
+            @Valid @RequestBody RQPersistPart request
     ){
-        return ResponseEntity.ok((PersistPartRSP) carPartService.editItem(request, partId));
+        return ResponseEntity.ok((RSPPersistPart) carPartService.editItem(request, partId));
     }
 
     @DeleteMapping("/{partId}")
