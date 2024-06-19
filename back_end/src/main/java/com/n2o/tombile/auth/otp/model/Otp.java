@@ -1,41 +1,36 @@
 package com.n2o.tombile.auth.otp.model;
 
 import com.n2o.tombile.core.user.model.User;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.Instant;
 
-@Setter
 @Getter
+@Setter
 @Entity
-@Table(name = "otp")
+@Table(name = "otp", schema = "tombile")
 public class Otp {
-    @Id
-    @Column(name = "user_id")
-    private int id;
+    @EmbeddedId
+    private OtpId id;
+
+    @MapsId("userId")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Column(name = "otp_code")
     private int otpCode;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "otp_type")
-    private OtpType otpType;
-
     @Column(name = "expiration")
-    private Date expiration;
-
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "user_id")
-    private User user;
+    private Instant expiration;
 }

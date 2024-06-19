@@ -11,7 +11,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -20,13 +19,12 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
-import java.util.List;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "orders", schema = "tombile")
-public class Order {
+@Table(name = "orders_history", schema = "tombile")
+public class OrderHistory {
     @Id
     @Column(name = "id", nullable = false)
     private int id;
@@ -46,7 +44,7 @@ public class Order {
 
     @Size(max = 20)
     @NotNull
-    @ColumnDefault("'PENDING'")
+    @ColumnDefault("'FINISHED'")
     @Enumerated(EnumType.STRING)
     @Column(name = "order_status", nullable = false, length = 20)
     private OrderStatus orderStatus;
@@ -55,7 +53,4 @@ public class Order {
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "order_date", nullable = false)
     private Instant orderDate;
-
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<OrderItem> orderItems;
 }

@@ -6,7 +6,6 @@ CREATE TABLE users (
 	id int NOT NULL AUTO_INCREMENT,
 	username varchar(50) DEFAULT NULL,
 	password varchar(100) DEFAULT NULL,
-	role varchar(50) DEFAULT NULL,
 	PRIMARY KEY (id),
 	UNIQUE KEY username (username)
 );
@@ -15,7 +14,7 @@ CREATE TABLE user_data (
 	user_id int NOT NULL,
 	first_name varchar(50) DEFAULT NULL,
 	last_name varchar(50) DEFAULT NULL,
-	email varchar(100) DEFAULT NULL,
+	email varchar(100) NOT NULL,
 	role varchar(50) DEFAULT NULL,
 	wallet_balance decimal(10,2) DEFAULT '0.00',
 	verification_status varchar(50) DEFAULT 'NOT_VERIFIED',
@@ -154,7 +153,7 @@ CREATE TABLE order_items_history (
 	quantity int DEFAULT NULL,
 	subtotal decimal(10,2) DEFAULT NULL,
 	PRIMARY KEY (order_id, product_id),
-	KEY FK_OrderItemsHistory_Order (order_id),
+	KEY FK_OrderItemsHistory_OrderHistory (order_id),
 	KEY FK_OrderItemsHistory_Product (product_id),
 	CONSTRAINT FK_OrderItemsHistory_OrderHistory FOREIGN KEY (order_id) REFERENCES orders_history (id) ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT FK_OrderItemsHistory_Product FOREIGN KEY (product_id) REFERENCES products (id) ON DELETE CASCADE ON UPDATE CASCADE

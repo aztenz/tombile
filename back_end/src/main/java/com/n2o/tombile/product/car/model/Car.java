@@ -6,16 +6,21 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @Entity
-@Table(name = "cars")
+@Table(name = "cars", schema = "tombile")
 public class Car extends Product {
-    @Column(name = "make")
+    @Size(max = 50)
+    @Column(name = "make", length = 50)
     private String make;
 
-    @Column(name = "model")
+    @Size(max = 50)
+    @Column(name = "model", length = 50)
     private String model;
 
     @Column(name = "year")
@@ -24,7 +29,8 @@ public class Car extends Product {
     @Column(name = "mileage")
     private int mileage;
 
+    @Size(max = 20)
     @Enumerated(EnumType.STRING)
-    @Column(name = "car_state")
+    @Column(name = "car_state", length = 20)
     private CarState carState;
 }

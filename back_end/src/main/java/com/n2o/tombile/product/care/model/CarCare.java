@@ -6,19 +6,23 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
 @Getter
 @Entity
-@Table(name = "services")
+@Table(name = "services", schema = "tombile")
 public class CarCare extends Product {
-    @Column(name = "contact_info")
+    @Size(max = 100)
+    @Column(name = "contact_info", length = 100)
     private String contactInfo;
 
-    @Column(name = "location")
+    @Size(max = 100)
+    @Column(name = "location", length = 100)
     private String location;
 
+    @Size(max = 50)
     @Enumerated(EnumType.STRING)
-    @Column(name = "service_type")
-    private CarCareType carCareType;
+    @Column(name = "service_type", length = 50)
+    private CarCareType serviceType;
 }

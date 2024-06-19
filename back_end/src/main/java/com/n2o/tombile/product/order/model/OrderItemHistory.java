@@ -21,15 +21,15 @@ import org.hibernate.annotations.ColumnDefault;
 @Getter
 @Setter
 @Entity
-@Table(name = "order_items", schema = "tombile")
-public class OrderItem {
+@Table(name = "order_items_history", schema = "tombile")
+public class OrderItemHistory {
     @EmbeddedId
-    private OrderItemId id;
+    private OrderItemHistoryId id;
 
     @MapsId("orderId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id", nullable = false)
-    private Order order;
+    private OrderHistory order;
 
     @MapsId("productId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
@@ -38,7 +38,7 @@ public class OrderItem {
 
     @Size(max = 20)
     @NotNull
-    @ColumnDefault("'PENDING'")
+    @ColumnDefault("'FINISHED'")
     @Enumerated(EnumType.STRING)
     @Column(name = "item_status", nullable = false, length = 20)
     private OrderStatus itemStatus;
