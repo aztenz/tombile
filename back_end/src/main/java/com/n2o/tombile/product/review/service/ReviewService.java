@@ -13,8 +13,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static com.n2o.tombile.core.common.util.Constants.ERROR_PRODUCT_NOT_FOUND;
@@ -31,7 +31,7 @@ public class ReviewService {
         Product product = productRepository.findById(pId)
                 .orElseThrow(() -> new ItemNotFoundException(ERROR_PRODUCT_NOT_FOUND));
         Review review = Util.cloneObject(request, Review.class);
-        review.setReviewDate(new Date());
+        review.setReviewDate(Instant.now());
         review.setUser(Util.getCurrentUser());
         review.setProduct(product);
         reviewRepository.save(review);

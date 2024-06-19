@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.Instant;
 
 import static com.n2o.tombile.core.common.util.Constants.ERROR_APPROVED_USER_NOT_FOUND;
 import static com.n2o.tombile.core.common.util.Constants.ERROR_NON_VERIFIED_USER_NOT_FOUND;
@@ -39,7 +39,7 @@ public class UserService {
     public User findUserForLogin(RQLogin request) {
         User user = getApprovedUserByUsername(request.getUsername());
 
-        user.getUserData().setLastLoginDate(new Date());
+        user.getUserData().setLastLoginDate(Instant.now());
 
         return userRepository.save(user);
     }
@@ -93,10 +93,9 @@ public class UserService {
     }
 
     private UserData createUserDataObject(RQRegister request) {
-        Date date = new Date();
         UserData userData = Util.cloneObject(request, UserData.class);
-        userData.setLastLoginDate(date);
-        userData.setRegistrationDate(date);
+        userData.setLastLoginDate(Instant.now());
+        userData.setRegistrationDate(Instant.now());
         userData.setVerificationStatus(VerificationStatus.NOT_VERIFIED);
         return userData;
     }

@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
 import java.time.Instant;
-import java.util.Date;
 import java.util.Random;
 
 import static com.n2o.tombile.core.common.util.Constants.ERROR_OTP_EXPIRED;
@@ -45,8 +44,8 @@ public class OtpService {
                 .orElseThrow(() -> new InvalidOtpException(ERROR_OTP_INVALID));
 
         boolean isOtpNotMatch = otp.getOtpCode() != requestedOtp;
-        boolean isOtpTypeNotMatch = otp.getOtpType() != otpType;
-        boolean isOtpExpired = otp.getExpiration().before(Date.from(Instant.now()));
+        boolean isOtpTypeNotMatch = otp.getId().getOtpType() != otpType;
+        boolean isOtpExpired = otp.getExpiration().isBefore(Instant.now());
 
         if(isOtpNotMatch)
             throw new InvalidOtpException(ERROR_OTP_INVALID);
@@ -59,14 +58,14 @@ public class OtpService {
     private MailBody createMailBody(User user, Otp otp) {
         return MailBody.builder()
                 .to(user.getUserData().getEmail())
-                .subject(otp.getOtpType().getSubject())
+                .subject(otp.getId().getOtpType().getSubject())
                 .text(prepareEmailBody(user, otp))
                 .build();
     }
 
     private String prepareEmailBody(User user, Otp otp) {
         return MessageFormat.format(
-                otp.getOtpType().getBody(),
+                otp.getId().getOtpType().getBody(),
                 user.getUserData().getFirstName(),
                 otp.getOtpCode());
     }
@@ -74,8 +73,8 @@ public class OtpService {
     private Otp createOtp(User user, OtpType otpType) {
         Otp otp = new Otp();
         otp.setOtpCode(generateOtp());
-        otp.setExpiration(new Date(System.currentTimeMillis() + OTP_EXPIRATION_MILLISECONDS));
-        otp.setOtpType(otpType);
+        otp.setExpiration(Instant.ofEpochMilli(Instant.now().toEpochMilli() + OTP_EXPIRATION_MILLISECONDS));
+        otp.getId().setOtpType(otpType);
         otp.setUser(user);
         return otp;
     }
