@@ -1,0 +1,27 @@
+insert into users values();
+insert into users values();
+insert into users values();
+insert into addresses(user_id) values(1);
+insert into user_data(user_id, wallet_balance) values(1, 100);
+insert into user_data(user_id, wallet_balance) values(2, 0);
+insert into user_data(user_id, wallet_balance) values(3, 0);
+insert into products(supplier_id, quantity, price) values(2, 8, 20);
+insert into products(supplier_id, quantity, price) values(2, 4, 10);
+insert into products(supplier_id, quantity, price) values(3, 2, 5);
+insert into carts(user_id, product_id, quantity) values(1, 1, 2);
+insert into carts(user_id, product_id, quantity) values(1, 3, 1);
+call create_order(1, 1, @order_id);
+call confirm_order_items(1, 2);
+call confirm_order_items(1, 3);
+call cancel_order_items_buyer(1, 1);
+call complete_order_items(1, 3);
+
+select * from user_data;
+select * from products;
+select * from carts;
+select * from orders;
+select * from order_items;
+select * from orders_history;
+select * from order_items_history;
+select * from temp_order_items;
+drop temporary table temp_order_items;
