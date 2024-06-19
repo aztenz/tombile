@@ -50,6 +50,6 @@ public class Product {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "price", precision = 10, scale = 2)
+    @Column(name = "price")
     private double price;
 }

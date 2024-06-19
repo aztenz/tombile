@@ -1,6 +1,7 @@
 package com.n2o.tombile.auth.otp.service;
 
 import com.n2o.tombile.auth.otp.model.Otp;
+import com.n2o.tombile.auth.otp.model.OtpId;
 import com.n2o.tombile.auth.otp.model.OtpType;
 import com.n2o.tombile.auth.otp.repository.OtpRepository;
 import com.n2o.tombile.core.common.exception.InvalidOtpException;
@@ -28,7 +29,8 @@ public class OtpService {
     private final EmailService emailService;
 
     public void sendOtpForVerification(User user, OtpType otpType) {
-        revokeExistingOtp(user.getId());
+        OtpId otpId = getOtpId(user.getId(), otpType);
+        revokeExistingOtp(otpId);
 
         Otp otp = createOtp(user, otpType);
 
@@ -40,7 +42,8 @@ public class OtpService {
     }
 
     public void verifyOtp(int requestedOtp, User user, OtpType otpType) {
-        Otp otp = otpRepository.findById(user.getId())
+        OtpId otpId = getOtpId(user.getId(), otpType);
+        Otp otp = otpRepository.findById(otpId)
                 .orElseThrow(() -> new InvalidOtpException(ERROR_OTP_INVALID));
 
         boolean isOtpNotMatch = otp.getOtpCode() != requestedOtp;
@@ -79,12 +82,19 @@ public class OtpService {
         return otp;
     }
 
-    private void revokeExistingOtp(int id) {
-        otpRepository.findById(id).ifPresent(otpRepository::delete);
+    private void revokeExistingOtp(OtpId otpId) {
+        otpRepository.findById(otpId).ifPresent(otpRepository::delete);
     }
 
     private int generateOtp() {
         Random random = new Random();
         return random.nextInt(OTP_MIN_VALUE, OTP_MAX_VALUE);
+    }
+
+    private OtpId getOtpId(int userId, OtpType otpType) {
+        OtpId otpId = new OtpId();
+        otpId.setOtpType(otpType);
+        otpId.setUserId(userId);
+        return otpId;
     }
 }

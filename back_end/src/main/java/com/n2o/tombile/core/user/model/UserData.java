@@ -54,7 +54,7 @@ public class UserData {
     private Role role;
 
     @ColumnDefault("0.00")
-    @Column(name = "wallet_balance", precision = 10, scale = 2)
+    @Column(name = "wallet_balance")
     private double walletBalance;
 
     @Size(max = 50)

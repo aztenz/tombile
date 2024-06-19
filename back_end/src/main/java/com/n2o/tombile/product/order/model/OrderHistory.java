@@ -39,7 +39,7 @@ public class OrderHistory {
     @JoinColumn(name = "shipping_address_id", nullable = false)
     private Address shippingAddress;
 
-    @Column(name = "total_price", precision = 10, scale = 2)
+    @Column(name = "total_price")
     private double totalPrice;
 
     @Size(max = 20)

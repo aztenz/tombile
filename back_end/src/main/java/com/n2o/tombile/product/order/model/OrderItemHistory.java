@@ -46,6 +46,6 @@ public class OrderItemHistory {
     @Column(name = "quantity")
     private int quantity;
 
-    @Column(name = "subtotal", precision = 10, scale = 2)
+    @Column(name = "subtotal")
     private double subtotal;
 }
