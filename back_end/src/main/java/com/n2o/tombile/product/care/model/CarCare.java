@@ -21,8 +21,7 @@ public class CarCare extends Product {
     @Column(name = "location", length = 100)
     private String location;
 
-    @Size(max = 50)
     @Enumerated(EnumType.STRING)
-    @Column(name = "service_type", length = 50)
+    @Column(name = "service_type")
     private CarCareType serviceType;
 }

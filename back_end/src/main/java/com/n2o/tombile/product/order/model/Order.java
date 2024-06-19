@@ -44,11 +44,9 @@ public class Order {
     @Column(name = "total_price")
     private double totalPrice;
 
-    @Size(max = 20)
-    @NotNull
     @ColumnDefault("'PENDING'")
     @Enumerated(EnumType.STRING)
-    @Column(name = "order_status", nullable = false, length = 20)
+    @Column(name = "order_status")
     private OrderStatus orderStatus;
 
     @NotNull

@@ -36,8 +36,7 @@ public class Token {
     @Column(name = "token", length = 256)
     private String token;
 
-    @Size(max = 50)
     @Enumerated(EnumType.STRING)
-    @Column(name = "token_type", length = 50)
+    @Column(name = "token_type")
     private TokenType tokenType;
 }

@@ -44,8 +44,7 @@ public class Address {
     @Column(name = "country", length = 50)
     private String country;
 
-    @Size(max = 20)
     @Enumerated(EnumType.STRING)
-    @Column(name = "address_type", length = 20)
+    @Column(name = "address_type")
     private AddressType addressType;
 }

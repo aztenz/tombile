@@ -48,19 +48,17 @@ public class UserData {
     @Column(name = "email", nullable = false, length = 100)
     private String email;
 
-    @Size(max = 50)
     @Enumerated(EnumType.STRING)
-    @Column(name = "role", length = 50)
+    @Column(name = "role")
     private Role role;
 
     @ColumnDefault("0.00")
     @Column(name = "wallet_balance")
     private double walletBalance;
 
-    @Size(max = 50)
-    @ColumnDefault("'NOT_VERIFIED'")
     @Enumerated(EnumType.STRING)
-    @Column(name = "verification_status", length = 50)
+    @ColumnDefault("'NOT_VERIFIED'")
+    @Column(name = "verification_status")
     private VerificationStatus verificationStatus;
 
     @ColumnDefault("CURRENT_TIMESTAMP")

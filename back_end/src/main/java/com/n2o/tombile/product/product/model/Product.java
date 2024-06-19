@@ -34,9 +34,8 @@ public class Product {
     @JoinColumn(name = "supplier_id", nullable = false)
     private User supplier;
 
-    @Size(max = 20)
     @Enumerated(EnumType.STRING)
-    @Column(name = "product_type", length = 20)
+    @Column(name = "product_type")
     private ProductType productType;
 
     @Column(name = "quantity")

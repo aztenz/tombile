@@ -29,8 +29,7 @@ public class Car extends Product {
     @Column(name = "mileage")
     private int mileage;
 
-    @Size(max = 20)
     @Enumerated(EnumType.STRING)
-    @Column(name = "car_state", length = 20)
+    @Column(name = "car_state")
     private CarState carState;
 }

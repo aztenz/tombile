@@ -36,11 +36,9 @@ public class OrderItemHistory {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-    @Size(max = 20)
-    @NotNull
-    @ColumnDefault("'FINISHED'")
     @Enumerated(EnumType.STRING)
-    @Column(name = "item_status", nullable = false, length = 20)
+    @ColumnDefault("'FINISHED'")
+    @Column(name = "item_status")
     private OrderStatus itemStatus;
 
     @Column(name = "quantity")

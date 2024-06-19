@@ -42,11 +42,9 @@ public class OrderHistory {
     @Column(name = "total_price")
     private double totalPrice;
 
-    @Size(max = 20)
-    @NotNull
-    @ColumnDefault("'FINISHED'")
     @Enumerated(EnumType.STRING)
-    @Column(name = "order_status", nullable = false, length = 20)
+    @ColumnDefault("'FINISHED'")
+    @Column(name = "order_status")
     private OrderStatus orderStatus;
 
     @NotNull

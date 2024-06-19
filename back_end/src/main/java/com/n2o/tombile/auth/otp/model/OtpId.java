@@ -24,9 +24,7 @@ public class OtpId implements java.io.Serializable {
     @Column(name = "user_id", nullable = false)
     private int userId;
 
-    @Size(max = 50)
-    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "otp_type", nullable = false, length = 50)
+    @Column(name = "otp_type")
     private OtpType otpType;
 }

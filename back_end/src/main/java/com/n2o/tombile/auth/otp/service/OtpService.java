@@ -74,10 +74,11 @@ public class OtpService {
     }
 
     private Otp createOtp(User user, OtpType otpType) {
+        OtpId otpId = getOtpId(user.getId(), otpType);
         Otp otp = new Otp();
         otp.setOtpCode(generateOtp());
         otp.setExpiration(Instant.ofEpochMilli(Instant.now().toEpochMilli() + OTP_EXPIRATION_MILLISECONDS));
-        otp.getId().setOtpType(otpType);
+        otp.setId(otpId);
         otp.setUser(user);
         return otp;
     }
