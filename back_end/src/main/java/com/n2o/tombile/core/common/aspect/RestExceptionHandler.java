@@ -12,15 +12,13 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @RestControllerAdvice
 public class RestExceptionHandler {
-
-    public static final String ERROR_HANDLING_REQUEST = "Error handling request";
-
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationException(
@@ -65,6 +63,14 @@ public class RestExceptionHandler {
             InvalidOtpException e
     ) {
         return handleGenericException(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    @ExceptionHandler
+    public ResponseEntity<GenericErrorResponse> noResourceFound(
+            NoResourceFoundException e
+    ) {
+        return handleGenericException(e.getMessage(), HttpStatus.METHOD_NOT_ALLOWED);
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

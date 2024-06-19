@@ -25,8 +25,6 @@ import static com.n2o.tombile.core.common.util.Constants.ERROR_USER_NOT_FOUND;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-
-
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 

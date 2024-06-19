@@ -8,7 +8,7 @@ public abstract class Constants {
     public static final int RATING_MIN_VALUE = 1;
     public static final int RATING_MAX_VALUE = 5;
     public static final int CAR_YEAR_MIN = 1950;
-    public static final int CAR_YEAR_MAX = 2014;
+    public static final int CAR_YEAR_MAX = 2024;
     public static final int OTP_MIN_VALUE = 100000;
     public static final int OTP_MAX_VALUE = 999999;
     public static final int OTP_EXPIRATION_MILLISECONDS = 600000;
