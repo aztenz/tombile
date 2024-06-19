@@ -24,7 +24,7 @@ import static com.n2o.tombile.core.common.util.Constants.JWT_TOKEN_EXPIRATION_MI
 @RequiredArgsConstructor
 public class JwtService {
     private final TokenService tokenService;
-    private static String secretKey;
+    private static final String secretKey = generateSecretKey();
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -68,7 +68,7 @@ public class JwtService {
     }
 
     private SecretKey getSigningKey() {
-        return Keys.hmacShaKeyFor(generateSecretKey().getBytes());
+        return Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
     private Claims extractAllClaims(String token) {
@@ -85,7 +85,6 @@ public class JwtService {
     }
 
     private static String generateSecretKey() {
-        if(secretKey != null) return secretKey;
         SecureRandom secureRandom = new SecureRandom();
         byte[] keyBytes = new byte[JWT_SECRET_KEY_BYTE_SIZE];
         secureRandom.nextBytes(keyBytes);
@@ -98,7 +97,6 @@ public class JwtService {
             }
             hexString.append(hex);
         }
-        secretKey = hexString.toString();
-        return secretKey;
+        return hexString.toString();
     }
 }

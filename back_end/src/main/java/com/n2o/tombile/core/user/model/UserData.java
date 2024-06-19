@@ -11,7 +11,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -23,8 +22,7 @@ import java.time.Instant;
 @Setter
 @Getter
 @Entity
-@Table(name = "user_data", schema = "tombile",
-        uniqueConstraints = @UniqueConstraint(name = "email", columnNames = {"email"}))
+@Table(name = "user_data", schema = "tombile")
 public class UserData {
     @Id
     @Column(name = "user_id", nullable = false)
@@ -45,7 +43,7 @@ public class UserData {
 
     @Size(max = 100)
     @NotNull
-    @Column(name = "email", nullable = false, length = 100)
+    @Column(name = "email", nullable = false, length = 100, unique = true)
     private String email;
 
     @Enumerated(EnumType.STRING)
