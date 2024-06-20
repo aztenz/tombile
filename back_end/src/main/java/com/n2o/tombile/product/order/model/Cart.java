@@ -2,7 +2,6 @@ package com.n2o.tombile.product.order.model;
 
 import com.n2o.tombile.core.user.model.User;
 import com.n2o.tombile.product.product.model.Product;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -26,22 +25,22 @@ public class Cart {
     private CartId id;
 
     @MapsId("userId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @MapsId("productId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
     @Column(name = "quantity")
     private int quantity;
 
-    @Column(name = "subtotal")
+    @Column(name = "subtotal", insertable = false, updatable = false)
     private double subtotal;
 
     @ColumnDefault("CURRENT_TIMESTAMP")
-    @Column(name = "added_date")
+    @Column(name = "added_date", insertable = false, updatable = false)
     private Instant addedDate;
 }

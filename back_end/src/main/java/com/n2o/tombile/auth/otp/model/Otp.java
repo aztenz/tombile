@@ -1,7 +1,6 @@
 package com.n2o.tombile.auth.otp.model;
 
 import com.n2o.tombile.core.user.model.User;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -24,7 +23,7 @@ public class Otp {
     private OtpId id;
 
     @MapsId("userId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 

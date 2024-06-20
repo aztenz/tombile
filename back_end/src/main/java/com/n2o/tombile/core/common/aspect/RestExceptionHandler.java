@@ -4,6 +4,7 @@ import com.n2o.tombile.core.common.dto.GenericErrorResponse;
 import com.n2o.tombile.core.common.exception.DuplicateItemException;
 import com.n2o.tombile.core.common.exception.InvalidOtpException;
 import com.n2o.tombile.core.common.exception.ItemNotFoundException;
+import com.n2o.tombile.core.common.exception.SQLValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -58,6 +59,14 @@ public class RestExceptionHandler {
             BadCredentialsException e
     ) {
         return handleGenericException(ERROR_BAD_CREDENTIALS, HttpStatus.BAD_REQUEST);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler
+    public ResponseEntity<GenericErrorResponse> invalidSqlValidation(
+            SQLValidationException e
+    ) {
+        return handleGenericException(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

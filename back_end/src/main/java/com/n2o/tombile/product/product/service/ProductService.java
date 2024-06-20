@@ -94,6 +94,11 @@ public abstract class ProductService<P extends Product, R extends ProductReposit
         }
     }
 
+    public P getProductEntityById(int id) {
+        return productRepository
+                .findById(id).orElseThrow(() -> new ItemNotFoundException(ERROR_PRODUCT_NOT_FOUND));
+    }
+
     private RSPPersistProduct getPersistProductRSP(P product) {
         RSPPersistProduct postProductRSP = Util.cloneObject(product, getPersistProductRSPClass());
         postProductRSP.setSupplierName(getSupplierName());

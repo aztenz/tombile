@@ -76,10 +76,14 @@ public abstract class Constants {
     public static final String ERROR_CAR_CARE_TYPE_REQUIRED = "car care type can't be empty";
     public static final String ERROR_CAR_STATE_REQUIRED = "car state can't be empty";
 
+    // Orders Related Messages
+    public static final String ERROR_CART_NOT_FOUND = "couldn't find a cart";
+
     // Success Messages
     public static final String EMAIL_VERIFIED = "email verified";
     public static final String OTP_SENT = "otp sent for verification";
     public static final String PASSWORD_RESET_SUCCESS = "password reset successfully";
+    public static final String CART_SUCCESSFULLY_ADDED = "cart successfully added";
 
     // Email Messages
     public static final String EMAIL_SENT_TO_ADMIN = "email sent to an admin for approval";
