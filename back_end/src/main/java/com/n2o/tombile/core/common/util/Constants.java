@@ -4,6 +4,7 @@ public abstract class Constants {
 
     // Length and Range Constants
     public static final int POSITIVE_NUM_MIN = 0;
+    public static final int POSITIVE_NON_ZERO_NUM_MIN = 1;
     public static final int PASSWORD_MIN_LENGTH = 6;
     public static final int RATING_MIN_VALUE = 1;
     public static final int RATING_MAX_VALUE = 5;
@@ -78,6 +79,8 @@ public abstract class Constants {
 
     // Orders Related Messages
     public static final String ERROR_CART_NOT_FOUND = "couldn't find a cart";
+    public static final String ERROR_QUANTITY_NEGATIVE = "quantity can't be negative";
+
 
     // Success Messages
     public static final String EMAIL_VERIFIED = "email verified";

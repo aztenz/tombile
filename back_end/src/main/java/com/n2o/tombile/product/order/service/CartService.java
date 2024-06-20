@@ -27,12 +27,15 @@ public class CartService {
     private final CarPartService carPartService;
     private final CartRepository cartRepository;
 
-    public RSPPersistCart addToCart(RQCart request) {
+    public RSPPersistCart updateCart(RQCart request) {
         try {
             Product product = getProduct(request.getProductId());
-            Cart cart = getCart(request, product);
-            saveCart(cart);
-            return createResponse(cart.getId().getProductId());
+
+            CartId cartId = createCartId(request.getProductId());
+
+            persistToCart(request, cartId, product);
+
+            return createResponse(cartId.getProductId());
         } catch (Exception e) {
             handleException(e);
             throw e;
@@ -56,6 +59,20 @@ public class CartService {
         return prepareCartDto(cart);
     }
 
+    private void persistToCart(RQCart request, CartId cartId, Product product) {
+        cartRepository.findById(cartId).ifPresentOrElse(cart -> {
+            cart.setQuantity(request.getQuantity());
+            cartRepository.save(cart);
+        }, () -> {
+            Cart cart = new Cart();
+            cart.setId(cartId);
+            cart.setQuantity(request.getQuantity());
+            cart.setUser(Util.getCurrentUser());
+            cart.setProduct(product);
+            cartRepository.save(cart);
+        });
+    }
+
     private Product getProduct(int productId) {
         return carPartService.getProductEntityById(productId);
     }
@@ -70,16 +87,6 @@ public class CartService {
                 .orElseThrow(() -> new ItemNotFoundException(ERROR_CART_NOT_FOUND));
     }
 
-    private Cart getCart(RQCart request, Product product) {
-        CartId cartId = createCartId(request.getProductId());
-        Cart cart = cartRepository.findById(cartId).orElse(new Cart());
-        cart.setId(cartId);
-        cart.setQuantity(cart.getQuantity() + request.getQuantity());
-        cart.setUser(Util.getCurrentUser());
-        cart.setProduct(product);
-        return cart;
-    }
-
     private CartId createCartId(int productId) {
         CartId cartId = new CartId();
         cartId.setProductId(productId);
@@ -87,23 +94,11 @@ public class CartService {
         return cartId;
     }
 
-    private void saveCart(Cart cart) {
-        cartRepository.save(cart);
-    }
-
     private RSPPersistCart createResponse(int id) {
         RSPPersistCart response = new RSPPersistCart();
         response.setId(id);
         response.setMessage(CART_SUCCESSFULLY_ADDED);
         return response;
-    }
-
-    private void handleException(Exception e) {
-        Throwable cause = e.getCause().getCause();
-        if (cause instanceof SQLException sqlException
-                && "45000".equals(sqlException.getSQLState())) {
-            throw new SQLValidationException(sqlException.getMessage());
-        }
     }
 
     private RSPCart prepareCartDto(Cart cart) {
@@ -122,5 +117,15 @@ public class CartService {
         return cart.getProduct().getSupplier().getUserData().getFirstName() +
                 " "
                 + cart.getProduct().getSupplier().getUserData().getLastName();
+    }
+
+    private void handleException(Exception e) {
+        Throwable cause = e.getCause();
+        if(cause == null) return;
+        cause = cause.getCause();
+        if (cause instanceof SQLException sqlException
+                && "45000".equals(sqlException.getSQLState())) {
+            throw new SQLValidationException(sqlException.getMessage());
+        }
     }
 }

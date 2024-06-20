@@ -30,12 +30,12 @@ public class OrderHistory {
     private int id;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "buyer_id", nullable = false)
     private User buyer;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "shipping_address_id", nullable = false)
     private Address shippingAddress;
 

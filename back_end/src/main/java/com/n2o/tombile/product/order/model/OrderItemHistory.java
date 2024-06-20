@@ -27,12 +27,12 @@ public class OrderItemHistory {
     private OrderItemHistoryId id;
 
     @MapsId("orderId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "order_id", nullable = false)
     private OrderHistory order;
 
     @MapsId("productId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 

@@ -25,8 +25,8 @@ public class CartController {
     private final CartService cartService;
 
     @PostMapping
-    public ResponseEntity<RSPPersistCart> addToCart(@RequestBody RQCart request) {
-        RSPPersistCart response = cartService.addToCart(request);
+    public ResponseEntity<RSPPersistCart> updateCart(@RequestBody RQCart request) {
+        RSPPersistCart response = cartService.updateCart(request);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
