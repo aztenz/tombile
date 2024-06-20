@@ -17,6 +17,9 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.n2o.tombile.core.common.util.Constants.ERROR_BAD_CREDENTIALS;
+import static com.n2o.tombile.core.common.util.Constants.ERROR_HANDLING_REQUEST;
+
 @RestControllerAdvice
 public class RestExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -54,7 +57,7 @@ public class RestExceptionHandler {
     public ResponseEntity<GenericErrorResponse> badCredentials(
             BadCredentialsException e
     ) {
-        return handleGenericException(e.getMessage(), HttpStatus.BAD_REQUEST);
+        return handleGenericException(ERROR_BAD_CREDENTIALS, HttpStatus.BAD_REQUEST);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
