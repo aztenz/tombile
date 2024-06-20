@@ -24,6 +24,8 @@ public abstract class Constants {
 
     // User-related Error Messages
     public static final String ERROR_BAD_CREDENTIALS = "username and password didn't match";
+    public static final String ERROR_USERNAME_REQUIRED = "username can't be empty";
+    public static final String ERROR_PASSWORD_REQUIRED = "password can't be empty";
     public static final String ERROR_PASSWORD_TOO_SHORT = "password cannot be less than " + PASSWORD_MIN_LENGTH + " characters";
     public static final String ERROR_FIRST_NAME_REQUIRED = "first name can't be empty";
     public static final String ERROR_LAST_NAME_REQUIRED = "last name can't be empty";
