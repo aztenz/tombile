@@ -29,7 +29,7 @@ public class AddressService {
 
         address.setUser(Util.getCurrentUser());
 
-        addressRepository.save(address);
+        address = addressRepository.save(address);
 
         return Util.cloneObject(address, RSPPersistAddress.class);
     }
