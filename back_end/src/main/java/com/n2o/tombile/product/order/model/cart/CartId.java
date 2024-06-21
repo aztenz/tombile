@@ -1,4 +1,4 @@
-package com.n2o.tombile.product.order.model;
+package com.n2o.tombile.product.order.model.cart;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

@@ -5,12 +5,13 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class RoleStrategyFactory {
-    private final Map<Role, RoleStrategy> strategies;
+    private final Map<Role, RoleStrategy> strategies = new HashMap<>();
 
     @PostConstruct
     public void init() {

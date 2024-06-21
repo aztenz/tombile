@@ -1,20 +1,18 @@
 package com.n2o.tombile.product.order.service;
 
 import com.n2o.tombile.core.common.exception.ItemNotFoundException;
-import com.n2o.tombile.core.common.exception.SQLValidationException;
 import com.n2o.tombile.core.common.util.Util;
 import com.n2o.tombile.product.order.dto.RQCart;
 import com.n2o.tombile.product.order.dto.RSPCart;
 import com.n2o.tombile.product.order.dto.RSPPersistCart;
-import com.n2o.tombile.product.order.model.Cart;
-import com.n2o.tombile.product.order.model.CartId;
+import com.n2o.tombile.product.order.model.cart.Cart;
+import com.n2o.tombile.product.order.model.cart.CartId;
 import com.n2o.tombile.product.order.repository.CartRepository;
 import com.n2o.tombile.product.part.service.CarPartService;
 import com.n2o.tombile.product.product.model.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +35,7 @@ public class CartService {
 
             return createResponse(cartId.getProductId());
         } catch (Exception e) {
-            handleException(e);
+            OrderUtil.handleException(e);
             throw e;
         }
     }
@@ -117,15 +115,5 @@ public class CartService {
         return cart.getProduct().getSupplier().getUserData().getFirstName() +
                 " "
                 + cart.getProduct().getSupplier().getUserData().getLastName();
-    }
-
-    private void handleException(Exception e) {
-        Throwable cause = e.getCause();
-        if(cause == null) return;
-        cause = cause.getCause();
-        if (cause instanceof SQLException sqlException
-                && "45000".equals(sqlException.getSQLState())) {
-            throw new SQLValidationException(sqlException.getMessage());
-        }
     }
 }

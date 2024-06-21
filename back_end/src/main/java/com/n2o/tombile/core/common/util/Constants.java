@@ -22,6 +22,7 @@ public abstract class Constants {
 
     // Generic Messages
     public static final String ERROR_HANDLING_REQUEST = "error handling request";
+    public static final String ERROR_CREATE_INSTANCE = "unable to create an instance of ";
 
     // User-related Error Messages
     public static final String ERROR_BAD_CREDENTIALS = "username and password didn't match";
@@ -80,6 +81,7 @@ public abstract class Constants {
     // Orders Related Messages
     public static final String ERROR_CART_NOT_FOUND = "couldn't find a cart";
     public static final String ERROR_QUANTITY_NEGATIVE = "quantity can't be negative";
+    public static final String ERROR_ORDER_NOT_FOUND = "couldn't find order";
 
 
     // Success Messages
@@ -87,6 +89,11 @@ public abstract class Constants {
     public static final String OTP_SENT = "otp sent for verification";
     public static final String PASSWORD_RESET_SUCCESS = "password reset successfully";
     public static final String CART_SUCCESSFULLY_ADDED = "cart successfully added";
+    public static final String ORDER_PLACED = "order placed";
+    public static final String ORDER_CONFIRMED = "order confirmed";
+    public static final String ORDER_REJECTED = "order rejected";
+    public static final String ORDER_COMPLETED = "order completed";
+    public static final String ORDER_CANCELLED = "order cancelled";
 
     // Email Messages
     public static final String EMAIL_SENT_TO_ADMIN = "email sent to an admin for approval";

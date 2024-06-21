@@ -1,36 +1,24 @@
-package com.n2o.tombile.product.order.model;
+package com.n2o.tombile.product.order.model.order_item;
 
+import com.n2o.tombile.product.order.model.OrderStatus;
 import com.n2o.tombile.product.product.model.Product;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.MapsId;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Immutable;
 
-@Getter
 @Setter
-@Entity
-@Table(name = "order_items", schema = "tombile")
-public class OrderItem {
-    @EmbeddedId
-    private OrderItemId id;
-
-    @MapsId("orderId")
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "order_id", nullable = false)
-    private Order order;
-
+@Getter
+@Immutable
+@MappedSuperclass
+public class OrderItemModel {
     @MapsId("productId")
     @ManyToOne(optional = false)
     @JoinColumn(name = "product_id", nullable = false)

@@ -1,4 +1,4 @@
-package com.n2o.tombile.product.order.model;
+package com.n2o.tombile.product.order.model.order_item;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -13,9 +13,9 @@ import java.io.Serial;
 @Setter
 @Embeddable
 @EqualsAndHashCode
-public class OrderItemId implements java.io.Serializable {
+public class OrderItemHistoryId implements java.io.Serializable {
     @Serial
-    private static final long serialVersionUID = -2890605446908782392L;
+    private static final long serialVersionUID = 7273078305917831117L;
 
     @NotNull
     @Column(name = "order_id", nullable = false)

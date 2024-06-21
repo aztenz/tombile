@@ -8,12 +8,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class OtpStrategyFactory {
-    private final Map<OtpType, OtpStrategy> strategies;
+    private final Map<OtpType, OtpStrategy> strategies = new HashMap<>();
     private final UserService userService;
     private final OtpService otpService;
     private final RoleStrategyFactory roleStrategyFactory;
