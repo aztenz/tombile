@@ -9,7 +9,6 @@ import com.n2o.tombile.address.model.Address;
 import com.n2o.tombile.address.repository.AddressRepository;
 import com.n2o.tombile.core.common.exception.ItemNotFoundException;
 import com.n2o.tombile.core.common.util.Util;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +18,6 @@ import java.util.List;
 import static com.n2o.tombile.core.common.util.Constants.ERROR_ADDRESS_NOT_FOUND;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class AddressService {
     private final AddressRepository addressRepository;
