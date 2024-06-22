@@ -3,6 +3,7 @@ package com.n2o.tombile.product.product.service;
 import com.n2o.tombile.core.common.exception.ItemNotFoundException;
 import com.n2o.tombile.core.common.service.CRUDService;
 import com.n2o.tombile.core.common.util.Util;
+import com.n2o.tombile.core.user.service.RoleStrategyFactory;
 import com.n2o.tombile.product.product.dto.RSPPersistProduct;
 import com.n2o.tombile.product.product.dto.RSPProductDetails;
 import com.n2o.tombile.product.product.dto.RSPProductListItem;
@@ -24,6 +25,7 @@ public abstract class ProductService<P extends Product, R extends ProductReposit
         implements CRUDService<P, Integer, R> {
 
     private final R productRepository;
+    private final RoleStrategyFactory roleStrategyFactory;
 
     public abstract Class<P> getProductClass();
     public abstract Class<? extends RSPPersistProduct> getPersistProductRSPClass();
@@ -45,6 +47,31 @@ public abstract class ProductService<P extends Product, R extends ProductReposit
     }
 
     @Override
+    public List<Object> getAll() {
+        List<P> products = roleStrategyFactory
+                .getStrategy(Util.getCurrentUser().getUserData().getRole())
+                .getProducts(productRepository);
+        List<Object> productList = new ArrayList<>();
+        products.forEach(product -> productList.add(Util.cloneObject(product, getProductListItemClass())));
+        return productList;
+    }
+
+    @Override
+    public void deleteItem(Integer id) {
+        productRepository.delete(roleStrategyFactory
+                .getStrategy(Util.getCurrentUser().getUserData().getRole())
+                .getProductById(productRepository, id));
+    }
+
+    @Override
+    public Object getItemById(Integer id) {
+        P product = roleStrategyFactory
+                .getStrategy(Util.getCurrentUser().getUserData().getRole())
+                .getProductById(productRepository, id);
+        return Util.cloneObject(product, getProductDetailsClass());
+    }
+
+    @Override
     public Object editItem(
             Object request,
             Integer id
@@ -55,40 +82,6 @@ public abstract class ProductService<P extends Product, R extends ProductReposit
             Util.copyProperties(request, product);
             product = productRepository.save(product);
             return getPersistProductRSP(product);
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-
-    public List<Object> getAllUserItems() {
-        try {
-            List<P> products = productRepository
-                    .findAllUserProducts(Util.getCurrentUserId());
-            List<Object> listItems = new ArrayList<>();
-            products.forEach(product -> listItems.add(Util.cloneObject(product, getProductListItemClass())));
-            return listItems;
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-
-    public Object getUserItemById(int id) {
-        try {
-            P product = productRepository
-                    .findUserProductById(id, Util.getCurrentUserId())
-                    .orElseThrow(() -> new ItemNotFoundException(ERROR_PRODUCT_NOT_FOUND));
-            return Util.cloneObject(product, getProductDetailsClass());
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-
-    public void deleteUserItemById(int id) {
-        try {
-            P product = productRepository
-                    .findUserProductById(id, Util.getCurrentUserId())
-                    .orElseThrow(() -> new ItemNotFoundException(ERROR_PRODUCT_NOT_FOUND));
-            productRepository.delete(product);
         } catch (Exception e) {
             throw e;
         }
