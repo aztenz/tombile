@@ -45,6 +45,10 @@ public class CartService {
         cartRepository.deleteById(cartId);
     }
 
+    public void clearCart() {
+        cartRepository.deleteAllByUserId(Util.getCurrentUserId());
+    }
+
     public List<RSPCart> getCarts() {
         List<Cart> carts = getAllCarts();
         List<RSPCart> responses = new ArrayList<>();

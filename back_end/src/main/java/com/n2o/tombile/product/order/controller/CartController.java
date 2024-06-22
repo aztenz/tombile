@@ -41,6 +41,9 @@ public class CartController {
         cartService.removeFromCart(pId);
     }
 
+    @DeleteMapping
+    public void clearCart() {cartService.clearCart();}
+
     @GetMapping
     public ResponseEntity<List<RSPCart>> getAllCarts() {
         List<RSPCart> responses = cartService.getCarts();
