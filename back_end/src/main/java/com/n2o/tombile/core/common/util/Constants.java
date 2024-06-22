@@ -102,12 +102,16 @@ public abstract class Constants {
     public static final String ORDER_CANCELLED = "order cancelled";
     public static final String CHARGED_SUCCESSFULLY = "account charged successfully";
     public static final String PROFILE_CHANGED_SUCCESSFULLY = "profile changed successfully";
+    public static final String USER_APPROVED = "user approved";
+    public static final String USER_REJECTED = "user rejected";
 
     // Email Messages
     public static final String EMAIL_SENT_TO_ADMIN = "email sent to an admin for approval";
     public static final String VERIFY_EMAIL_SUBJECT = "your account verification code";
     public static final String RECOVER_PASSWORD_SUBJECT = "your Password Recovery OTP";
     public static final String CHANGE_EMAIL_SUBJECT = "your Password Recovery OTP";
+    public static final String ACCOUNT_APPROVED_SUBJECT = "Welcome to Team Tombile! Your Registration is Approved";
+    public static final String ACCOUNT_REJECTED_SUBJECT = "Team Tombile Registration Update";
     public static final String VERIFY_EMAIL_BODY =
             """
             Dear {0},
@@ -115,6 +119,8 @@ public abstract class Constants {
             To complete your registration, please verify your email address.
             Please use the following One-Time Password (OTP) to verify your email address: {1}
             If you did not create an account, please ignore this email.
+            Best regards,
+            Team Tombile Support
             """;
     public static final String RECOVER_PASSWORD_BODY =
             """
@@ -122,6 +128,8 @@ public abstract class Constants {
             We received a request to reset your password for your Tombile account.
             If you did not request a password reset, please ignore this email.
             To reset your password, please use the following One-Time Password (OTP): {1}
+            Best regards,
+            Team Tombile Support
             """;
     public static final String CHANGE_EMAIL_BODY =
             """
@@ -130,6 +138,28 @@ public abstract class Constants {
             To complete this process, please use the following One-Time Password to confirm your new email address: {1}
             If you did not request this change, please ignore this email or contact our support team immediately.
             Thank you for using Tombile.
+            Best regards,
+            Team Tombile Support
+            """;
+    public static final String ACCOUNT_APPROVED_BODY =
+            """
+            Dear {0},
+            Congratulations! Your registration with Team Tombile has been successfully approved.
+            You can now log in to your account and start exploring all the features and services we offer.
+            We are excited to have you on board and look forward to providing you with the best experience.
+            If you have any questions or need assistance, please do not hesitate to contact our support team.
+            Welcome to Team Tombile!
+            Best regards,
+            Team Tombile Support
+            """;
+    public static final String ACCOUNT_REJECTED_BODY =
+            """
+            Dear {0},
+            Thank you for your interest in joining Team Tombile. We have carefully reviewed your registration request.
+            Unfortunately, we are unable to approve your registration at this time.
+            This decision may be due to not meeting certain criteria or other requirements.
+            If you have any questions or believe this is a mistake, please contact our support team for further assistance.
+            We appreciate your understanding.
             Best regards,
             Team Tombile Support
             """;
