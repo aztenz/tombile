@@ -87,7 +87,8 @@ public abstract class ProductService<P extends Product, R extends ProductReposit
             Integer id
     ) {
         try {
-            P product = productRepository.findUserProductById(id, Util.getCurrentUserId())
+            P product = productRepository
+                    .findUserProductById(id, Util.getCurrentUserId(), productRepository.getProductType())
                     .orElseThrow(() -> new ItemNotFoundException(ERROR_PRODUCT_NOT_FOUND));
             Util.copyProperties(request, product);
             product = productRepository.save(product);

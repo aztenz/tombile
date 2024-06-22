@@ -65,12 +65,12 @@ public class RoleStrategySupplier implements RoleStrategy {
 
     @Override
     public <P extends Product, R extends ProductRepository<P>> List<P> getProducts(R repository) {
-        return repository.findAllUserProducts(Util.getCurrentUserId());
+        return repository.findAllUserProducts(Util.getCurrentUserId(), repository.getProductType());
     }
 
     @Override
     public <P extends Product, R extends ProductRepository<P>> P getProductById(R repository, int productId) {
-        return repository.findUserProductById(productId, Util.getCurrentUserId())
+        return repository.findUserProductById(productId, Util.getCurrentUserId(), repository.getProductType())
                 .orElseThrow(() -> new ItemNotFoundException(ERROR_PRODUCT_NOT_FOUND));
     }
 

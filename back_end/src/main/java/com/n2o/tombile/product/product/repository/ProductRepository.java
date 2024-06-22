@@ -12,9 +12,16 @@ public interface ProductRepository<P extends Product>
         extends JpaRepository<P, Integer> {
     List<P> findByProductType(ProductType productType);
     @Query("SELECT p from Product p WHERE p.id = :id " +
-            "AND p.supplier.id = :spId")
-    Optional<P> findUserProductById(int id, int spId);
+            "AND p.supplier.id = :spId " +
+            "AND p.productType = :pt")
+    Optional<P> findUserProductById(int id, int spId, ProductType pt);
 
-    @Query("SELECT p from Product p WHERE p.supplier.id = :spId")
-    List<P> findAllUserProducts(int spId);
+    @Query("SELECT p from Product p " +
+            "WHERE p.supplier.id = :spId " +
+            "AND p.productType = :pt")
+    List<P> findAllUserProducts(int spId ,ProductType pt);
+
+    default ProductType getProductType() {
+        return ProductType.CAR;
+    };
 }
