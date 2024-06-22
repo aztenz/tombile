@@ -56,6 +56,8 @@ public class AdminService {
 
         emailService.sendSimpleMessage(mailBody);
 
+        userRepository.save(user);
+
         return USER_APPROVED;
     }
 
