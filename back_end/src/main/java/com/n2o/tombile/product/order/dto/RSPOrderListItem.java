@@ -1,5 +1,6 @@
 package com.n2o.tombile.product.order.dto;
 
+import com.n2o.tombile.address.dto.RSPAddressDetails;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,5 +15,5 @@ public class RSPOrderListItem {
     private double totalPrice;
     private String orderStatus;
     private Instant orderDate;
-    private RSPShippingAddress shippingAddress;
+    private RSPAddressDetails shippingAddress;
 }

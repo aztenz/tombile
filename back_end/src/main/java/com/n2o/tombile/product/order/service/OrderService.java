@@ -1,5 +1,6 @@
 package com.n2o.tombile.product.order.service;
 
+import com.n2o.tombile.address.dto.RSPAddressDetails;
 import com.n2o.tombile.core.common.util.Util;
 import com.n2o.tombile.core.user.model.User;
 import com.n2o.tombile.core.user.service.RoleStrategyFactory;
@@ -144,7 +145,7 @@ public class OrderService {
         }
 
         public static <P extends RSPOrderListItem> P prepareOrderData(OrderModel order, Class<P> pClass) {
-            RSPShippingAddress shippingAddress = Util.cloneObject(order.getShippingAddress(), RSPShippingAddress.class);
+            RSPAddressDetails shippingAddress = Util.cloneObject(order.getShippingAddress(), RSPAddressDetails.class);
             P orderListItem = createInstance(pClass);
             orderListItem.setShippingAddress(shippingAddress);
             orderListItem.setOrderStatus(order.getOrderStatus().name());

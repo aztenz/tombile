@@ -28,7 +28,11 @@ public abstract class Constants {
     public static final String ERROR_BAD_CREDENTIALS = "username and password didn't match";
     public static final String ERROR_USERNAME_REQUIRED = "username can't be empty";
     public static final String ERROR_PASSWORD_REQUIRED = "password can't be empty";
+    public static final String ERROR_PASSWORD_NOT_MATCH = "password does not match";
     public static final String ERROR_PASSWORD_TOO_SHORT = "password cannot be less than " + PASSWORD_MIN_LENGTH + " characters";
+    public static final String ERROR_OLD_PASSWORD_NOT_EMPTY = "old password cannot be empty";
+    public static final String ERROR_NEW_PASSWORD_NOT_EMPTY = "new password cannot be empty";
+    public static final String ERROR_CHARGE_NOT_NEGATIVE = "charge cannot be negative";
     public static final String ERROR_FIRST_NAME_REQUIRED = "first name can't be empty";
     public static final String ERROR_LAST_NAME_REQUIRED = "last name can't be empty";
     public static final String ERROR_EMAIL_REQUIRED = "email can't be empty";
@@ -72,7 +76,7 @@ public abstract class Constants {
     public static final String ERROR_CONTACT_INFO_REQUIRED = "contact info can't be empty";
     public static final String ERROR_ITEM_NOT_FOUND = "Item not found";
     public static final String ERROR_COPYING_PROPERTIES = "error copying properties: ";
-    public static final String ERROR_PRICE_NEGATIVE = "price can't be negative";
+    public static final String ERROR_PRICE_NEGATIVE = "you should add at least one pound";
     public static final String ERROR_MANUFACTURER_REQUIRED = "manufacturer can't be empty";
     public static final String ERROR_COMPATIBILITY_REQUIRED = "compatibility can't be empty";
     public static final String ERROR_CAR_CARE_TYPE_REQUIRED = "car care type can't be empty";
@@ -88,17 +92,21 @@ public abstract class Constants {
     public static final String EMAIL_VERIFIED = "email verified";
     public static final String OTP_SENT = "otp sent for verification";
     public static final String PASSWORD_RESET_SUCCESS = "password reset successfully";
+    public static final String EMAIL_CHANGE_SUCCESS = "email changed successfully";
     public static final String CART_SUCCESSFULLY_ADDED = "cart successfully added";
     public static final String ORDER_PLACED = "order placed";
     public static final String ORDER_CONFIRMED = "order confirmed";
     public static final String ORDER_REJECTED = "order rejected";
     public static final String ORDER_COMPLETED = "order completed";
     public static final String ORDER_CANCELLED = "order cancelled";
+    public static final String CHARGED_SUCCESSFULLY = "account charged successfully";
+    public static final String PROFILE_CHANGED_SUCCESSFULLY = "profile changed successfully";
 
     // Email Messages
     public static final String EMAIL_SENT_TO_ADMIN = "email sent to an admin for approval";
     public static final String VERIFY_EMAIL_SUBJECT = "your account verification code";
     public static final String RECOVER_PASSWORD_SUBJECT = "your Password Recovery OTP";
+    public static final String CHANGE_EMAIL_SUBJECT = "your Password Recovery OTP";
     public static final String VERIFY_EMAIL_BODY =
             """
             Dear {0},
@@ -113,5 +121,15 @@ public abstract class Constants {
             We received a request to reset your password for your Tombile account.
             If you did not request a password reset, please ignore this email.
             To reset your password, please use the following One-Time Password (OTP): {1}
+            """;
+    public static final String CHANGE_EMAIL_BODY =
+            """
+            Dear {0},
+            We received a request to change the email address associated with your account on Tombile.
+            To complete this process, please use the following One-Time Password to confirm your new email address: {1}
+            If you did not request this change, please ignore this email or contact our support team immediately.
+            Thank you for using Tombile.
+            Best regards,
+            Team Tombile Support
             """;
 }

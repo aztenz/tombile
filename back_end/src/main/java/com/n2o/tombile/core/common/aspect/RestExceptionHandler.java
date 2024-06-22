@@ -4,6 +4,7 @@ import com.n2o.tombile.core.common.dto.GenericErrorResponse;
 import com.n2o.tombile.core.common.exception.DuplicateItemException;
 import com.n2o.tombile.core.common.exception.InvalidOtpException;
 import com.n2o.tombile.core.common.exception.ItemNotFoundException;
+import com.n2o.tombile.core.common.exception.PasswordNotMatchException;
 import com.n2o.tombile.core.common.exception.SQLValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import java.util.Map;
 
 import static com.n2o.tombile.core.common.util.Constants.ERROR_BAD_CREDENTIALS;
 import static com.n2o.tombile.core.common.util.Constants.ERROR_HANDLING_REQUEST;
+import static com.n2o.tombile.core.common.util.Constants.ERROR_PASSWORD_NOT_MATCH;
 
 @RestControllerAdvice
 public class RestExceptionHandler {
@@ -75,6 +77,14 @@ public class RestExceptionHandler {
             InvalidOtpException e
     ) {
         return handleGenericException(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler
+    public ResponseEntity<GenericErrorResponse> passwordNotMatching(
+            PasswordNotMatchException e
+    ) {
+        return handleGenericException(ERROR_PASSWORD_NOT_MATCH, HttpStatus.BAD_REQUEST);
     }
 
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)

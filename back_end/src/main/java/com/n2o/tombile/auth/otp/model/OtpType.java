@@ -8,7 +8,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum OtpType {
     VERIFY_EMAIL(Constants.VERIFY_EMAIL_SUBJECT, Constants.VERIFY_EMAIL_BODY),
-    RECOVER_PASSWORD(Constants.RECOVER_PASSWORD_SUBJECT, Constants.RECOVER_PASSWORD_BODY);
+    RECOVER_PASSWORD(Constants.RECOVER_PASSWORD_SUBJECT, Constants.RECOVER_PASSWORD_BODY),
+    CHANGE_EMAIL(Constants.CHANGE_EMAIL_SUBJECT, Constants.CHANGE_EMAIL_BODY);
 
     private final String subject;
     private final String body;

@@ -5,6 +5,7 @@ import com.n2o.tombile.auth.otp.model.OtpId;
 import com.n2o.tombile.auth.otp.model.OtpType;
 import com.n2o.tombile.auth.otp.repository.OtpRepository;
 import com.n2o.tombile.core.common.exception.InvalidOtpException;
+import com.n2o.tombile.core.common.exception.ItemNotFoundException;
 import com.n2o.tombile.core.mail.EmailService;
 import com.n2o.tombile.core.mail.MailBody;
 import com.n2o.tombile.core.user.model.User;
@@ -15,6 +16,7 @@ import java.text.MessageFormat;
 import java.time.Instant;
 import java.util.Random;
 
+import static com.n2o.tombile.core.common.util.Constants.ERROR_ITEM_NOT_FOUND;
 import static com.n2o.tombile.core.common.util.Constants.ERROR_OTP_EXPIRED;
 import static com.n2o.tombile.core.common.util.Constants.ERROR_OTP_INVALID;
 import static com.n2o.tombile.core.common.util.Constants.ERROR_OTP_TYPE_MISMATCH;
@@ -34,9 +36,13 @@ public class OtpService {
 
         Otp otp = createOtp(user, otpType);
 
-        MailBody mailBody = createMailBody(user, otp);
+        saveAndSendOtp(user.getUserData().getEmail(), user.getUserData().getFirstName(), otp);
+    }
 
+    public void saveAndSendOtp(String email, String firstName, Otp otp) {
         otpRepository.save(otp);
+
+        MailBody mailBody = createMailBody(email, firstName, otp);
 
         emailService.sendSimpleMessage(mailBody);
     }
@@ -58,22 +64,22 @@ public class OtpService {
             throw new InvalidOtpException(ERROR_OTP_TYPE_MISMATCH);
     }
 
-    private MailBody createMailBody(User user, Otp otp) {
+    private MailBody createMailBody(String email, String firstName, Otp otp) {
         return MailBody.builder()
-                .to(user.getUserData().getEmail())
+                .to(email)
                 .subject(otp.getId().getOtpType().getSubject())
-                .text(prepareEmailBody(user, otp))
+                .text(prepareEmailBody(firstName, otp))
                 .build();
     }
 
-    private String prepareEmailBody(User user, Otp otp) {
+    private String prepareEmailBody(String firstName, Otp otp) {
         return MessageFormat.format(
                 otp.getId().getOtpType().getBody(),
-                user.getUserData().getFirstName(),
+                firstName,
                 otp.getOtpCode());
     }
 
-    private Otp createOtp(User user, OtpType otpType) {
+    public Otp createOtp(User user, OtpType otpType) {
         OtpId otpId = getOtpId(user.getId(), otpType);
         Otp otp = new Otp();
         otp.setOtpCode(generateOtp());
@@ -92,10 +98,15 @@ public class OtpService {
         return random.nextInt(OTP_MIN_VALUE, OTP_MAX_VALUE);
     }
 
-    private OtpId getOtpId(int userId, OtpType otpType) {
+    public OtpId getOtpId(int userId, OtpType otpType) {
         OtpId otpId = new OtpId();
         otpId.setOtpType(otpType);
         otpId.setUserId(userId);
         return otpId;
+    }
+
+    public Otp getOtpById(OtpId otpId) {
+        return otpRepository.findById(otpId)
+                .orElseThrow(() -> new ItemNotFoundException(ERROR_ITEM_NOT_FOUND));
     }
 }

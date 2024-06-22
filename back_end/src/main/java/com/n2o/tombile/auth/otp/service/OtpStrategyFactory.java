@@ -27,6 +27,7 @@ public class OtpStrategyFactory {
 
         strategies.put(OtpType.RECOVER_PASSWORD,
                 new OtpStrategyRecoverPassword(userService, otpService, roleStrategyFactory, passwordEncoder));
+        strategies.put(OtpType.CHANGE_EMAIL, new OtpStrategyChangeEmail(userService, otpService, roleStrategyFactory));
     }
 
     public OtpStrategy getStrategy(OtpType otpType) {

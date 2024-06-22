@@ -164,6 +164,7 @@ CREATE TABLE otp (
     otp_type varchar(50) NOT NULL,
 	otp_code int DEFAULT NULL,
 	expiration datetime DEFAULT NULL,
+    request_body varchar(100) DEFAULT NULL,
 	PRIMARY KEY (user_id, otp_type),
 	CONSTRAINT FK_Otp_User FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
 );

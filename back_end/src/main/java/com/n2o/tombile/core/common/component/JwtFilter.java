@@ -1,5 +1,6 @@
 package com.n2o.tombile.core.common.component;
 
+import com.n2o.tombile.auth.auth.service.LogoutService;
 import com.n2o.tombile.auth.token.service.JwtService;
 import com.n2o.tombile.core.user.service.UserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -24,6 +25,7 @@ import java.io.IOException;
 public class JwtFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
+    private final LogoutService logoutService;
 
     @Override
     protected void doFilterInternal(
@@ -47,6 +49,8 @@ public class JwtFilter extends OncePerRequestFilter {
         } catch (ExpiredJwtException e) {
             jwtService.handleExpiredToken(response, token);
             return;
+        } catch (Exception e) {
+            logoutService.logout();
         }
 
         filterChain.doFilter(request, response);

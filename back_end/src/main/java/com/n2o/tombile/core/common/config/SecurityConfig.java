@@ -1,5 +1,6 @@
 package com.n2o.tombile.core.common.config;
 
+import com.n2o.tombile.core.common.component.CustomLogoutHandler;
 import com.n2o.tombile.core.common.component.JwtFilter;
 import com.n2o.tombile.core.user.service.UserDetailsService;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 @RequiredArgsConstructor
 @Configuration
@@ -24,7 +24,7 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 public class SecurityConfig {
     private final UserDetailsService userDetailsService;
     private final JwtFilter jwtFilter;
-    private final LogoutHandler logoutHandler;
+    private final CustomLogoutHandler logoutHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
