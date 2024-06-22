@@ -1,5 +1,6 @@
 package com.n2o.tombile.product.part.service;
 
+import com.n2o.tombile.core.user.service.RoleStrategyFactory;
 import com.n2o.tombile.product.part.dto.RSPPartDetails;
 import com.n2o.tombile.product.part.dto.RSPPartListItem;
 import com.n2o.tombile.product.part.dto.RSPPersistPart;
@@ -15,8 +16,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class CarPartService extends ProductService<CarPart, CarPartRepository> {
 
-    public CarPartService(CarPartRepository productRepository) {
-        super(productRepository);
+    public CarPartService(CarPartRepository productRepository, RoleStrategyFactory roleStrategyFactory) {
+        super(productRepository, roleStrategyFactory);
     }
 
     @Override
