@@ -9,6 +9,7 @@ import lombok.Getter;
 import static com.n2o.tombile.core.common.util.Constants.ERROR_CAR_CARE_TYPE_REQUIRED;
 import static com.n2o.tombile.core.common.util.Constants.ERROR_CONTACT_INFO_REQUIRED;
 import static com.n2o.tombile.core.common.util.Constants.ERROR_LOCATION_REQUIRED;
+import static com.n2o.tombile.core.common.util.Constants.ERROR_NAME_REQUIRED;
 
 @Getter
 public class RQPersistCarCare extends RQPersistProduct {
@@ -18,7 +19,10 @@ public class RQPersistCarCare extends RQPersistProduct {
     @NotEmpty(message = ERROR_LOCATION_REQUIRED)
     private String location;
 
+    @NotEmpty(message = ERROR_NAME_REQUIRED)
+    private String name;
+
     @NotEmpty(message = ERROR_CAR_CARE_TYPE_REQUIRED)
     @Enum(enumClass = CarCareType.class)
-    private String carCareType;
+    private String serviceType;
 }

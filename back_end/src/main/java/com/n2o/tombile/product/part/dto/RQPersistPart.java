@@ -7,6 +7,7 @@ import lombok.Getter;
 
 import static com.n2o.tombile.core.common.util.Constants.ERROR_COMPATIBILITY_REQUIRED;
 import static com.n2o.tombile.core.common.util.Constants.ERROR_MANUFACTURER_REQUIRED;
+import static com.n2o.tombile.core.common.util.Constants.ERROR_NAME_REQUIRED;
 import static com.n2o.tombile.core.common.util.Constants.ERROR_QUANTITY_NEGATIVE;
 import static com.n2o.tombile.core.common.util.Constants.POSITIVE_NON_ZERO_NUM_MIN;
 
@@ -17,6 +18,9 @@ public class RQPersistPart extends RQPersistProduct {
 
     @NotEmpty(message = ERROR_COMPATIBILITY_REQUIRED)
     private String compatibility;
+
+    @NotEmpty(message = ERROR_NAME_REQUIRED)
+    private String name;
 
     @Min(value = POSITIVE_NON_ZERO_NUM_MIN, message = ERROR_QUANTITY_NEGATIVE)
     private int quantity;

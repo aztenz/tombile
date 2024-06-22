@@ -21,7 +21,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/Cares")
+@RequestMapping("/services")
 @RequiredArgsConstructor
 public class CarCareController {
     private final CarCareService carCareService;

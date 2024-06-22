@@ -8,5 +8,5 @@ import lombok.Getter;
 public class RSPPersistCarCare extends RSPPersistProduct {
     private String contactInfo;
     private String location;
-    private CarCareType carCareType;
+    private CarCareType serviceType;
 }

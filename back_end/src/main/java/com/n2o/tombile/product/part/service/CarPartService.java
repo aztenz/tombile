@@ -42,7 +42,6 @@ public class CarPartService extends ProductService<CarPart, CarPartRepository> {
 
     @Override
     public void setProductSpecificDetails(CarPart product) {
-        product.setName("");
         product.setProductType(ProductType.CAR_PART);
     }
 }

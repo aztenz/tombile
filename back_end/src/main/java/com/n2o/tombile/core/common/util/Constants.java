@@ -81,6 +81,7 @@ public abstract class Constants {
     public static final String ERROR_COMPATIBILITY_REQUIRED = "compatibility can't be empty";
     public static final String ERROR_CAR_CARE_TYPE_REQUIRED = "car care type can't be empty";
     public static final String ERROR_CAR_STATE_REQUIRED = "car state can't be empty";
+    public static final String ERROR_NAME_REQUIRED = "name can't be empty";
 
     // Orders Related Messages
     public static final String ERROR_CART_NOT_FOUND = "couldn't find a cart";

@@ -11,6 +11,7 @@ import com.n2o.tombile.product.product.model.Product;
 import com.n2o.tombile.product.product.repository.ProductRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -68,7 +69,16 @@ public abstract class ProductService<P extends Product, R extends ProductReposit
         P product = roleStrategyFactory
                 .getStrategy(Util.getCurrentUser().getUserData().getRole())
                 .getProductById(productRepository, id);
-        return Util.cloneObject(product, getProductDetailsClass());
+        RSPProductDetails productDetails = Util.cloneObject(product, getProductDetailsClass());
+        productDetails.setSupplierName(getSupplierName(product));
+        productDetails.setSupplierEmail(product.getSupplier().getUserData().getEmail());
+        return productDetails;
+    }
+
+    private static <P extends Product> @NotNull String getSupplierName(P product) {
+        return product.getSupplier().getUserData().getFirstName()
+                + " " +
+                product.getSupplier().getUserData().getLastName();
     }
 
     @Override
