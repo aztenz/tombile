@@ -4,6 +4,7 @@ import com.n2o.tombile.product.product.dto.RQPersistProduct;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
+import lombok.Setter;
 
 import static com.n2o.tombile.core.common.util.Constants.ERROR_COMPATIBILITY_REQUIRED;
 import static com.n2o.tombile.core.common.util.Constants.ERROR_MANUFACTURER_REQUIRED;
@@ -11,6 +12,7 @@ import static com.n2o.tombile.core.common.util.Constants.ERROR_NAME_REQUIRED;
 import static com.n2o.tombile.core.common.util.Constants.ERROR_QUANTITY_NEGATIVE;
 import static com.n2o.tombile.core.common.util.Constants.POSITIVE_NON_ZERO_NUM_MIN;
 
+@Setter
 @Getter
 public class RQPersistPart extends RQPersistProduct {
     @NotEmpty(message = ERROR_MANUFACTURER_REQUIRED)

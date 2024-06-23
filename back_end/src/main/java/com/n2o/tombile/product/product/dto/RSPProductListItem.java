@@ -7,4 +7,5 @@ public abstract class RSPProductListItem {
     private int id;
     private String name;
     private double price;
+    private String imagePath;
 }

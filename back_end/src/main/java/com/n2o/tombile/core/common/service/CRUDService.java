@@ -38,7 +38,7 @@ public interface CRUDService<E, ID, I extends JpaRepository<E, ID>> {
         }
     }
 
-    default Object addItem(Object request) {
+    default Object addItem(Object request, String imagePath) {
         try {
             E item = Util.cloneObject(request, getEntity());
             item = getRepository().save(item);

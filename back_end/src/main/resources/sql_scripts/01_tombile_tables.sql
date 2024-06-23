@@ -38,6 +38,14 @@ CREATE TABLE addresses (
 	CONSTRAINT FK_Addresses_User FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE images (
+    id int NOT NULL AUTO_INCREMENT,
+    name varchar(100) DEFAULT NULL,
+    type varchar(50) NOT NULL,
+    data longblob NOT NULL,
+    PRIMARY KEY (id)
+);
+
 CREATE TABLE products (
 	id int NOT NULL AUTO_INCREMENT,
     supplier_id int NOT NULL,
@@ -46,6 +54,7 @@ CREATE TABLE products (
 	name varchar(100) DEFAULT NULL,
 	description text,
 	price decimal(10,2) DEFAULT NULL,
+    image_path varchar(100) DEFAULT NULL,
 	PRIMARY KEY (id),
 	KEY FK_Products_Supplier (supplier_id),
 	CONSTRAINT FK_Products_Supplier FOREIGN KEY (supplier_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE

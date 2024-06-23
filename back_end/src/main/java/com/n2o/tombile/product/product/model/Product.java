@@ -52,4 +52,7 @@ public class Product {
 
     @Column(name = "price")
     private double price;
+
+    @Column(name = "image_path", length = 100)
+    private String imagePath;
 }

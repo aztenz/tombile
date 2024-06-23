@@ -1,7 +1,8 @@
 package com.n2o.tombile.product.part.controller;
 
-import com.n2o.tombile.product.part.dto.RSPPartDetails;
+import com.n2o.tombile.image.ImageService;
 import com.n2o.tombile.product.part.dto.RQPersistPart;
+import com.n2o.tombile.product.part.dto.RSPPartDetails;
 import com.n2o.tombile.product.part.dto.RSPPersistPart;
 import com.n2o.tombile.product.part.service.CarPartService;
 import jakarta.validation.Valid;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -25,6 +27,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CarPartController {
     private final CarPartService carPartService;
+    private final ImageService imageService;
 
     @GetMapping
     public ResponseEntity<List<Object>> getAllCarParts() {
@@ -38,8 +41,10 @@ public class CarPartController {
     }
 
     @PostMapping
-    public ResponseEntity<RSPPersistPart> addCarPart(@Valid @RequestBody RQPersistPart request){
-        RSPPersistPart response = (RSPPersistPart) carPartService.addItem(request);
+    public ResponseEntity<RSPPersistPart> addCarPart(@Valid @ModelAttribute RQPersistPart request) {
+        String imagePath = imageService.saveImageWithPath(request.getImage());
+
+        RSPPersistPart response = (RSPPersistPart) carPartService.addItem(request, imagePath);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")

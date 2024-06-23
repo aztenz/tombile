@@ -35,10 +35,11 @@ public abstract class ProductService<P extends Product, R extends ProductReposit
     public abstract void setProductSpecificDetails(P product);
 
     @Override
-    public Object addItem(Object request) {
+    public Object addItem(Object request, String imagePath) {
         try {
             P product = Util.cloneObject(request, getProductClass());
             product.setSupplier(Util.getCurrentUser());
+            product.setImagePath(imagePath);
             setProductSpecificDetails(product);
             productRepository.save(product);
             return getPersistProductRSP(product);

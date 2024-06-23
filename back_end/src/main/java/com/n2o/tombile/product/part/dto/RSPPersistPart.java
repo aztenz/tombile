@@ -8,4 +8,5 @@ public class RSPPersistPart extends RSPPersistProduct {
     private String manufacturer;
     private String compatibility;
     private int quantity;
+    private String imagePath;
 }
