@@ -1,7 +1,7 @@
-package com.n2o.tombile.core.common.config;
+package com.n2o.tombile.auth.auth.config;
 
-import com.n2o.tombile.core.common.component.CustomLogoutHandler;
-import com.n2o.tombile.core.common.component.JwtFilter;
+import com.n2o.tombile.auth.auth.service.CustomLogoutHandler;
+import com.n2o.tombile.auth.auth.service.JwtFilter;
 import com.n2o.tombile.core.user.service.UserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

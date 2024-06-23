@@ -1,7 +1,6 @@
-package com.n2o.tombile.core.common.component;
+package com.n2o.tombile.auth.auth.service;
 
 import com.n2o.tombile.auth.token.service.TokenService;
-import com.n2o.tombile.core.common.util.Util;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +16,8 @@ public class CustomLogoutHandler implements LogoutHandler {
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         try {
-            tokenService.revokeTokenById(Util.getCurrentUserId());
+            String token = request.getHeader("Authorization").substring(7);
+            tokenService.revokeTokenByToken(token);
             SecurityContextHolder.clearContext();
         } catch (Exception e) {
             SecurityContextHolder.clearContext();

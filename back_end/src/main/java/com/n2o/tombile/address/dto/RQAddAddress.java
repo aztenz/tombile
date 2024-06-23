@@ -1,7 +1,7 @@
 package com.n2o.tombile.address.dto;
 
 import com.n2o.tombile.address.model.AddressType;
-import com.n2o.tombile.core.common.validate.Enum;
+import com.n2o.tombile.core.common.validate.annotation.Enum;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 

@@ -1,6 +1,6 @@
 package com.n2o.tombile.product.care.dto;
 
-import com.n2o.tombile.core.common.validate.Enum;
+import com.n2o.tombile.core.common.validate.annotation.Enum;
 import com.n2o.tombile.product.care.model.CarCareType;
 import com.n2o.tombile.product.product.dto.RQPersistProduct;
 import jakarta.validation.constraints.NotEmpty;

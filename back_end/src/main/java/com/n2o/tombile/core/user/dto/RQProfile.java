@@ -1,6 +1,6 @@
 package com.n2o.tombile.core.user.dto;
 
-import com.n2o.tombile.core.common.validate.NotEmptyIfPresent;
+import com.n2o.tombile.core.common.validate.annotation.NotEmptyIfPresent;
 import lombok.Getter;
 
 import static com.n2o.tombile.core.common.util.Constants.ERROR_FIRST_NAME_REQUIRED;

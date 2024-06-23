@@ -1,6 +1,5 @@
 package com.n2o.tombile.auth.auth.service;
 
-import com.n2o.tombile.core.common.component.CustomLogoutHandler;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

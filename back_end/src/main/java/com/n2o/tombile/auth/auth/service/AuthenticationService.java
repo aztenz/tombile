@@ -7,7 +7,6 @@ import com.n2o.tombile.auth.otp.service.OtpService;
 import com.n2o.tombile.auth.otp.service.OtpStrategyFactory;
 import com.n2o.tombile.auth.token.dto.RSPToken;
 import com.n2o.tombile.auth.token.model.TokenType;
-import com.n2o.tombile.auth.token.service.JwtService;
 import com.n2o.tombile.auth.token.service.TokenService;
 import com.n2o.tombile.core.user.dto.RQLogin;
 import com.n2o.tombile.core.user.dto.RQRegister;

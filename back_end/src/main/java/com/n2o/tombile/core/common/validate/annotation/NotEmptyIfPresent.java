@@ -1,5 +1,6 @@
-package com.n2o.tombile.core.common.validate;
+package com.n2o.tombile.core.common.validate.annotation;
 
+import com.n2o.tombile.core.common.validate.impl.NotEmptyIfPresentValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 

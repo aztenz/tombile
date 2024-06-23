@@ -1,7 +1,5 @@
-package com.n2o.tombile.core.common.component;
+package com.n2o.tombile.auth.auth.service;
 
-import com.n2o.tombile.auth.auth.service.LogoutService;
-import com.n2o.tombile.auth.token.service.JwtService;
 import com.n2o.tombile.core.user.service.UserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
@@ -25,7 +23,7 @@ import java.io.IOException;
 public class JwtFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
-    private final LogoutService logoutService;
+    private final JwtExceptionHandler jwtExceptionHandler;
 
     @Override
     protected void doFilterInternal(
@@ -38,7 +36,7 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
 
-        String token = extractTokenFromHeader(request);
+        String token = JwtUtils.extractTokenFromHeader(request);
         if (token == null) {
             filterChain.doFilter(request, response);
             return;
@@ -47,10 +45,10 @@ public class JwtFilter extends OncePerRequestFilter {
         try {
             authenticateUserIfValid(token, request);
         } catch (ExpiredJwtException e) {
-            jwtService.handleExpiredToken(response, token);
+            jwtExceptionHandler.handleExpiredToken(response, token);
             return;
         } catch (Exception e) {
-            logoutService.logout();
+            jwtExceptionHandler.handleInvalidToken(response);
         }
 
         filterChain.doFilter(request, response);
@@ -75,13 +73,5 @@ public class JwtFilter extends OncePerRequestFilter {
                 userDetails, null, userDetails.getAuthorities());
         authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authToken);
-    }
-
-    private String extractTokenFromHeader(HttpServletRequest request) {
-        String authHeader = request.getHeader("Authorization");
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            return authHeader.substring(7);
-        }
-        return null;
     }
 }

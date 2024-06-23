@@ -43,6 +43,11 @@ public abstract class Constants {
     public static final String ERROR_USER_NOT_FOUND = "user not found";
     public static final String ERROR_APPROVED_USER_NOT_FOUND = "couldn't find approved user";
     public static final String ERROR_NON_VERIFIED_USER_NOT_FOUND = "couldn't find non verified user";
+    public static final String ERROR_INVALID_TOKEN = "Authentication failed. Invalid token.";
+    public static final String ERROR_SESSION_EXPIRED = "Your session has expired. Please log in again.";
+    public static final String ERROR_TOKEN_IS_EXPIRED = "Token has expired";
+    public static final String ERROR_TOKEN_IS_INVALID = "Invalid token";
+
 
     // Address-related Error Messages
     public static final String ERROR_STREET_REQUIRED = "street can't be empty";

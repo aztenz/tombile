@@ -1,6 +1,6 @@
 package com.n2o.tombile.core.user.dto;
 
-import com.n2o.tombile.core.common.validate.Enum;
+import com.n2o.tombile.core.common.validate.annotation.Enum;
 import com.n2o.tombile.core.user.model.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;

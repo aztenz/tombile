@@ -1,5 +1,6 @@
-package com.n2o.tombile.core.common.validate;
+package com.n2o.tombile.core.common.validate.impl;
 
+import com.n2o.tombile.core.common.validate.annotation.Enum;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

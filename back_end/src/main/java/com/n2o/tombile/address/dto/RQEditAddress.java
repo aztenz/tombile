@@ -1,8 +1,8 @@
 package com.n2o.tombile.address.dto;
 
 import com.n2o.tombile.address.model.AddressType;
-import com.n2o.tombile.core.common.validate.Enum;
-import com.n2o.tombile.core.common.validate.NotEmptyIfPresent;
+import com.n2o.tombile.core.common.validate.annotation.Enum;
+import com.n2o.tombile.core.common.validate.annotation.NotEmptyIfPresent;
 import lombok.Getter;
 
 import static com.n2o.tombile.core.common.util.Constants.ERROR_CITY_REQUIRED;
