@@ -80,7 +80,7 @@ public class CartService {
     }
 
     private List<Cart> getAllCarts() {
-        return cartRepository.findAll();
+        return cartRepository.findAllByUser(Util.getCurrentUser());
     }
 
     private Cart getCartByProductId(int pId) {
