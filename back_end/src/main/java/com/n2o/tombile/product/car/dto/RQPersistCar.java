@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
+import lombok.Setter;
 
 import static com.n2o.tombile.core.common.util.Constants.CAR_YEAR_MAX;
 import static com.n2o.tombile.core.common.util.Constants.CAR_YEAR_MIN;
@@ -18,6 +19,7 @@ import static com.n2o.tombile.core.common.util.Constants.ERROR_YEAR_TOO_NEW;
 import static com.n2o.tombile.core.common.util.Constants.ERROR_YEAR_TOO_OLD;
 import static com.n2o.tombile.core.common.util.Constants.POSITIVE_NUM_MIN;
 
+@Setter
 @Getter
 public class RQPersistCar extends RQPersistProduct {
     @NotEmpty(message = ERROR_MAKE_REQUIRED)
